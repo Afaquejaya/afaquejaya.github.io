@@ -288,3 +288,13 @@ p {
 .ml{
   margin-left: 3%;
 }
+.profile {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;     /* 🔥 key line */
+    object-position: center;
+    border-radius: 4px;    /* optional – looks cleaner */
+    display: block;
+    margin: 0 auto;
+}
+
