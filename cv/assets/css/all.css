@@ -294,91 +294,76 @@ p {
     object-fit: cover;
     border-radius: 50%;
 }
-/* ======================================================
-   PROFILE STATS
-   Add below "Sr. Software Engineer"
-====================================================== */
+/*==============================
+ Profile Stats
+==============================*/
 
 .profile-stats{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-top:22px;
-    gap:8px;
+    margin-top:25px;
+    width:100%;
 }
 
 .stat-box{
     flex:1;
-    text-align:center;
-    padding:12px 6px;
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:10px;
-    transition:all .3s ease;
-    cursor:default;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:0 8px;
 }
 
-.stat-box:hover{
-    background:rgba(255,255,255,.08);
-    transform:translateY(-3px);
+.stat-box:not(:last-child){
+    border-right:1px solid rgba(255,255,255,.2);
 }
 
 .stat-box i{
-    display:block;
-    color:#FDBA12;
-    font-size:22px;
-    margin-bottom:8px;
+    color:#FDB813;
+    font-size:24px;
+    flex-shrink:0;
 }
 
-.stat-box h4{
+.stat-text{
+    text-align:left;
+}
+
+.stat-text h4{
     margin:0;
     color:#fff;
-    font-size:24px;
+    font-size:22px;
     font-weight:700;
     line-height:1;
 }
 
-.stat-box span{
+.stat-text span{
     display:block;
-    color:#FDBA12;
+    margin-top:4px;
+    color:#FDB813;
     font-size:10px;
     font-weight:700;
     letter-spacing:1px;
-    text-transform:uppercase;
-    margin-top:6px;
 }
 
-.stat-box small{
+.stat-text small{
     display:block;
-    color:rgba(255,255,255,.75);
+    color:#fff;
     font-size:10px;
-    margin-top:2px;
-    letter-spacing:.5px;
-    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
-/* Mobile */
-
-@media (max-width:767px){
+@media(max-width:767px){
 
     .profile-stats{
-        gap:6px;
+        flex-direction:column;
+        gap:18px;
     }
 
     .stat-box{
-        padding:10px 5px;
-    }
-
-    .stat-box h4{
-        font-size:18px;
-    }
-
-    .stat-box i{
-        font-size:18px;
-    }
-
-    .stat-box span,
-    .stat-box small{
-        font-size:9px;
+        width:100%;
+        border-right:none !important;
+        justify-content:flex-start;
     }
 
 }
