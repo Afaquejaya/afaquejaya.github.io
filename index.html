@@ -1,498 +1,1308 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
-
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Afaque Jaya — Senior Mobile &amp; Full-Stack Engineer</title>
+  <meta name="description" content="Afaque Jaya is a Senior Mobile &amp; Full-Stack Engineer with 7+ years building Flutter, React Native and native apps across FinTech, e-commerce, logistics and government ed-tech. 15+ published apps, 1M+ downloads.">
+  <meta name="author" content="Afaque Jaya">
+  <meta name="theme-color" content="#f3efe7">
+  <link rel="canonical" href="https://afaquejaya.github.io/">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AfaqueJaya | Computer Science</title>
-    <meta name="description" content="Personal Website of Afaque Jaya, Computer Science Engineering Student, Developer" />
-    <meta name="keywords" content="afaquejaya , afaquejaya,java ,c# developer, Personal, Website, Resume, CV,B.A.College of engineering & Technology, Computer Science, Engineer" />
-    <meta name="author" content="afaquejaya" />
-    <link rel="shortcut icon" href="me_new.ico">
-    <link rel="icon" href="me_new.ico" type="image/x-icon">
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="css/bulmaswatch.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-    <style>
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Afaque Jaya">
+  <meta property="og:title" content="Afaque Jaya — Senior Mobile &amp; Full-Stack Engineer">
+  <meta property="og:description" content="7+ years shipping Flutter, React Native and native apps. 15+ published apps, 1M+ downloads across Google Play and the App Store.">
+  <meta property="og:url" content="https://afaquejaya.github.io/">
+  <meta property="og:image" content="https://afaquejaya.github.io/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Portrait of Afaque Jaya">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Afaque Jaya — Senior Mobile &amp; Full-Stack Engineer">
+  <meta name="twitter:description" content="7+ years shipping Flutter, React Native and native apps. 15+ published apps, 1M+ downloads.">
+  <meta name="twitter:image" content="https://afaquejaya.github.io/img/og-image.jpg">
 
-        .avatar {
-            margin-bottom: 1em width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            text-align: center;
-            display: block;
-            vertical-align: middle
-        }
-    </style>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="me_new.ico" sizes="any">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+  <link rel="preload" as="image" href="img/profile/afaque-960.webp" type="image/webp">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script>document.documentElement.classList.add('js');if(location.hash.length>1)document.documentElement.classList.add('no-smooth');</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Afaque Jaya",
+    "jobTitle": "Senior Mobile & Full-Stack Engineer",
+    "url": "https://afaquejaya.github.io/",
+    "image": "https://afaquejaya.github.io/img/profile/afaque-960.jpg",
+    "email": "mailto:afaquejaya123@gmail.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/afaque-jaya",
+      "https://github.com/Afaquejaya"
+    ],
+    "alumniOf": "Jharkhand University of Technology",
+    "knowsAbout": ["Flutter", "React Native", "Android", "Kotlin", "Swift", "iOS", "React", "Next.js", "REST APIs", "GraphQL", "LangChain"]
+  }
+  </script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-    <!-- Home Sec -->
-    <section id="home" class="hero is-white is-fullheight">
+  <!-- ===================================================== Navigation -->
+  <header class="nav" id="nav">
+    <div class="wrap">
+      <a class="brand pill" href="#top" aria-label="Afaque Jaya — back to top">
+        <span class="brand-mark" aria-hidden="true">AJ</span>
+        <span class="brand-name">Afaque Jaya <span class="brand-role">· Mobile &amp; Full-Stack</span></span>
+      </a>
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="#">
+      <nav class="tabs pill" id="tabs" aria-label="Sections">
+        <span class="tab-ind" aria-hidden="true"></span>
+        <a href="#work">Apps</a>
+        <a href="#builds">SaaS &amp; AI</a>
+        <a href="#impact">Impact</a>
+        <a href="#cases">Case studies</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="tab-contact">Contact</a>
+      </nav>
+
+      <a class="btn nav-cta" href="#contact">Let’s talk <span class="arrow" aria-hidden="true">→</span></a>
+
+      <button class="menu-btn pill" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+        <span class="bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" aria-label="Site menu" hidden>
+    <ol>
+      <li><a href="#work">Apps</a></li>
+      <li><a href="#builds">SaaS &amp; AI</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#cases">Case studies</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+    <div class="menu-foot">
+      <a href="mailto:afaquejaya123@gmail.com">afaquejaya123@gmail.com</a>
+      <a href="https://www.linkedin.com/in/afaque-jaya" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/Afaquejaya" target="_blank" rel="noopener">GitHub</a>
+      <a href="cv/cv.html" target="_blank" rel="noopener">View CV</a>
+      <a href="files/Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf" download>Download CV</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ===================================================== Hero -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="status" data-reveal style="--d:.05s">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="status-name">Afaque Jaya ·</span> Senior Mobile &amp; Full-Stack Engineer
+            </p>
+
+            <h1 id="hero-title">
+              <span class="line"><span style="--d:.1s">Engineering mobile</span></span>
+              <span class="line"><span style="--d:.18s">experiences.</span></span>
+              <span class="line"><span style="--d:.26s">Building products</span></span>
+              <span class="line"><span style="--d:.34s" class="serif">that matter.</span></span>
+            </h1>
+
+            <p class="hero-lead" data-reveal style="--d:.5s">
+              I’m <strong>Afaque Jaya</strong> — a senior engineer with <strong>7+ years</strong> shipping
+              Flutter, React Native and native apps for FinTech, e-commerce, logistics and government
+              ed-tech. I take products from 0→1, wire them to solid APIs, and lead teams across borders
+              to get them into the stores.
+            </p>
+
+            <div class="hero-ctas" data-reveal style="--d:.6s">
+              <a class="btn" href="#work">Explore my work <span class="arrow" aria-hidden="true">↓</span></a>
+              <a class="btn ghost" href="cv/cv.html" target="_blank" rel="noopener">View CV <span class="arrow" aria-hidden="true">↗</span></a>
+              <a class="btn ghost" href="files/Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf" download="Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf" type="application/pdf">Download CV <span class="arrow" aria-hidden="true">↓</span><span class="sr-only"> (PDF, 680 KB)</span></a>
+            </div>
+
+            <div class="hero-stack" data-reveal style="--d:.7s">
+              <span class="label">Core stack</span>
+              <span class="chip">Flutter</span>
+              <span class="chip">React Native</span>
+              <span class="chip">Kotlin</span>
+              <span class="chip">Swift</span>
+              <span class="chip">Dart</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">REST · GraphQL</span>
+              <span class="chip">LangChain</span>
+            </div>
+          </div>
+
+          <div class="portrait" data-reveal="scale" style="--d:.2s">
+            <div class="idbadge" data-badge>
+              <div class="badge-swing">
+                <span class="badge-strap" aria-hidden="true"><span>AFAQUE JAYA · ENGINEERING · AFAQUE JAYA · ENGINEERING</span></span>
+                <span class="badge-clip" aria-hidden="true"></span>
+                <div class="badge-tilt">
+                  <button type="button" class="badge-card" aria-pressed="false" aria-label="ID badge for Afaque Jaya. Flip to see career stats.">
+                    <span class="badge-face badge-front">
+                      <span class="bf-head"><span class="bf-mark">AJ</span><span class="bf-org">AFAQUE JAYA<small>MOBILE · FULL-STACK</small></span><span class="bf-slot" aria-hidden="true"></span><span class="bf-tag">ENGINEERING</span></span>
+                      <span class="bf-photo">
+                        <picture>
+                          <source srcset="img/profile/afaque-480.webp 480w, img/profile/afaque-960.webp 960w" sizes="(min-width: 960px) 520px, 90vw" type="image/webp">
+                          <img src="img/profile/afaque-960.jpg" width="960" height="960" alt="Afaque Jaya, wearing glasses and a beige blazer, arms crossed" fetchpriority="high" draggable="false">
+                        </picture>
+                        <span class="bf-holo" aria-hidden="true"></span>
+                      </span>
+                      <span class="bf-body">
+                        <span class="bf-name">Afaque Jaya</span>
+                        <span class="bf-role">SENIOR MOBILE &amp; FULL-STACK ENGINEER</span>
+                        <span class="bf-row"><span class="bf-bars" aria-hidden="true"></span><span class="bf-id">PORTFOLIO ID<b>AJ · 2019 → NOW</b></span></span>
+                      </span>
+                    </span>
+                    <span class="badge-face badge-back" aria-hidden="true">
+                      <span class="bb-top"><span class="bf-mark">AJ</span><span>THE SHORT VERSION</span></span>
+                      <span class="bb-title">Made of <em>shipped apps.</em></span>
+                      <span class="bb-stats">
+                        <span><b>7+</b>years</span>
+                        <span><b>15+</b>apps published</span>
+                        <span><b>1M+</b>downloads</span>
+                        <span><b>3</b>countries, one team</span>
+                      </span>
+                      <span class="bb-where">Live across Qatar · UAE · India · Nigeria · Ghana</span>
+                      <span class="bb-foot"><span>B.Tech, Computer Science</span><span>Flutter · Kotlin · Swift · React</span></span>
+                      <span class="bb-hint">Click to flip back</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="float-tag t1 drift" aria-hidden="true"><b>1M+</b>downloads</div>
+            <div class="float-tag t2 drift slow" aria-hidden="true"><b>15+</b>apps published</div>
+            <div class="float-tag t3 drift" aria-hidden="true"><b>Qatar · UAE</b>international roles</div>
+            <p class="badge-hint" aria-hidden="true"><span class="h-fine">↔ Drag a little. Click to flip.</span><span class="h-touch">Tap the badge to flip it.</span></p>
+          </div>
+        </div>
+
+        <ul class="proof" aria-label="Highlights">
+          <li class="proof-item" data-reveal style="--d:.05s">
+            <div class="proof-value"><span data-count="7">7</span><sup>+</sup></div>
+            <p class="proof-label">Years building mobile, tablet &amp; web products</p>
+          </li>
+          <li class="proof-item" data-reveal style="--d:.12s">
+            <div class="proof-value"><span data-count="15">15</span><sup>+</sup></div>
+            <p class="proof-label">Apps published on Google Play &amp; the App Store</p>
+          </li>
+          <li class="proof-item" data-reveal style="--d:.19s">
+            <div class="proof-value"><span data-count="1">1</span>M<sup>+</sup></div>
+            <p class="proof-label">Collective downloads across published apps</p>
+          </li>
+          <li class="proof-item" data-reveal style="--d:.26s">
+            <div class="proof-value"><span data-count="3">3</span></div>
+            <p class="proof-label">Countries in the team I led — Dubai, China &amp; Sri Lanka</p>
+          </li>
+        </ul>
+
+        <div class="ask-zone" data-reveal>
+          <div class="minion2" aria-hidden="true">
+            <svg class="m2-head" viewBox="0 0 200 120">
+              <defs>
+                <clipPath id="m2Dome"><path d="M14 130 V78 A86 86 0 0 1 186 78 V130 Z"/></clipPath>
+                <linearGradient id="m2Skin" x1="0" x2="1"><stop offset="0" stop-color="#e3b10f"/><stop offset=".3" stop-color="#ffe04a"/><stop offset=".7" stop-color="#fbd62c"/><stop offset="1" stop-color="#d9a70c"/></linearGradient>
+                <radialGradient id="m2Metal" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#f6f7f9"/><stop offset=".55" stop-color="#bcc1c8"/><stop offset="1" stop-color="#7a8089"/></radialGradient>
+              </defs>
+              <g clip-path="url(#m2Dome)">
+                <rect x="10" y="0" width="180" height="130" fill="url(#m2Skin)"/>
+                <rect x="10" y="74" width="180" height="16" fill="#2a2a2a"/>
+                <rect x="10" y="74" width="180" height="3" fill="#4a4a4a"/>
+              </g>
+              <path d="M14 130 V78 A86 86 0 0 1 186 78 V130" fill="none" stroke="#c99a0c" stroke-width="1.5" opacity=".6"/>
+              <g class="m2-hair" fill="none" stroke="#2a2a2a" stroke-width="2.6" stroke-linecap="round">
+                <path d="M46 30 C 56 14, 74 8, 92 10"/><path d="M58 22 C 70 10, 86 6, 100 8"/><path d="M112 8 C 128 6, 146 12, 156 26"/><path d="M118 12 C 134 10, 150 18, 160 32"/><path d="M98 9 C 104 4, 110 4, 114 8"/>
+              </g>
+              <circle cx="100" cy="82" r="38" fill="url(#m2Metal)" stroke="#6b7078" stroke-width="2"/>
+              <g fill="#6b7078"><circle cx="100" cy="47" r="2"/><circle cx="66" cy="82" r="2"/><circle cx="134" cy="82" r="2"/><circle cx="76" cy="57" r="2"/><circle cx="124" cy="57" r="2"/></g>
+              <circle cx="100" cy="82" r="27" fill="#fff"/>
+              <g class="m2-iris">
+                <circle cx="98" cy="92" r="11" fill="#8f5222"/><circle cx="98" cy="92" r="11" fill="none" stroke="#5a300f" stroke-width="1.3"/>
+                <circle cx="98" cy="92" r="5.2" fill="#111"/><circle cx="101.5" cy="88.5" r="2.4" fill="#fff"/>
+              </g>
+              <rect class="m2-lid" x="72" y="54" width="56" height="56" rx="28" fill="#f6cf22"/>
+              <circle cx="88" cy="70" r="6" fill="#fff" opacity=".5"/>
+            </svg>
+            <svg class="m2-glove m2-l" viewBox="0 0 54 40"><ellipse cx="14" cy="18" rx="11" ry="12" fill="#1c1c1c"/><ellipse cx="29" cy="20" rx="11" ry="13" fill="#1c1c1c"/><ellipse cx="43" cy="22" rx="9" ry="11" fill="#1c1c1c"/><ellipse cx="11" cy="12" rx="4" ry="2.5" fill="#4a4a4a"/><ellipse cx="26" cy="13" rx="4" ry="2.5" fill="#4a4a4a"/><ellipse cx="40" cy="16" rx="3.5" ry="2.2" fill="#4a4a4a"/></svg>
+            <svg class="m2-glove m2-r" viewBox="0 0 54 40"><ellipse cx="11" cy="22" rx="9" ry="11" fill="#1c1c1c"/><ellipse cx="25" cy="20" rx="11" ry="13" fill="#1c1c1c"/><ellipse cx="40" cy="18" rx="11" ry="12" fill="#1c1c1c"/><ellipse cx="9" cy="16" rx="3.5" ry="2.2" fill="#4a4a4a"/><ellipse cx="23" cy="13" rx="4" ry="2.5" fill="#4a4a4a"/><ellipse cx="38" cy="12" rx="4" ry="2.5" fill="#4a4a4a"/></svg>
+            <span class="m2-say">Psst! Ask the AI about him 👇</span>
+          </div>
+        <div class="ask-ai" data-ask-ai>
+          <span class="ask-orb" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#fff" d="M12 1.5C13 8 16 11 22.5 12 16 13 13 16 12 22.5 11 16 8 13 1.5 12 8 11 11 8 12 1.5Z"/></svg></span>
+          <div class="ask-ai-copy">
+            <span class="ask-eyebrow">For recruiters</span>
+            <p class="ask-title">Hiring? Don’t take my word for it — <span class="ask-grad">ask an AI.</span></p>
+            <p class="ask-sub">Pick a question, then your AI — it gets my résumé summary with it.</p>
+            <div class="ask-ai-qs" role="radiogroup" aria-label="Choose a question">
+              <button type="button" role="radio" aria-checked="true" data-q="hire">Should we hire him?</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-q="senior">Is he senior-level?</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-q="fit">Fit for our team?</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-q="custom">✎ Ask your own</button>
+            </div>
+            <label class="ask-ai-own" hidden><span class="sr-only">Your question</span><input type="text" maxlength="240" placeholder="e.g. Could he lead a Flutter team of five?"></label>
+          </div>
+          <span class="ask-divider" aria-hidden="true"></span>
+          <div class="ask-ai-go" aria-label="Ask an AI about Afaque">
+            <a class="ai-opt is-active" data-ai="chatgpt" href="#" target="_blank" rel="noopener">
+              <span class="ai-compact" aria-hidden="true"><span class="ai-ico"><img src="img/tech/openai.svg" alt="" width="24" height="24"></span><span>ChatGPT</span></span>
+              <span class="ai-wide"><img src="img/tech/openai.svg" alt="" width="26" height="26"><span>Ask with ChatGPT</span><span class="arrow" aria-hidden="true">→</span></span>
             </a>
+            <a class="ai-opt" data-ai="gemini" href="#" target="_blank" rel="noopener">
+              <span class="ai-compact" aria-hidden="true"><span class="ai-ico"><img src="img/tech/gemini.svg" alt="" width="24" height="24"></span><span>Gemini</span></span>
+              <span class="ai-wide"><img src="img/tech/gemini.svg" alt="" width="26" height="26"><span>Ask with Gemini</span><span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+            <a class="ai-opt" data-ai="claude" href="#" target="_blank" rel="noopener">
+              <span class="ai-compact" aria-hidden="true"><span class="ai-ico"><img src="img/tech/claude.svg" alt="" width="24" height="24"></span><span>Claude</span></span>
+              <span class="ai-wide"><img src="img/tech/claude.svg" alt="" width="26" height="26"><span>Ask with Claude</span><span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+          </div>
+        </div>
+        </div>
+
+        <div class="logos" data-reveal>
+          <p class="logos-title">Where my work has shipped — employers &amp; products</p>
+          <div class="marquee" id="logo-marquee">
+            <ul class="marquee-track" id="logo-track" aria-label="Companies and products"></ul>
+          </div>
+          <p class="logos-note">Logos and names belong to their owners and identify companies I worked for and products I helped build — not endorsements.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== Products -->
+    <section class="work work-light hs" id="work" aria-labelledby="work-title" data-hscroll>
+      <div class="hs-sticky">
+        <div class="wrap hs-head">
+          <div>
+            <p class="eyebrow"><span class="num">01</span> Published mobile applications</p>
+            <h2 class="hs-title" id="work-title">Apps living in <span class="serif">people’s pockets.</span></h2>
+          </div>
+          <div class="hs-meta">
+            <nav class="app-index" id="app-index" aria-label="Jump to an app"></nav>
+            <div class="hs-status" aria-hidden="true"><span class="hs-count">01 / 07</span><span class="hs-progress"><i></i></span><span class="hs-hint">Scroll →</span></div>
+          </div>
+        </div>
+
+        <div class="hs-viewport">
+          <div class="hs-track" id="apps-track">
+            <!-- js/main.js inserts the published-app cards (js/data.js → featured) here -->
+
+            <article class="hcard doha-hcard" id="app-jeeb" data-short="Jeeb" data-icon="img/logos/jeeb-icon.webp" style="--app:#3f86ef" aria-labelledby="app-jeeb-name">
+              <div class="hcard-media concept-media" aria-hidden="true">
+                <div class="cp-phone big">
+                  <div class="cp-screen jeeb-ui">
+                    <div class="j-top"><b>Deliver to · Doha</b><span>ع</span></div>
+                    <div class="j-search">Search groceries…</div>
+                    <div class="j-banner"><b>For you</b><span>Personalised picks</span></div>
+                    <div class="j-cats"><i></i><i></i><i></i><i></i></div>
+                    <div class="j-grid"><i></i><i></i><i></i><i></i></div>
+                    <div class="j-cart">Cart · 4 items</div>
+                  </div>
+                </div>
+                <span class="concept-tag">Concept preview — listing retired</span>
+              </div>
+              <div class="hcard-copy">
+                <div class="app-meta-top"><span class="idx">05 / 07</span><span class="bar"></span><span>Doha, Qatar</span></div>
+                <span class="doha-logo"><img src="img/logos/jeeb.webp" width="230" height="80" alt="Jeeb logo" loading="lazy" decoding="async"></span>
+                <h3 class="hcard-name" id="app-jeeb-name">Jeeb <span class="kind">Grocery &amp; e-commerce · Qatar</span></h3>
+                <p class="app-summary">A 0→1 omnichannel grocery platform built with the founders, fully in Arabic — server-driven personalised homepage and Algolia search.</p>
+                <ul class="doha-metrics">
+                  <li><b>95%</b><span>faster homepage</span></li>
+                  <li><b>+50%</b><span>engagement</span></li>
+                  <li><b>+20%</b><span>checkout performance</span></li>
+                </ul>
+                <div class="app-stack"><span class="chip">Flutter</span><span class="chip">React Native</span><span class="chip">Swift</span><span class="chip">Kotlin</span><span class="chip">Algolia</span></div>
+                <p class="app-note">Store listing retired — no published screenshots. Preview is a concept sketch.</p>
+              </div>
+            </article>
+
+            <article class="hcard doha-hcard" id="app-pass" data-short="Pass" data-icon="img/logos/pass-icon.webp" style="--app:#1cc4cc" aria-labelledby="app-pass-name">
+              <div class="hcard-media">
+                <div class="hstage" data-stage>
+                  <figure class="slot s-main"><div class="enter" style="--d:0s"><div class="tilt"><div class="phone"><div class="screen" style="--ar:560 / 957"><img class="shot" src="img/apps/pass/screen-1.webp" width="560" height="957" loading="lazy" decoding="async" alt="Pass store screenshot: live tracking, a courier's car on the map with 'Pickup in 2 min'"></div></div></div></div></figure>
+                  <figure class="slot s-left"><div class="enter" style="--d:.12s"><div class="tilt"><div class="phone"><div class="screen" style="--ar:560 / 957"><img class="shot" src="img/apps/pass/screen-2.webp" width="560" height="957" loading="lazy" decoding="async" alt="Pass store screenshot: driver orders list with pick-up and drop-off addresses in Doha, fares and order actions"></div></div></div></div></figure>
+                  <figure class="slot s-right"><div class="enter" style="--d:.22s"><div class="tilt"><div class="phone"><div class="screen pass-map" style="--ar:9 / 19" role="img" aria-label="Concept sketch of a delivery map screen: route from pick-up to drop-off with the courier on the way">
+                    <svg class="pm-map" viewBox="0 0 180 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <rect width="180" height="300" fill="#f3f1ec"/>
+                      <g fill="#e6e2d9"><rect x="8" y="10" width="46" height="38" rx="4"/><rect x="66" y="10" width="54" height="38" rx="4"/><rect x="132" y="10" width="40" height="70" rx="4"/><rect x="8" y="60" width="46" height="56" rx="4"/><rect x="66" y="60" width="54" height="56" rx="4"/><rect x="8" y="128" width="72" height="44" rx="4"/><rect x="92" y="92" width="80" height="80" rx="4"/><rect x="8" y="184" width="46" height="60" rx="4"/><rect x="66" y="184" width="106" height="60" rx="4"/></g>
+                      <g stroke="#fff" stroke-width="6" fill="none"><path d="M0 54 H180 M0 122 H180 M0 178 H180 M60 0 V300 M126 0 V180 M86 122 V300"/></g>
+                      <rect x="92" y="196" width="34" height="22" rx="4" fill="#d7ebe4"/>
+                      <path class="pm-route" d="M30 238 C 30 200, 60 182, 60 150 S 100 122, 126 112 S 150 70, 150 44" fill="none" stroke="#1cc4cc" stroke-width="4.5" stroke-linecap="round"/>
+                      <circle cx="30" cy="238" r="6" fill="#102048"/>
+                      <path d="M150 30 c-7 0-12 5-12 11 0 8 12 19 12 19s12-11 12-19c0-6-5-11-12-11z" fill="#1cc4cc"/><circle cx="150" cy="41" r="4" fill="#fff"/>
+                      <circle class="pm-car" cx="60" cy="150" r="7" fill="#102048" stroke="#fff" stroke-width="3"/>
+                    </svg>
+                    <div class="pm-top" aria-hidden="true"><b>pass</b><span>Doha</span></div>
+                    <div class="pm-eta" aria-hidden="true">Courier · 6 min</div>
+                    <div class="pm-sheet" aria-hidden="true">
+                      <b>On the way to pick-up</b>
+                      <div class="pm-steps"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+                      <span><em class="a"></em>Al Wifaq St</span>
+                      <span><em class="b"></em>B Ring Rd</span>
+                    </div>
+                  </div></div></div></div></figure>
+                </div>
+                <span class="concept-tag">2 store screenshots · map screen is a concept sketch</span>
+              </div>
+              <div class="hcard-copy">
+                <div class="app-meta-top"><span class="idx">06 / 07</span><span class="bar"></span><span>Doha, Qatar</span></div>
+                <span class="doha-logo"><img src="img/logos/pass.webp" width="191" height="80" alt="Pass logo" loading="lazy" decoding="async"></span>
+                <h3 class="hcard-name" id="app-pass-name">Pass Delivery &amp; driver apps <span class="kind">Logistics · Qatar</span></h3>
+                <p class="app-summary">Real-time GPS tracking, route optimisation and secure payments — plus the Driver, Collector and Storekeeper apps I built with a remote team.</p>
+                <ul class="doha-metrics">
+                  <li><b>+60%</b><span>delivery speed</span></li>
+                  <li><b>+20%</b><span>delivery efficiency</span></li>
+                  <li><b>3</b><span>operations apps</span></li>
+                </ul>
+                <div class="app-bottom"><div class="store-links"><a class="store" href="https://play.google.com/store/apps/details?id=qa.pass&amp;hl=en_IN&amp;gl=US" target="_blank" rel="noopener" aria-label="Pass Delivery on Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.2 2.6c-.3.3-.4.7-.4 1.2v16.4c0 .5.1.9.4 1.2l9.2-9.4-9.2-9.4Zm10.4 8.2 2.6-2.7L6.1 1.8c-.4-.2-.8-.3-1.1-.2l9.6 9.2Zm0 2.4L5 22.4c.3.1.7 0 1.1-.2l11.1-6.3-2.6-2.7Zm6-3.6-2.5-1.4-2.9 2.8 2.9 2.8 2.5-1.4c.8-.5.8-2.3 0-2.8Z"/></svg><span><small>Get it on</small>Google Play</span></a></div></div>
+                <div class="app-stack"><span class="chip">Flutter</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">Python</span><span class="chip">IoT</span></div>
+                <p class="app-note">Screens from the Pass store listing; the map screen is a concept sketch. The Play listing may no longer be live.</p>
+              </div>
+            </article>
+
+            <article class="hcard more-hcard" id="more-shipped" data-short="More apps" data-icon="grid" aria-labelledby="more-title">
+              <div class="hcard-copy wide">
+                <div class="app-meta-top"><span class="idx">07 / 07</span><span class="bar"></span><span>15+ apps published</span></div>
+                <h3 class="hcard-name" id="more-title">More shipped apps</h3>
+                <p class="app-summary">Other published work from the same teams — operations, education and FinTech.</p>
+                <div class="more-grid" id="more-apps"></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== SaaS, AI & innovation -->
+    <section class="builds hs" id="builds" aria-labelledby="builds-title" data-hscroll>
+      <div class="hs-sticky">
+        <div class="wrap hs-head">
+          <div>
+            <p class="eyebrow"><span class="num">02</span> SaaS, AI &amp; mobile innovation</p>
+            <h2 class="hs-title" id="builds-title">Beyond the <span class="serif">app stores.</span></h2>
+          </div>
+          <div class="hs-meta">
+            <div class="hs-status" aria-hidden="true"><span class="hs-count">01 / 05</span><span class="hs-progress"><i></i></span><span class="hs-hint">Scroll →</span></div>
+          </div>
+        </div>
+
+        <div class="hs-viewport">
+          <div class="hs-track">
+
+            <!-- 1 · Rental SaaS -->
+            <article class="hcard build" id="build-rental" style="--b:#c43a0c" aria-labelledby="rental-name">
+              <div class="hcard-media">
+                <div class="browser">
+                  <div class="browser-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">rental-property.hatchable.site</span></div>
+                  <div class="browser-view concept-dash" role="img" aria-label="Design representation of the rental dashboard with sample figures">
+                    <div class="cd-side" aria-hidden="true"><b>Rentals</b><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="cd-main" aria-hidden="true">
+                      <div class="cd-head"><b>October overview</b><span>Sample data</span></div>
+                      <div class="cd-kpis">
+                        <div><small>Collected</small><b>₹4.82L</b><em class="up">86% of billed</em></div>
+                        <div><small>Outstanding</small><b>₹78K</b><em class="down">6 invoices</em></div>
+                        <div><small>Occupancy</small><b>92%</b><em>23 / 25 units</em></div>
+                        <div><small>Expiring</small><b>3</b><em>next 60 days</em></div>
+                      </div>
+                      <div class="cd-row">
+                        <div class="cd-chart"><small>Collection · 6 months</small><div class="bars"><i style="--h:52%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:72%"></i><i style="--h:80%"></i><i style="--h:86%"></i></div></div>
+                        <div class="cd-list"><small>Overdue</small><p><span>A-204</span><b>12 d</b></p><p><span>B-110</span><b>8 d</b></p><p><span>C-03</span><b>3 d</b></p></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="gallery-caption">Design representation with sample figures — the live app is behind sign-in.</p>
+              </div>
+              <div class="hcard-copy">
+                <div class="badges"><span class="badge live">Live SaaS</span><span class="badge hot">MCP integration</span></div>
+                <div class="build-title">
+                  <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg></span>
+                  <h3 id="rental-name">Rental Property Management <span class="kind">Multi-role SaaS for owners &amp; tenants</span></h3>
+                </div>
+                <p class="lede">The whole rent cycle in one dashboard — and an AI client can ask it questions over MCP.</p>
+                <ul class="feature-list one">
+                  <li><b>Lease → bill → payment</b>, with meter readings and invoice PDFs</li>
+                  <li><b>Owner &amp; tenant portals</b>, each owner’s data kept separate</li>
+                  <li><b>Expenses &amp; reconciliation</b>, rent-due and overdue alerts</li>
+                  <li><b>Authenticated MCP tools</b> for AI clients</li>
+                </ul>
+                <div class="role-stack"><span class="chip">JavaScript</span><span class="chip">REST API</span><span class="chip">MCP</span><span class="chip">Hatchable</span></div>
+                <div class="build-links"><a class="btn" href="https://rental-property.hatchable.site/" target="_blank" rel="noopener">Open live SaaS <span class="arrow" aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+
+            <!-- 2 · MCP architecture -->
+            <article class="hcard build mcp-card" id="build-mcp" style="--b:#c43a0c" aria-labelledby="mcp-name">
+              <div class="hcard-copy wide mcp" data-mcp>
+                <div class="badges"><span class="badge hot">Model Context Protocol</span><span class="badge">Rental SaaS</span></div>
+                <h3 id="mcp-name" class="hcard-name">How an AI client talks to <span class="serif">the SaaS</span></h3>
+                <p class="lede">Compatible, authorised AI clients call a small set of MCP tools — every answer scoped to the signed-in owner.</p>
+                <div class="mcp-flow">
+                  <span class="mcp-wire" aria-hidden="true"></span>
+                  <div class="mcp-node"><span class="step">01</span><b>AI client</b><span class="d">MCP-compatible assistant</span></div>
+                  <div class="mcp-node"><span class="step">02</span><b>MCP auth</b><span class="d">Owner-scoped access</span></div>
+                  <div class="mcp-node"><span class="step">03</span><b>MCP tools</b><span class="d">Rent, leases, expenses</span></div>
+                  <div class="mcp-node"><span class="step">04</span><b>SaaS APIs</b><span class="d">Same business rules</span></div>
+                  <div class="mcp-node"><span class="step">05</span><b>Database</b><span class="d">Owner’s records only</span></div>
+                </div>
+                <div class="mcp-asks" aria-label="Example questions">
+                  <span>Which tenants have overdue rent?</span>
+                  <span>Show this month’s collection.</span>
+                  <span>Which leases are expiring?</span>
+                  <span>Summarise property expenses.</span>
+                </div>
+                <p class="mcp-foot">Works with AI clients that support MCP and are authorised by the owner — not with every AI model automatically.</p>
+              </div>
+            </article>
+
+            <!-- 3 · GlowFit AI -->
+            <article class="hcard build" id="build-glowfit" style="--b:#a65f58" aria-labelledby="glow-name">
+              <div class="hcard-media">
+                <div class="browser">
+                  <div class="browser-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">glowfit-ai.vercel.app</span></div>
+                  <div class="browser-view" data-gallery-view>
+                    <img class="is-active" src="img/projects/glowfit/screen-1.webp" width="1200" height="675" loading="lazy" decoding="async" alt="GlowFit Skin Intelligence screen: skin score, eight skin metrics and an AI GlowMap on the face">
+                    <img src="img/projects/glowfit/screen-2.webp" width="1200" height="675" loading="lazy" decoding="async" alt="GlowFit Decision Lab: three makeup looks rendered on the same face with match scores">
+                    <img src="img/projects/glowfit/screen-3.webp" width="1200" height="675" loading="lazy" decoding="async" alt="GlowFit Change One Thing: lip shade options with a before and after slider">
+                    <img src="img/projects/glowfit/screen-4.webp" width="1200" height="675" loading="lazy" decoding="async" alt="GlowFit final decision screen with the chosen look and product list">
+                  </div>
+                </div>
+                <div class="gallery-tabs" role="tablist" aria-label="GlowFit screens">
+                  <button type="button" role="tab" aria-selected="true">Skin scan</button>
+                  <button type="button" role="tab" aria-selected="false">Three looks</button>
+                  <button type="button" role="tab" aria-selected="false">One change</button>
+                  <button type="button" role="tab" aria-selected="false">Decision</button>
+                </div>
+                <p class="gallery-caption">Real screenshots from the live app.</p>
+              </div>
+              <div class="hcard-copy">
+                <div class="badges"><span class="badge live">Live demo</span><span class="badge">Perfect Corp hackathon</span></div>
+                <div class="build-title">
+                  <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 6.4L21 10.6l-6.8 2.2L12 19.6l-2.2-6.8L3 10.6l6.8-2.2z"/></svg></span>
+                  <h3 id="glow-name">GlowFit AI <span class="kind">AI beauty decision engine · web</span></h3>
+                </div>
+                <p class="lede">One selfie in, a confident look out — skin analysis, makeup try-on on your own face, and a score for which look suits you.</p>
+                <ul class="feature-list one">
+                  <li><b>YouCam Skin AI</b> — score, 8 metrics, GlowMap</li>
+                  <li><b>Virtual try-on</b> of three looks + hairstyles</li>
+                  <li><b>Budget mode</b> and change-one-thing previews</li>
+                </ul>
+                <div class="role-stack"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">YouCam API</span><span class="chip">MediaPipe</span></div>
+                <div class="build-links">
+                  <a class="btn" href="https://glowfit-ai.vercel.app" target="_blank" rel="noopener">Live demo <span class="arrow" aria-hidden="true">↗</span></a>
+                  <a class="btn ghost" href="https://github.com/Afaquejaya/glowfit-ai" target="_blank" rel="noopener">GitHub</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- 4 · Pregnancy Tracker -->
+            <article class="hcard build preg" id="build-pregnancy" aria-labelledby="preg-name">
+              <div class="hcard-media">
+                <figure class="preg-stage" aria-label="Pregnancy Tracker home screen and its home-screen widget">
+                  <div class="preg-phone">
+                    <div class="preg-screen shot-screen">
+                      <img src="img/projects/pregnancy/home.webp" width="560" height="1245" loading="lazy" decoding="async" alt="Pregnancy Tracker home screen: Week 19, second trimester, 46% of the journey complete, a week selector, baby size this week and today’s reminders">
+                    </div>
+                  </div>
+                  <div aria-hidden="true">
+                    <span class="widget-label">Home-screen widget · 4 × 2</span>
+                    <div class="preg-widget">
+                      <div class="w-top"><small>Pregnancy timeline</small><span>👶</span></div>
+                      <b>Week 24 (Day 3)</b>
+                      <span class="w-sub">Month 6 · 2nd trimester</span>
+                      <div class="ps-bar" style="--pct:61%"><i></i></div>
+                      <div class="w-chips"><span>171 days crossed</span><span>109 left</span></div>
+                    </div>
+                  </div>
+                </figure>
+                <p class="gallery-caption">App home screen. The widget beside it is a representation of the 4×2 home-screen widget.</p>
+              </div>
+              <div class="hcard-copy">
+                <div class="badges"><span class="badge">Native Android</span><span class="badge hot">Home-screen widget</span></div>
+                <div class="build-title">
+                  <img src="img/projects/pregnancy/icon.webp" width="56" height="56" alt="" loading="lazy" decoding="async">
+                  <h3 id="preg-name">Pregnancy Tracker <span class="kind">Kotlin · Jetpack Compose</span></h3>
+                </div>
+                <p class="lede">A calm week-by-week companion — progress, what’s changing, care tips and reminders, with today’s week on the home screen.</p>
+                <ul class="feature-list one">
+                  <li><b>Resizable 4×2 widget</b> — week, trimester, days left</li>
+                  <li><b>40 weeks</b> of educational content</li>
+                  <li><b>Reminders</b> that survive reboots</li>
+                </ul>
+                <div class="role-stack"><span class="chip">Kotlin</span><span class="chip">Jetpack Compose</span><span class="chip">Room</span><span class="chip">AppWidget</span></div>
+              </div>
+            </article>
+
+            <!-- 5 · AI expense tracker -->
+            <article class="hcard build expense" id="build-expense" style="--b:#6d5bd0" aria-labelledby="exp-name" data-short="Expense AI">
+              <div class="hcard-media">
+                <figure class="exp-stage">
+                  <div class="exp-phone"><img src="img/projects/expense/screen.webp" width="640" height="831" loading="lazy" decoding="async" alt="AI Hook Expense Tracker screen: a Hinglish sentence about dinner at Dubai Mall and a taxi, turned into two expenses — 120 AED food and 15 AED transport"></div>
+                  <div class="exp-bubble" aria-hidden="true"><span>You type</span>“…120 AED ka dinner kiya aur 15 AED taxi…”</div>
+                  <pre class="exp-json" aria-hidden="true"><span>AI hook → JSON</span>{ "item": "Taxi Ride",
+  "category": "Transport",
+  "amount": 15, "currency": "AED" }</pre>
+                </figure>
+                <p class="gallery-caption">Screenshot from the app; the overlays explain the flow.</p>
+              </div>
+              <div class="hcard-copy">
+                <div class="badges"><span class="badge">Lab · June 2026</span><span class="badge hot">LangChain callbacks</span></div>
+                <div class="build-title">
+                  <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span>
+                  <h3 id="exp-name">AI Smart Expense Tracker <span class="kind">Flutter app + FastAPI backend</span></h3>
+                </div>
+                <p class="lede">Type how you spent money in plain — even Hinglish — language and get back structured, categorised expenses.</p>
+                <ul class="feature-list one">
+                  <li><b>Natural language in</b>, items, categories and amounts out</li>
+                  <li><b>“AI hook”</b> on the LangChain callback lifecycle drives loading, strict JSON and errors</li>
+                  <li><b>Graceful failure</b> with an offline fallback view</li>
+                </ul>
+                <div class="role-stack"><span class="chip">Flutter</span><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">LangChain</span></div>
+                <div class="build-links">
+                  <a class="btn" href="https://gist.github.com/Afaquejaya/a4d157d4255799bd6e3521320f6d9537" target="_blank" rel="noopener">View code &amp; notes <span class="arrow" aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== Impact -->
+    <section class="impact" id="impact" aria-labelledby="impact-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow"><span class="num">03</span> Impact</p>
+            <h2 class="section-title" id="impact-title" style="margin-top:18px">Outcomes, <span class="serif">not just output.</span></h2>
+          </div>
+          <p class="section-lead">The numbers I’m proudest of — each one tied to the product and team where it happened.</p>
+        </div>
+
+        <ul class="impact-grid">
+          <li class="metric" data-reveal>
+            <div class="metric-value"><span data-count="95">95</span><span class="unit">%</span></div>
+            <p class="metric-label">Faster homepage load time</p>
+            <p class="metric-ctx"><b>Jeeb, Doha</b> — server-driven, personalised homepage with Algolia instant search.</p>
+          </li>
+          <li class="metric" data-reveal style="--d:.06s">
+            <div class="metric-value"><span class="unit">+</span><span data-count="60">60</span><span class="unit">%</span></div>
+            <p class="metric-label">Delivery speed</p>
+            <p class="metric-ctx"><b>Jeeb, Doha</b> — Driver, Collector and Storekeeper apps built with a remote team.</p>
+          </li>
+          <li class="metric" data-reveal style="--d:.12s">
+            <div class="metric-value"><span data-count="500">500</span><span class="unit">K+</span></div>
+            <p class="metric-label">Downloads of state-government ed-tech apps</p>
+            <p class="metric-ctx"><b>CSM Technologies</b> — school management, biometric attendance and e-learning during COVID-19.</p>
+          </li>
+          <li class="metric" data-reveal>
+            <div class="metric-value"><span class="unit">+</span><span data-count="50">50</span><span class="unit">%</span></div>
+            <p class="metric-label">User engagement</p>
+            <p class="metric-ctx"><b>Jeeb, Doha</b> — from the personalised homepage and instant search.</p>
+          </li>
+          <li class="metric" data-reveal style="--d:.06s">
+            <div class="metric-value"><span data-count="70">70</span><span class="unit">%</span></div>
+            <p class="metric-label">Less manual data entry</p>
+            <p class="metric-ctx"><b>JUSCO (Tata Steel)</b> — native app replacing paper vendor registers, plus 50% better data accuracy.</p>
+          </li>
+          <li class="metric" data-reveal style="--d:.12s">
+            <div class="metric-value"><span class="unit">+</span><span data-count="20">20</span><span class="unit">%</span></div>
+            <p class="metric-label">Delivery efficiency &amp; checkout performance</p>
+            <p class="metric-ctx"><b>Jeeb, Doha</b> — real-time GPS tracking, route optimisation and secure payments.</p>
+          </li>
+        </ul>
+
+        <div class="markets" data-reveal>
+          <span>Shipped for markets in</span>
+          <span class="chip">Qatar</span><span class="chip">UAE</span><span class="chip">India</span>
+          <span>· with teams in</span>
+          <span class="chip">Dubai</span><span class="chip">China</span><span class="chip">Sri Lanka</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== Case studies -->
+    <section class="cases on-night" id="cases" aria-labelledby="cases-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow"><span class="num">04</span> Case studies</p>
+            <h2 class="section-title" id="cases-title" style="margin-top:18px">How the work <span class="serif">actually got done.</span></h2>
+          </div>
+          <p class="section-lead">Three engagements, opened like case files: the challenge, what I built, and what changed.</p>
+        </div>
+
+        <div class="cs" data-cases>
+          <div class="cs-bar">
+            <div class="cs-tabs" role="tablist" aria-label="Case studies — rotates automatically">
+              <button type="button" role="tab" id="cs-tab-jeeb" aria-controls="case-jeeb" aria-selected="true" style="--c:#3f86ef">
+                <span class="cs-tab-logo full"><img src="img/logos/jeeb-icon.webp" width="96" height="96" alt="" decoding="async"></span>
+                <span><b>Jeeb</b><small>E-commerce · Doha</small></span>
+              </button>
+              <button type="button" role="tab" id="cs-tab-kobet" aria-controls="case-kobet" aria-selected="false" tabindex="-1" style="--c:#e01010">
+                <span class="cs-tab-logo"><img src="img/logos/kobet.webp" width="102" height="112" alt="" decoding="async"></span>
+                <span><b>Kobet</b><small>FinTech · Dubai</small></span>
+              </button>
+              <button type="button" role="tab" id="cs-tab-evv" aria-controls="case-evv" aria-selected="false" tabindex="-1" style="--c:#4f8df5">
+                <span class="cs-tab-logo full"><img src="img/apps/evv/icon.webp" width="192" height="192" alt="" decoding="async"></span>
+                <span><b>eVV 2.0</b><small>Gov ed-tech · India</small></span>
+              </button>
+            </div>
+              <button type="button" class="cs-play" aria-pressed="false" aria-label="Pause case studies">
+              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>
+            </button>
+          </div>
+
+          <!-- Case 1 — Jeeb -->
+          <article class="cs-panel is-active" id="case-jeeb" role="tabpanel" aria-labelledby="cs-tab-jeeb" style="--c:#3f86ef">
+            <header class="cs-head">
+              <div class="cs-id">
+                <span class="cs-logo"><img src="img/logos/jeeb.webp" width="230" height="80" alt="Jeeb logo" loading="lazy" decoding="async"></span>
+                <p class="eyebrow"><span class="num">4.1</span> E-commerce &amp; logistics · Doha, Qatar · 2022 – 2024</p>
+                <h3>A grocery platform built <span class="serif">from zero to one.</span></h3>
+                <p class="who"><b>Software Engineer</b> · Jeeb E-Commerce &amp; Logistics (start-up)</p>
+              </div>
+              <ul class="cs-metrics">
+                <li><b>95%</b><span>faster homepage load</span></li>
+                <li><b>+50%</b><span>user engagement</span></li>
+                <li><b>+60%</b><span>delivery speed</span></li>
+                <li><b>+20%</b><span>delivery &amp; checkout efficiency</span></li>
+              </ul>
+            </header>
+            <div class="cs-body">
+              <div class="cs-col"><span class="cs-step">01</span><h4>The challenge</h4><p>A fast-growing Qatari start-up needed an omnichannel grocery and logistics platform — customer app, operations apps and the delivery chain behind them — fully in Arabic, built directly with the founders.</p></div>
+              <div class="cs-col"><span class="cs-step">02</span><h4>What I built</h4><ul>
+                <li><strong>Server-driven homepage</strong> — merchandising changes without an app release</li>
+                <li><strong>Algolia instant search</strong> instead of in-house search</li>
+                <li><strong>GPS tracking, route optimisation</strong> and secure payments</li>
+                <li><strong>Driver, Collector &amp; Storekeeper apps</strong> with a remote team I led</li>
+              </ul></div>
+              <div class="cs-col"><span class="cs-step">03</span><h4>The result</h4><p>A homepage that loads 95% faster and lifted engagement by 50%, with deliveries 60% faster and checkout 20% more efficient.</p></div>
+            </div>
+            <figure class="cs-visual">
+              <div class="cs-flow" data-flow>
+                <span class="cs-wire" aria-hidden="true"></span>
+                <div class="fnode"><b>Server</b><span>layout + personalised content</span></div>
+                <div class="fnode hot"><b>App renderer</b><span>maps layout blocks to native widgets</span></div>
+                <div class="fnode"><b>Algolia</b><span>instant, typo-tolerant search</span></div>
+                <div class="fnode"><b>Customer</b><span>personalised home, in Arabic</span></div>
+              </div>
+              <figcaption>Server-driven UI, simplified — an illustration of the idea, not a production diagram.</figcaption>
+            </figure>
+          </article>
+
+          <!-- Case 2 — Kobet -->
+          <article class="cs-panel" id="case-kobet" role="tabpanel" aria-labelledby="cs-tab-kobet" style="--c:#e01010">
+            <header class="cs-head">
+              <div class="cs-id">
+                <span class="cs-logo square"><img src="img/logos/kobet.webp" width="102" height="112" alt="Kobet logo" loading="lazy" decoding="async"></span>
+                <p class="eyebrow"><span class="num">4.2</span> FinTech · Dubai, UAE · 2024 – 2026</p>
+                <h3>A FinTech app family, <span class="serif">one distributed team.</span></h3>
+                <p class="who"><b>Senior Software Engineer</b> · Kobet Technology DMCC</p>
+              </div>
+              <ul class="cs-metrics">
+                <li><b>4</b><span>live apps on the stores</span></li>
+                <li><b>3</b><span>countries in one team</span></li>
+                <li><b>1M+</b><span>Tbay downloads on Google Play</span></li>
+                <li><b>100K+</b><span>VivaKard downloads on Google Play</span></li>
+              </ul>
+            </header>
+            <div class="cs-body">
+              <div class="cs-col"><span class="cs-step">01</span><h4>The challenge</h4><p>Several cross-platform FinTech products — crypto, wallets and gift cards — needing reliable releases on both stores, built by one team spread across three countries.</p></div>
+              <div class="cs-col"><span class="cs-step">02</span><h4>What I built</h4><ul>
+                <li><strong>Architected and delivered</strong> the apps on Android and iOS</li>
+                <li><strong>KYC, two-factor auth</strong> and wallet flows</li>
+                <li><strong>Real-time data</strong> kept consistent across platforms</li>
+                <li><strong>Release, docs &amp; CI/CD</strong> rhythm for Dubai, China and Sri Lanka</li>
+              </ul></div>
+              <div class="cs-col"><span class="cs-step">03</span><h4>The result</h4><p>Production releases on both stores for VivaKard, TimuCard and Tbay, plus BitOwi on Google Play — apps whose listings now show over a million downloads.</p></div>
+            </div>
+            <figure class="cs-visual cs-family">
+              <ul class="cs-apps">
+                <li><img src="img/apps/tbay/icon.webp" width="192" height="192" alt="" loading="lazy"><b>Tbay</b><span>1M+ · Play</span></li>
+                <li><img src="img/apps/vivakard/icon.webp" width="192" height="192" alt="" loading="lazy"><b>VivaKard</b><span>100K+ · Play</span></li>
+                <li><img src="img/apps/timucard/icon.webp" width="192" height="192" alt="" loading="lazy"><b>TimuCard</b><span>50K+ · Play</span></li>
+                <li><img src="img/apps/bitowi/icon.webp" width="192" height="192" alt="" loading="lazy"><b>BitOwi</b><span>Google Play</span></li>
+              </ul>
+              <div class="cs-team" aria-label="Team locations: Dubai, China and Sri Lanka">
+                <span class="cs-city"><i></i>Dubai</span><span class="cs-link" aria-hidden="true"></span><span class="cs-city"><i></i>China</span><span class="cs-link" aria-hidden="true"></span><span class="cs-city"><i></i>Sri Lanka</span>
+              </div>
+              <figcaption>Download counts are from the Google Play listings.</figcaption>
+            </figure>
+          </article>
+
+          <!-- Case 3 — eVV -->
+          <article class="cs-panel" id="case-evv" role="tabpanel" aria-labelledby="cs-tab-evv" style="--c:#4f8df5">
+            <header class="cs-head">
+              <div class="cs-id">
+                <span class="cs-logo square"><img src="img/apps/evv/icon.webp" width="192" height="192" alt="eVV 2.0 app icon" loading="lazy" decoding="async"></span>
+                <p class="eyebrow"><span class="num">4.3</span> Government ed-tech · Jharkhand, India · 2020 – 2022</p>
+                <h3>Keeping a state’s schools running <span class="serif">through COVID-19.</span></h3>
+                <p class="who"><b>Software Engineer</b> · CSM Technologies (CMMI Level 5)</p>
+              </div>
+              <ul class="cs-metrics">
+                <li><b>500K+</b><span>downloads</span></li>
+                <li><b>State-wide</b><span>rollout and adoption</span></li>
+                <li><b>3</b><span>roles: officer, school, teacher</span></li>
+                <li><b>End-to-end</b><span>requirements to support</span></li>
+              </ul>
+            </header>
+            <div class="cs-body">
+              <div class="cs-col"><span class="cs-step">01</span><h4>The challenge</h4><p>With schools closed by COVID-19, a state government needed school management, biometric attendance, student and teacher tracking, mid-day meals (MDM) and e-learning — fast.</p></div>
+              <div class="cs-col"><span class="cs-step">02</span><h4>What I built</h4><ul>
+                <li><strong>Biometric attendance</strong>, configured for real schools</li>
+                <li><strong>Enrolment &amp; tracking</strong> for students and teachers</li>
+                <li><strong>Client demos and user training</strong> for adoption</li>
+                <li><strong>UAT, rollout and post-launch support</strong></li>
+              </ul></div>
+              <div class="cs-col"><span class="cs-step">03</span><h4>The result</h4><p>The state’s ed-tech apps, including eVV and DigiSchool, passed 500K downloads with successful state-wide adoption.</p></div>
+            </div>
+            <figure class="cs-visual cs-evv">
+              <div class="cs-evv-phone"><img src="img/apps/evv/screen-1.webp" width="560" height="996" loading="lazy" decoding="async" alt="eVV 2.0 home grid: data download, student enrolment, student attendance, teacher enrolment, monitoring and more"></div>
+              <ul class="cs-roles" aria-label="Who uses it">
+                <li><b>Officer</b><span>monitoring &amp; grievances</span></li>
+                <li><b>School</b><span>enrolment &amp; attendance</span></li>
+                <li><b>Teacher</b><span>biometric attendance</span></li>
+              </ul>
+              <figcaption>Screen from the current Google Play listing.</figcaption>
+            </figure>
+          </article>
+        </div>
+
+        <!-- Lab -->
+        <div class="lab" data-reveal>
+          <div class="lab-card">
+            <p class="eyebrow">Android · 2019</p>
+            <h4>Social media app</h4>
+            <p>A full social app: posts with photos, likes and comments, friend requests, one-to-one chat, plus voice and video calls, with Google Sign-In and real-time notifications.</p>
+            <div class="lab-phones" aria-label="Social media app screens">
+              <div class="lp"><div class="lp-scr"><img src="img/projects/social/feed.webp" width="480" height="973" loading="lazy" decoding="async" alt="Social app feed: a post by Afaque Jaya with a photo, likes and comments, and Home, Friends, Notification and Profile tabs"></div><span class="lp-tag">Feed · app screen</span></div>
+              <div class="lp"><div class="lp-scr ui-chat" role="img" aria-label="Concept sketch of the chat screen">
+                <div class="c-top"><i></i><span><b>Farheen</b><small>online</small></span><em>✆</em><em>▶</em></div>
+                <div class="c-msgs"><p class="in">Hey! Saw your new post 🔥</p><p class="out">Thanks! Shot it last weekend</p><p class="in">Video call later?</p><p class="out">Sure, 8 pm 👍</p><p class="in typing"><i></i><i></i><i></i></p></div>
+                <div class="c-input"><span>Message</span><b>➤</b></div>
+              </div><span class="lp-tag">Chat · concept</span></div>
+              <div class="lp"><div class="lp-scr ui-call" role="img" aria-label="Concept sketch of a video call screen">
+                <div class="v-remote"><span>F</span></div>
+                <div class="v-self"></div>
+                <div class="v-info"><b>Farheen</b><small>04:12</small></div>
+                <div class="v-ctrl"><i>🎙</i><i class="end">✕</i><i>🎥</i></div>
+              </div><span class="lp-tag">Video call · concept</span></div>
+            </div>
+            <div class="meta-chips"><span class="chip">Java</span><span class="chip">Kotlin</span><span class="chip">PHP</span><span class="chip">Firebase</span><span class="chip">Agora</span></div>
+          </div>
+          <div class="lab-card">
+            <p class="eyebrow">Android · Jan 2020</p>
+            <h4>Face detection</h4>
+            <p>Pick a photo and the app finds every face, then reads each one with Microsoft Face API — age, gender, emotion, hair, glasses, make-up, head pose and image quality.</p>
+            <div class="lab-phones two" aria-label="Face detection app screens">
+              <div class="lp"><div class="lp-scr"><img src="img/projects/face/screen-1.webp" width="480" height="976" loading="lazy" decoding="async" alt="Face detection result for one face: landmarks drawn on the face, age 43, gender male, emotion and accessories listed"></div><span class="lp-tag">Single face · app screen</span></div>
+              <div class="lp"><div class="lp-scr"><img src="img/projects/face/screen-2.webp" width="480" height="974" loading="lazy" decoding="async" alt="Face detection result for a photo of two people, with attributes listed for each face"></div><span class="lp-tag">Multiple faces · app screen</span></div>
+            </div>
+            <div class="meta-chips"><span class="chip">Java</span><span class="chip">Android</span><span class="chip">Microsoft Face API</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== Experience -->
+    <section class="experience" id="experience" aria-labelledby="exp-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow"><span class="num">05</span> Experience</p>
+            <h2 class="section-title" id="exp-title" style="margin-top:18px">Seven years, <span class="serif">one path.</span></h2>
+          </div>
+          <p class="section-lead">From an internship in Jamshedpur to leading a FinTech team in Dubai — the map runs forward in time, the timeline below starts with today.</p>
+        </div>
+
+        <!-- Journey map: the path is drawn by js/main.js through the node centres -->
+        <div class="journey" data-journey>
+          <svg class="journey-svg" aria-hidden="true" focusable="false">
+            <path class="jp-base"></path>
+            <path class="jp-line"></path>
+            <path class="jp-next"></path>
+            <circle class="jp-dot" r="7" cx="-20" cy="-20"></circle>
+          </svg>
+          <ol class="journey-stops" aria-label="Career path, oldest to newest">
+            <li class="stop" style="--c:#7a8796">
+              <a href="#role-tgs">
+                <span class="node-band"><span class="node">TGS</span></span>
+                <span class="stop-text">
+                  <span class="stop-when">2018</span>
+                  <b>Data Analyst intern</b>
+                  <span class="stop-where">Tata Growth Shop · Jamshedpur</span>
+                </span>
+              </a>
+            </li>
+            <li class="stop" style="--c:#2f6fb0">
+              <a href="#role-jusco">
+                <span class="node-band"><span class="node has-logo"><img src="img/logos/tata-steel-uisl.webp" width="183" height="160" alt="" loading="lazy" decoding="async"><span class="sr-only">JUSCO</span></span></span>
+                <span class="stop-text">
+                  <span class="stop-when">2019 – 20</span>
+                  <b>Android App Developer</b>
+                  <span class="stop-where">Tata Steel company · Jamshedpur</span>
+                </span>
+              </a>
+            </li>
+            <li class="stop" style="--c:#4f8df5">
+              <a href="#role-csm">
+                <span class="node-band"><span class="node has-logo on-dark"><img src="img/logos/csm.png" width="139" height="28" alt="" loading="lazy" decoding="async"><span class="sr-only">CSM</span></span></span>
+                <span class="stop-text">
+                  <span class="stop-when">2020 – 22</span>
+                  <b>Software Engineer</b>
+                  <span class="stop-where">CSM Technologies · Ranchi</span>
+                </span>
+              </a>
+            </li>
+            <li class="stop" style="--c:#3f86ef">
+              <a href="#role-jeeb">
+                <span class="node-band"><span class="node has-logo wide"><img src="img/logos/jeeb.webp" width="230" height="80" alt="" loading="lazy" decoding="async"><span class="sr-only">Jeeb</span></span></span>
+                <span class="stop-text">
+                  <span class="stop-when">2022 – 24</span>
+                  <b>Software Engineer</b>
+                  <span class="stop-where">Jeeb · Doha, Qatar</span>
+                </span>
+              </a>
+            </li>
+            <li class="stop latest" style="--c:#e01010">
+              <a href="#role-kobet">
+                <span class="node-band"><span class="node has-logo"><img src="img/logos/kobet.webp" width="102" height="112" alt="" loading="lazy" decoding="async"><span class="sr-only">Kobet</span></span></span>
+                <span class="stop-text">
+                  <span class="stop-when">2024 – 26</span>
+                  <b>Senior Software Engineer</b>
+                  <span class="stop-where">Kobet Technology · Dubai, UAE</span>
+                </span>
+              </a>
+            </li>
+            <li class="stop next">
+              <a href="#contact">
+                <span class="node-band"><span class="node">?</span></span>
+                <span class="stop-text">
+                  <span class="stop-when">Next</span>
+                  <b>Your team?</b>
+                  <span class="stop-where">Let’s talk →</span>
+                </span>
+              </a>
+            </li>
+          </ol>
+        </div>
+
+        <ol class="timeline" data-rail>
+          <li class="rail-fill" aria-hidden="true"></li>
+
+          <li class="role" id="role-kobet" data-reveal>
+            <span class="role-node" aria-hidden="true"></span>
+            <p class="role-when"><b>Sep 2024 – Jul 2026</b>Dubai, UAE</p>
+            <div class="role-head">
+              <p class="role-chapter">Step 05 · Leading across borders</p>
+              <h3>Senior Software Engineer</h3>
+              <p class="company">Kobet Technology DMCC</p>
+              <div class="apps-line" data-apps="vivakard,timucard,tbay,bitowi"></div>
+            </div>
+            <div>
+              <ul class="role-points">
+                <li>Architected and delivered cross-platform <strong>FinTech apps</strong> — crypto, wallet, KYC and 2FA — with real-time data, shipping production releases on the App Store and Google Play.</li>
+                <li>Led a <strong>cross-country team</strong> across Dubai, China and Sri Lanka: feature planning, releases, documentation and CI/CD deployments.</li>
+              </ul>
+              <div class="role-stack"><span class="chip">Flutter</span><span class="chip">React Native</span><span class="chip">Kotlin</span><span class="chip">Swift</span><span class="chip">Vue.js</span><span class="chip">React</span><span class="chip">Python</span></div>
+            </div>
+          </li>
+
+          <li class="role" id="role-jeeb" data-reveal>
+            <p class="role-hop"><span aria-hidden="true">↑</span> Stepped up to Senior · Dubai, UAE</p>
+            <span class="role-node" aria-hidden="true"></span>
+            <p class="role-when"><b>Sep 2022 – Sep 2024</b>Doha, Qatar</p>
+            <div class="role-head">
+              <p class="role-chapter">Step 04 · Zero to one at a start-up</p>
+              <h3>Software Engineer</h3>
+              <p class="company">Jeeb E-Commerce &amp; Logistics <span class="where">· start-up</span></p>
+              <div class="apps-line" data-apps="jeeb,pass"></div>
+            </div>
+            <div>
+              <ul class="role-points">
+                <li>Built and launched a <strong>0→1 omnichannel e-commerce and logistics platform</strong>, working directly with the founders, with Arabic localisation.</li>
+                <li>Architected a <strong>server-driven personalised homepage</strong> with Algolia search — <strong>95% faster</strong> load, <strong>+50%</strong> engagement.</li>
+                <li>Engineered real-time GPS tracking, route optimisation and secure payments — <strong>+20%</strong> delivery and checkout efficiency.</li>
+                <li>Led a remote team building Driver, Collector and Storekeeper apps — <strong>+60%</strong> delivery speed.</li>
+              </ul>
+              <div class="role-stack"><span class="chip">Flutter</span><span class="chip">React Native</span><span class="chip">Swift</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">Python</span><span class="chip">IoT</span></div>
+            </div>
+          </li>
+
+          <li class="role" id="role-csm" data-reveal>
+            <p class="role-hop"><span aria-hidden="true">↑</span> Went international · Doha, Qatar</p>
+            <span class="role-node" aria-hidden="true"></span>
+            <p class="role-when"><b>Aug 2020 – Sep 2022</b>Ranchi, India</p>
+            <div class="role-head">
+              <p class="role-chapter">Step 03 · Apps at state scale</p>
+              <h3>Software Engineer</h3>
+              <p class="company">CSM Technologies <span class="where">· CMMI Level 5</span></p>
+              <div class="apps-line" data-apps="evv,digischool"></div>
+            </div>
+            <div>
+              <ul class="role-points">
+                <li>Built and launched <strong>state-government ed-tech apps (500K+ downloads)</strong> — school management, biometric attendance, student/teacher tracking, MDM and e-learning — during COVID-19.</li>
+                <li>Led client demos, user training, production rollout and post-launch support for <strong>state-wide adoption</strong>.</li>
+                <li>Owned delivery end to end, from requirements and biometric configuration to UAT and production.</li>
+              </ul>
+              <div class="role-stack"><span class="chip">Flutter</span><span class="chip">React Native</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">.NET</span><span class="chip">PHP</span></div>
+            </div>
+          </li>
+
+          <li class="role" id="role-jusco" data-reveal>
+            <p class="role-hop"><span aria-hidden="true">↑</span> Moved to Ranchi</p>
+            <span class="role-node" aria-hidden="true"></span>
+            <p class="role-when"><b>Aug 2019 – Aug 2020</b>Jamshedpur, India</p>
+            <div class="role-head">
+              <p class="role-chapter">Step 02 · Native Android, enterprise users</p>
+              <h3>Android App Developer</h3>
+              <p class="company">JUSCO (Tata Steel company) <span class="where">· LHS + MFK Software</span></p>
+              <div class="apps-line" data-apps="jmr,ecampuslink"></div>
+            </div>
+            <div>
+              <ul class="role-points">
+                <li>Built a native app to automate vendor-register maintenance, backed by scalable <strong>.NET APIs</strong> — <strong>70% less</strong> data-entry time, <strong>50% better</strong> accuracy.</li>
+                <li>Built cross-platform web and mobile school apps with .NET, Xamarin, ERP and third-party APIs.</li>
+                <li>Optimised APIs and database performance, improving app speed and <strong>increasing sales by 40%</strong>.</li>
+              </ul>
+              <div class="role-stack"><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">C#</span><span class="chip">.NET</span><span class="chip">Xamarin</span><span class="chip">SQL</span><span class="chip">PHP</span></div>
+            </div>
+          </li>
+
+          <li class="role" id="role-tgs" data-reveal>
+            <p class="role-hop"><span aria-hidden="true">↑</span> Graduated · first full-time role</p>
+            <span class="role-node" aria-hidden="true"></span>
+            <p class="role-when"><b>Mar 2018 – Apr 2018</b>Jamshedpur, India</p>
+            <div class="role-head">
+              <p class="role-chapter">Step 01 · The first step</p>
+              <h3>Data Analyst <span class="serif" style="font-weight:400">(internship)</span></h3>
+              <p class="company">Tata Growth Shop (TGS)</p>
+            </div>
+            <div>
+              <ul class="role-points">
+                <li>Built a Windows dashboard monitoring <strong>100+ IoT devices</strong>, improving operational efficiency by <strong>30%</strong>.</li>
+              </ul>
+              <div class="role-stack"><span class="chip">.NET</span><span class="chip">C#</span><span class="chip">SQL</span></div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="edu">
+          <div data-reveal>
+            <h3>Education</h3>
+            <div class="school">
+              <b>Jharkhand University of Technology</b>
+              <span>B.Tech, Computer Science &amp; Engineering · 2015 – 2019</span>
+            </div>
+          </div>
+          <div data-reveal style="--d:.08s">
+            <h3>Certifications &amp; recognition</h3>
+            <ul class="certs">
+              <li><span>Introduction to MCP — Anthropic</span><time datetime="2026-06">Jun 2026</time></li>
+              <li><span>Built an agentic AI system</span><time datetime="2026-06">Jun 2026</time></li>
+              <li><span>Prompt Engineering for Generative AI</span><time datetime="2024-03">Mar 2024</time></li>
+              <li><span>AR / VR / XR &amp; Metaverse — introduction</span><time datetime="2024-03">Mar 2024</time></li>
+              <li><span>3rd prize, Autonomous Robotics exhibition — NIT Jamshedpur (IoT)</span><time datetime="2018-05">May 2018</time></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== Skills -->
+    <section class="skills on-night" id="skills" aria-labelledby="skills-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow"><span class="num">06</span> Skills</p>
+            <h2 class="section-title" id="skills-title" style="margin-top:18px">Depth where <span class="serif">it counts.</span></h2>
+          </div>
+          <div>
+            <p class="section-lead">Grouped by the job they do. Highlighted items are what I reach for every day; dashed ones I’m actively exploring rather than running in production.</p>
+            <div class="skill-legend" aria-hidden="true">
+              <span><i class="l-core"></i>Daily driver</span>
+              <span><i class="l-used"></i>Production experience</span>
+              <span><i class="l-exp"></i>Exploring</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="skill-groups">
+          <article class="skill-group" data-reveal>
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></span>
+              <span class="g-num">01</span>
+            </div>
+            <h3>Mobile engineering</h3>
+            <p>Cross-platform and native apps for phone, tablet and web — from first commit to store release.</p>
+            <ul class="skill-list" aria-label="Mobile engineering skills">
+              <li class="core">Flutter</li><li class="core">React Native</li><li class="core">Android</li><li>Jetpack Compose</li><li>iOS</li><li>Xamarin</li><li>Expo</li><li>XML layouts</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal style="--d:.06s">
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16"/></svg></span>
+              <span class="g-num">02</span>
+            </div>
+            <h3>Languages</h3>
+            <p>The languages behind the apps, the APIs and the tooling.</p>
+            <ul class="skill-list" aria-label="Languages">
+              <li class="core">Dart</li><li class="core">Kotlin</li><li class="core">TypeScript</li><li>Java</li><li>Swift</li><li>C# / .NET</li><li>PHP</li><li>Python</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal style="--d:.12s">
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
+              <span class="g-num">03</span>
+            </div>
+            <h3>Frontend &amp; web</h3>
+            <p>Web front-ends and admin surfaces that sit next to the mobile apps.</p>
+            <ul class="skill-list" aria-label="Frontend and web skills">
+              <li class="core">React</li><li>Next.js</li><li>Vue.js</li><li>HTML5</li><li>CSS3</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal>
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg></span>
+              <span class="g-num">04</span>
+            </div>
+            <h3>Architecture &amp; state</h3>
+            <p>Structures that keep large apps maintainable as teams and features grow.</p>
+            <ul class="skill-list" aria-label="Architecture and state management">
+              <li class="core">Clean Architecture</li><li class="core">MVVM</li><li>BLoC</li><li>Riverpod</li><li>GetX</li><li>Redux</li><li>Zustand</li><li>MVC / MVP</li><li>SOLID</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal style="--d:.06s">
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span>
+              <span class="g-num">05</span>
+            </div>
+            <h3>Backend, APIs &amp; data</h3>
+            <p>Designing, building and integrating the services the apps depend on.</p>
+            <ul class="skill-list" aria-label="Backend, API and data skills">
+              <li class="core">REST APIs</li><li>GraphQL</li><li>OAuth</li><li>WebSocket</li><li>Dio / Retrofit</li><li>FastAPI</li><li>MySQL</li><li>Firebase / Firestore</li><li>Room</li><li>Hive</li><li>Neo4j</li><li>Algolia</li><li>OWASP</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal style="--d:.12s">
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2"/><circle cx="12" cy="12" r="3.5"/></svg></span>
+              <span class="g-num">06</span>
+            </div>
+            <h3>Delivery &amp; quality</h3>
+            <p>Getting builds tested, reviewed and into the stores without drama.</p>
+            <ul class="skill-list" aria-label="Delivery and quality skills">
+              <li class="core">Store publishing</li><li>CI/CD</li><li>Git · GitHub · GitLab</li><li>Bitbucket / SVN</li><li>Jira</li><li>Unit &amp; UI testing</li><li>Mockito</li><li>TDD</li><li>UAT</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal>
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4L12 3zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9L18 15z"/></svg></span>
+              <span class="g-num">07</span>
+            </div>
+            <h3>AI &amp; GenAI</h3>
+            <p>Bringing LLMs into real apps — with the plumbing for monitoring, structured output and failure handling.</p>
+            <ul class="skill-list" aria-label="AI skills">
+              <li>LLM integration</li><li>LangChain</li><li>AI agents</li><li>Prompt engineering</li><li>Claude</li><li>Cursor</li><li class="exploring">MCP</li><li class="exploring">AR / VR</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal style="--d:.06s">
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6M14.5 14.6c.8-.4 1.6-.6 2.5-.6 2.2 0 3.8 1.3 4.3 3.6"/></svg></span>
+              <span class="g-num">08</span>
+            </div>
+            <h3>Leadership</h3>
+            <p>The non-code part of shipping: people, plans and stakeholders.</p>
+            <ul class="skill-list" aria-label="Leadership skills">
+              <li class="core">Distributed teams</li><li>Release planning</li><li>Client demos</li><li>User training</li><li>Founder collaboration</li><li>Documentation</li>
+            </ul>
+          </article>
+
+          <article class="skill-group" data-reveal style="--d:.12s">
+            <div class="g-top">
+              <span class="g-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.5 4.5 19.5 9.5 9 20H4v-5z"/><path d="m12.5 6.5 5 5"/></svg></span>
+              <span class="g-num">09</span>
+            </div>
+            <h3>Tools</h3>
+            <p>Where the work happens.</p>
+            <ul class="skill-list" aria-label="Tools">
+              <li>Android Studio</li><li>Xcode</li><li>Visual Studio</li><li>Postman</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== About -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-head about-head">
+          <p class="eyebrow"><span class="num">07</span> About</p>
+          <h2 class="sr-only" id="about-title">About Afaque</h2>
+          <div class="mascot-dock"></div>
+        </div>
+        <div class="about-grid">
+          <div class="about-photo" data-reveal="scale">
+            <img src="img/profile/afaque-480.webp" srcset="img/profile/afaque-480.webp 480w, img/profile/afaque-960.webp 960w" sizes="(min-width: 960px) 480px, 90vw" width="480" height="480" loading="lazy" decoding="async" alt="Portrait of Afaque Jaya">
+            <span class="stamp">EST. 2019</span>
+          </div>
+          <div class="about-copy">
+            <p class="big" data-reveal>I’m an engineer who likes the whole journey — <span class="serif">from a blank repo to a five-star review.</span></p>
+            <div class="body">
+              <p data-reveal>I studied Computer Science at Jharkhand University of Technology and started out writing native Android at a Tata Steel company. Since then I’ve built for government departments in India, a grocery start-up in Doha and a FinTech company in Dubai — mostly in Flutter and React Native, with Kotlin and Swift when the platform calls for it.</p>
+              <p data-reveal>The problems I enjoy most sit where the app meets the system behind it: making a homepage fast and configurable from the server, getting a driver’s location on a map in real time, or putting an LLM behind an interface without letting it break the experience. Lately that last one has been taking up a lot of my evenings.</p>
+            </div>
+            <ul class="principles">
+              <li data-reveal><b>Ship, then sharpen.</b><span>Get a real build in real hands early, then iterate with data.</span></li>
+              <li data-reveal style="--d:.06s"><b>Architecture is for people.</b><span>Clean boundaries so a team across three countries can move without stepping on each other.</span></li>
+              <li data-reveal><b>Measure what matters.</b><span>Load time, engagement and delivery speed — not lines of code.</span></li>
+              <li data-reveal style="--d:.06s"><b>Own it end to end.</b><span>Requirements, build, UAT, rollout and the support call after launch.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================== Contact -->
+    <section class="contact on-night" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <p class="eyebrow"><span class="num">08</span> Contact</p>
+        <h2 class="contact-title" id="contact-title" style="margin-top:22px" data-reveal>Have an interesting product to build? <span class="serif">Let’s talk.</span></h2>
+        <p class="contact-lead" data-reveal style="--d:.08s">I’m happy to talk about senior mobile and full-stack roles, 0→1 product builds, or a team that needs someone who can ship across Android, iOS and the web.</p>
+
+        <div class="mail-row" data-reveal style="--d:.14s">
+          <a class="mail-big" href="mailto:afaquejaya123@gmail.com">afaquejaya123@gmail.com <span aria-hidden="true">↗</span></a>
+          <button class="copy-btn" type="button" data-copy="afaquejaya123@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/></svg>
+            <span>Copy email</span>
+          </button>
+        </div>
+
+        <nav class="contact-links" aria-label="Profiles">
+          <a href="https://www.linkedin.com/in/afaque-jaya" target="_blank" rel="noopener">
+            <div><small>LinkedIn</small><span>in/afaque-jaya</span></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+          <a href="https://github.com/Afaquejaya" target="_blank" rel="noopener">
+            <div><small>GitHub</small><span>@Afaquejaya</span></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+          <a href="cv/cv.html" target="_blank" rel="noopener">
+            <div><small>Résumé</small><span>View CV</span></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+          <a href="files/Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf" download="Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf" type="application/pdf">
+            <div><small>PDF · 680 KB</small><span>Download CV</span></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg>
+          </a>
         </nav>
-        <div class="hero-head">
-            <div class="container">
-                <center><img class="avatar" src="/img/me_new.png" ></center>
+
+        <div class="ask-zone ask-zone--contact" data-reveal>
+          <div class="minion2" aria-hidden="true">
+            <svg class="m2-head" viewBox="0 0 200 120">
+              <defs>
+                <clipPath id="m2DomeB"><path d="M14 130 V78 A86 86 0 0 1 186 78 V130 Z"/></clipPath>
+                <linearGradient id="m2SkinB" x1="0" x2="1"><stop offset="0" stop-color="#e3b10f"/><stop offset=".3" stop-color="#ffe04a"/><stop offset=".7" stop-color="#fbd62c"/><stop offset="1" stop-color="#d9a70c"/></linearGradient>
+                <radialGradient id="m2MetalB" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#f6f7f9"/><stop offset=".55" stop-color="#bcc1c8"/><stop offset="1" stop-color="#7a8089"/></radialGradient>
+              </defs>
+              <g clip-path="url(#m2DomeB)">
+                <rect x="10" y="0" width="180" height="130" fill="url(#m2SkinB)"/>
+                <rect x="10" y="74" width="180" height="16" fill="#2a2a2a"/>
+                <rect x="10" y="74" width="180" height="3" fill="#4a4a4a"/>
+              </g>
+              <path d="M14 130 V78 A86 86 0 0 1 186 78 V130" fill="none" stroke="#c99a0c" stroke-width="1.5" opacity=".6"/>
+              <g class="m2-hair" fill="none" stroke="#2a2a2a" stroke-width="2.6" stroke-linecap="round">
+                <path d="M46 30 C 56 14, 74 8, 92 10"/><path d="M58 22 C 70 10, 86 6, 100 8"/><path d="M112 8 C 128 6, 146 12, 156 26"/><path d="M118 12 C 134 10, 150 18, 160 32"/><path d="M98 9 C 104 4, 110 4, 114 8"/>
+              </g>
+              <circle cx="100" cy="82" r="38" fill="url(#m2MetalB)" stroke="#6b7078" stroke-width="2"/>
+              <g fill="#6b7078"><circle cx="100" cy="47" r="2"/><circle cx="66" cy="82" r="2"/><circle cx="134" cy="82" r="2"/><circle cx="76" cy="57" r="2"/><circle cx="124" cy="57" r="2"/></g>
+              <circle cx="100" cy="82" r="27" fill="#fff"/>
+              <g class="m2-iris">
+                <circle cx="98" cy="92" r="11" fill="#8f5222"/><circle cx="98" cy="92" r="11" fill="none" stroke="#5a300f" stroke-width="1.3"/>
+                <circle cx="98" cy="92" r="5.2" fill="#111"/><circle cx="101.5" cy="88.5" r="2.4" fill="#fff"/>
+              </g>
+              <rect class="m2-lid" x="72" y="54" width="56" height="56" rx="28" fill="#f6cf22"/>
+              <circle cx="88" cy="70" r="6" fill="#fff" opacity=".5"/>
+            </svg>
+            <svg class="m2-glove m2-l" viewBox="0 0 54 40"><ellipse cx="14" cy="18" rx="11" ry="12" fill="#1c1c1c"/><ellipse cx="29" cy="20" rx="11" ry="13" fill="#1c1c1c"/><ellipse cx="43" cy="22" rx="9" ry="11" fill="#1c1c1c"/><ellipse cx="11" cy="12" rx="4" ry="2.5" fill="#4a4a4a"/><ellipse cx="26" cy="13" rx="4" ry="2.5" fill="#4a4a4a"/><ellipse cx="40" cy="16" rx="3.5" ry="2.2" fill="#4a4a4a"/></svg>
+            <svg class="m2-glove m2-r" viewBox="0 0 54 40"><ellipse cx="11" cy="22" rx="9" ry="11" fill="#1c1c1c"/><ellipse cx="25" cy="20" rx="11" ry="13" fill="#1c1c1c"/><ellipse cx="40" cy="18" rx="11" ry="12" fill="#1c1c1c"/><ellipse cx="9" cy="16" rx="3.5" ry="2.2" fill="#4a4a4a"/><ellipse cx="23" cy="13" rx="4" ry="2.5" fill="#4a4a4a"/><ellipse cx="38" cy="12" rx="4" ry="2.5" fill="#4a4a4a"/></svg>
+            <span class="m2-say">Psst! Ask the AI about him 👇</span>
+          </div>
+        <div class="ask-ai" data-ask-ai>
+          <span class="ask-orb" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#fff" d="M12 1.5C13 8 16 11 22.5 12 16 13 13 16 12 22.5 11 16 8 13 1.5 12 8 11 11 8 12 1.5Z"/></svg></span>
+          <div class="ask-ai-copy">
+            <span class="ask-eyebrow">For recruiters</span>
+            <p class="ask-title">Hiring? Don’t take my word for it — <span class="ask-grad">ask an AI.</span></p>
+            <p class="ask-sub">Pick a question, then your AI — it gets my résumé summary with it.</p>
+            <div class="ask-ai-qs" role="radiogroup" aria-label="Choose a question">
+              <button type="button" role="radio" aria-checked="true" data-q="hire">Should we hire him?</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-q="senior">Is he senior-level?</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-q="fit">Fit for our team?</button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-q="custom">✎ Ask your own</button>
             </div>
+            <label class="ask-ai-own" hidden><span class="sr-only">Your question</span><input type="text" maxlength="240" placeholder="e.g. Could he lead a Flutter team of five?"></label>
+          </div>
+          <span class="ask-divider" aria-hidden="true"></span>
+          <div class="ask-ai-go" aria-label="Ask an AI about Afaque">
+            <a class="ai-opt is-active" data-ai="chatgpt" href="#" target="_blank" rel="noopener">
+              <span class="ai-compact" aria-hidden="true"><span class="ai-ico"><img src="img/tech/openai.svg" alt="" width="24" height="24"></span><span>ChatGPT</span></span>
+              <span class="ai-wide"><img src="img/tech/openai.svg" alt="" width="26" height="26"><span>Ask with ChatGPT</span><span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+            <a class="ai-opt" data-ai="gemini" href="#" target="_blank" rel="noopener">
+              <span class="ai-compact" aria-hidden="true"><span class="ai-ico"><img src="img/tech/gemini.svg" alt="" width="24" height="24"></span><span>Gemini</span></span>
+              <span class="ai-wide"><img src="img/tech/gemini.svg" alt="" width="26" height="26"><span>Ask with Gemini</span><span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+            <a class="ai-opt" data-ai="claude" href="#" target="_blank" rel="noopener">
+              <span class="ai-compact" aria-hidden="true"><span class="ai-ico"><img src="img/tech/claude.svg" alt="" width="24" height="24"></span><span>Claude</span></span>
+              <span class="ai-wide"><img src="img/tech/claude.svg" alt="" width="26" height="26"><span>Ask with Claude</span><span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+          </div>
+        </div>
         </div>
 
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="columns">
-                    <div class="column is-half is-offset-one-quarter">
-                        <h1 class="subtitle is-2 has-text-weight-light">
-                            <strong><span class="txt-rotate" data-period="200" data-rotate='[  "السلام عليكم ","Hello !" ]'></span></strong>
-                            <i class="em em-raised_hand_with_fingers_splayed"></i>
-                        </h1>
-                        <h3 class="subtitle is-3 has-text-justified has-text-weight-light">
-                            I'm
-                            <strong> Afaque Jaya</strong>, Software Engineer <i class="em em-male-technologist"></i>
-                            & Open source enthusiastic<i class="em em-penguin"></i>&nbsp;love to build Mobile App & Website &  API &nbsp;<i class="em em-sparkling_heart"></i>
-
-                        </h3>
-                    </div>
-                </div>
-                <div class="columns is-centered">
-                    <div class="column is-2">
-                        <a class="button is-medium is-danger" href="cv/cv.html"
-        class="action is-primary">Resume</a>
-                    </div>
-                    <div class="column is-2">
-                        <a class="button is-medium is-black" href="index.html#contact">Contact</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hero-foot">
-            <nav class="tabs is-boxed is-fullwidth">
-                <div class="container">
-                    <h4 class="subtitle is-4 has-text-weight-light has-text-centered arrow bounce">
-                        Check my work! <i class="em em-point_down"></i>
-                    </h4>
-                </div>
-            </nav>
-        </div>
-
+        <footer class="footer">
+          <span>© <span id="year">2026</span> Afaque Jaya. Designed &amp; built by hand — no templates.</span>
+          <a class="to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+        </footer>
+        <p class="wordmark" aria-hidden="true">Afaque Jaya</p>
+      </div>
     </section>
+  </main>
 
-    <!-- Portfolio Sec -->
-    <section id="portfolio" class="hero is-white is-fullheight">
-        <div class="hero-body">
-            <div class="container content-wrapper">
+  <div class="toast" role="status" aria-live="polite"></div>
 
-               <!-- 1st line -->
-                <div class="columns">
-				
-				<!-- ----Social Media app-- -->
-                    <div class="column">
-                        <!-- If you played for -->
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Social Media App</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-success">Java</span>
-										 <span class="tag is-warning">PHP</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery2.png" alt="If you played for screenshot">
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-                                    This Project Just like Social Media ,For Uploading Image, sending friend Request,Like,Comment etc.
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-primary">For Learning</a>
-                                           <a class="tag is-info">Android Studio</a>
-                                            <a class="tag is-warning">2019</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-					
-					<!-- ----Facial Recog app-- -->
-					<div class="column">
-                        <!-- Adapt.ai -->
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Face Detection</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-warning">JAVA</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery1.png">
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-                                    The project aim is to deliver the Face description to the user. Eg:Gender,Age,Smile,Facial Hair etc
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-info">Android Studio</a>
-						<a class="tag is-success">API</a>
-                                            <a class="tag is-warning">2020</a>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-                   
-						<!-- ----Messenger app-- -->							
-                    <div class="column">
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Messenger App</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-danger">JAVA</span>
-                                        <span class="tag is-success">XML</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery9.jpg" alt="OUM Zarabi screenshot">
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-								<br>
-								</br>
-                                    Messenger App -Native app developed in android studio
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-primary">Firebase</a>
-											<a class="tag is-info">Android Studio</a>
-                                            <a class="tag is-warning">2020</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-			<!-- ----------------------Next line-------------------- -->
-
-               						 <!-- Google Login -->
-                <div class="columns">
-                    <div class="column">
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Google Login</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-warning">Java</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery6.png">
-                                </figure>
-								<br>
-									</br>
-                                <div style="margin-top:1em" class="content">
-                                    Smart Google-Login App 2017 Project
-									<br>
-									</br>
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-success">Learning Project</a>
-                                            <a class="tag is-info">Android Studio</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-			
-							<!-- WEB VIEW APP (XAMARIN)-->
-                    <div class="column">
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Web View App</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-success">C#</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery8.jpg" alt="OUM Zarabi screenshot">
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-                                    Web App is for Android,ios,Windows.
-                                    <br>
-                                    </br>
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-primary">Visual Studio</a>
-											<a class="tag is-info">XAMARIN</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-			
-							 <!-- WEB APP (ANDROID) -->
-						<div class="column">
-                        	<div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Web View App  </span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-success"> JAVA</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery8.jpg" alt="OUM Zarabi screenshot" >
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-                                    Web view App for Android.
-                                    <br>
-                                    <br>
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-primary">XML</a>
-											<a class="tag is-info">Android Studio</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://github.com/Afaquejaya/Web_View_App" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-				<!--END-->
-				
-				<!-- ----------------------Next line-------------------- -->
-						<!-- PORTFOLIO -->
-			<div class="columns">
-                    <div class="column">
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>My Portfolio</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-danger">HTML</span>
-                                        <span class="tag is-primary">CSS</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/gallery5.png" alt="OUM Zarabi screenshot">
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-                                    My portfolio site.
-                                    <br>
-                                    <br>
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-success">Portfolio Project</a>
-                                            <a class="tag is-warning">Vscode</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fa fa-eye"> </i>
-                                    </span>
-                                    Preview
-                                </a>
-                                <a href="https://github.com/Afaquejaya/afaquejaya.github.io" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-					
-					<!-- Blnk div -->
-                    <div class="column">
-                        <!-- BlNK -->
-			    <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">
-                                    <span>Messenger App</span>
-                                    <span class="is-pulled-right">
-                                        <span class="tag is-danger">JAVA</span>
-                                        <span class="tag is-success">XML</span>
-                                    </span>
-                                </p>
-                            </header>
-                            <div class="card-content">
-                                <figure class="image">
-                                    <img src="img/portfolio/WhatsApp.jpeg" alt="OUM Zarabi screenshot">
-                                </figure>
-                                <div style="margin-top:1em" class="content">
-								<br>
-								</br>
-                                    App Just Like Whats App ( Similar to whats app)
-                                </div>
-                                <div class="field is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags">
-                                            <a class="tag is-primary">Firebase</a>
-											<a class="tag is-info">Android Studio</a>
-                                            <a class="tag is-warning">2020</a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="https://afaquejaya.github.io/" class="card-footer-item">
-                                    <span class="icon">
-                                        <i class="fab fa-github"> </i>
-                                    </span>
-                                    Source Code
-                                </a>
-                            </footer>
-                        </div>
-                    </div>
-					<!-- Blank Div-->
-                    <div class="column">
-                             <!-- BlNK -->
-                    </div>
-					</div>
-				<!-- --- END -- -->
-			</div>
-		</div>
-	</section>
-
-    <!-- Contact Sec -->
-    <section id="contact" class="hero is-white">
-        <div class="hero-body">
-            <div class="columns">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1 class="title is-2 has-text-centered">
-                        <strong> Let's get in touch </strong>
-                    </h1>
-                    <p class="content is-medium">
-                        Need anything built, want to work together or simply want to have a chat? Drop me an e-mail at
-                        <span class="btn btn-link has-text-info ">
-                            <a href="mailto:afaquejaya123@gmail.com " target="_blank" class="highlight-link">&nbsp;afaquejaya123@gmail.com&nbsp;</a>
-                        </span> and I will reply to you soon!
-                    </p>
-                    <br>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Sec -->
-    <footer class="footer has-background-white">
-        <div class="content has-text-centered has-text-dark">
-            <p>
-		<a style="padding-right: 0.5em " href="https://www.instagram.com/afaque_jaya/ ">
-                    <i class="fab fa-instagram fa-2x "></i>
-                </a>
-                <a style="padding-right: 0.5em " href="https://www.linkedin.com/in/afaque-jaya-5b6311134 ">
-                    <i class="fab fa-linkedin-in fa-2x "></i>
-                </a>
-                <a style="padding-right: 0.5em " href="https://github.com/Afaquejaya ">
-                    <i class="fab fa-github fa-2x "></i>
-                </a>
-		
-            </p>
-            <p>
-                Copyrights © <a target="_blank" href="index.html">Afaque Jaya</a> 2020 |
-                Made with <i class="em em-yellow_heart"></i>
-                in Jharkhand | India
-            </p>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/index.js"></script>
-
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/mascot.js" defer></script>
 </body>
-
 </html>
