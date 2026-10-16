@@ -4564,3 +4564,105 @@ html.no-smooth { scroll-behavior: auto; }
   .hs.hs-on .hs-sticky { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
   .toast { bottom: calc(86px + env(safe-area-inset-bottom)); }
 }
+
+/* --------------------------------------------------------------------------
+   Ask-an-AI card on phones: one clean column — small orb beside the title,
+   question chips in a 2 × 2 grid (no sideways overflow), and three equal,
+   compact AI buttons under a short label.
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .ask-zone > .ask-ai {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: center;
+    gap: 0 12px;
+    padding: 18px 16px 16px !important;
+    border-radius: 22px;
+  }
+  .ask-ai .ask-ai-copy { display: contents; }
+  .ask-ai .ask-orb {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+    width: 44px;
+    height: 44px;
+    box-shadow: 0 0 0 5px rgba(130, 120, 250, 0.08), 0 10px 20px -10px rgba(110, 90, 240, 0.6);
+  }
+  .ask-ai .ask-orb svg { width: 20px; height: 20px; }
+  .ask-ai .ask-eyebrow { grid-column: 2; grid-row: 1; justify-self: start; }
+  .ask-ai .ask-title { grid-column: 2; grid-row: 2; margin-top: 5px; font-size: 18px; line-height: 1.25; }
+  .ask-ai .ask-sub { grid-column: 1 / -1; margin-top: 12px; font-size: 14px; line-height: 1.45; }
+
+  .ask-ai .ask-ai-qs {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .ask-ai .ask-ai-qs button {
+    min-height: 42px;
+    padding: 8px 10px;
+    font-size: 13.5px;
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+  .ask-ai .ask-ai-own { grid-column: 1 / -1; max-width: none; }
+  .ask-ai .ask-divider { display: none; }
+
+  .ask-ai .ask-ai-go {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    margin: 16px 0 0;
+  }
+  .ask-ai .ask-ai-go::before {
+    content: "Then ask with";
+    grid-column: 1 / -1;
+    margin-bottom: 2px;
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6e6a7c;
+  }
+  /* Equal buttons: no expanding "active" one on a touch screen. */
+  .ask-ai .ai-opt,
+  .ask-ai .ai-opt.is-active {
+    flex-grow: 0;
+    height: 52px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid rgba(23, 22, 36, 0.1);
+    box-shadow: 0 8px 18px -14px rgba(40, 36, 60, 0.45);
+  }
+  .ask-ai .ai-opt .ai-wide { display: none; }
+  .ask-ai .ai-opt .ai-compact,
+  .ask-ai .ai-opt.is-active .ai-compact {
+    flex-direction: row;
+    gap: 7px;
+    opacity: 1;
+    transform: none;
+    color: #171624;
+    font-size: 13px;
+  }
+  .ask-ai .ai-ico { width: 26px; height: 26px; border-radius: 8px; box-shadow: none; background: transparent; }
+  .ask-ai .ai-ico img { width: 20px; height: 20px; }
+  .ask-ai .ai-opt:active { background: #f3f1fb; }
+}
+@media (max-width: 374px) {
+  .ask-ai .ask-ai-qs button { font-size: 12.5px; padding: 8px 6px; }
+}
+
+/* Experience → Skills → About → Contact: same rhythm as Impact → Case
+   studies (no doubled full section padding between neighbours). */
+.experience { padding-bottom: clamp(36px, 4vw, 56px); }
+.skills { padding-top: clamp(56px, 6vw, 88px); padding-bottom: clamp(36px, 4vw, 56px); }
+.about { padding-top: clamp(56px, 6vw, 88px); padding-bottom: clamp(36px, 4vw, 56px); }
+.contact { padding-top: clamp(56px, 6vw, 88px); }
