@@ -4035,6 +4035,9 @@ html.no-smooth { scroll-behavior: auto; }
 /* Tighter spacing around the side projects */
 .cases .lab { margin-top: 28px; }
 .cases { padding-bottom: clamp(40px, 5vw, 64px); }
+/* Impact → Case studies: no double section padding between the markets row and the next heading */
+.impact { padding-bottom: clamp(36px, 4vw, 56px); }
+.cases { padding-top: clamp(56px, 6vw, 88px); }
 .experience { padding-top: clamp(56px, 7vw, 96px); }
 
 /* --------------------------------------------------------------------------

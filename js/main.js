@@ -648,6 +648,27 @@
     setTimeout(function () { target.focus({ preventScroll: true }); }, reduced ? 0 : 450);
   });
 
+  // Programmatic navigation for the AI Portfolio Guide (js/concierge.js):
+  // the same landing logic as in-page links — pinned horizontal cards, case
+  // tabs, sticky-nav offset — without moving keyboard focus out of the chat.
+  // Only ids that exist in the page can be reached.
+  window.PortfolioNav = {
+    go: function (id) {
+      var target = typeof id === 'string' ? document.getElementById(id) : null;
+      if (!target) return null;
+      closeMenu(false);
+      if (/^case-/.test(id)) {
+        openCase(id);
+        window.dispatchEvent(new CustomEvent('portfolio:holdcases'));
+      }
+      var y = hsTargetY(target);
+      if (y === null) y = target.getBoundingClientRect().top + window.scrollY - (nav ? nav.offsetHeight : 0) - 20;
+      history.replaceState(null, '', '#' + id);
+      window.scrollTo({ top: Math.max(0, y), behavior: reduced ? 'auto' : 'smooth' });
+      return target;
+    }
+  };
+
   /* ------------------------------------------------------------------ */
   /* Mobile menu                                                          */
   /* ------------------------------------------------------------------ */
@@ -798,6 +819,8 @@
       }, DUR);
     }
     if (btn) btn.addEventListener('click', function () { paused = !paused; syncBtn(); start(); });
+    // The AI guide opened a specific case: hold it there (the play button resumes).
+    window.addEventListener('portfolio:holdcases', function () { paused = true; syncBtn(); start(); });
     var tabsEl = $('.cs-tabs', box);
     tabsEl.addEventListener('focusin', function (e) { if (e.target.matches(':focus-visible')) { kbd = true; stop(); } });
     tabsEl.addEventListener('focusout', function () { kbd = false; start(); });

@@ -15,9 +15,9 @@
  *
  * Behaviour is adapted from page-mascot's <Mascot> React component
  * (https://github.com/nilbuild/page-mascot, v0.1.0, src/mascot.tsx): the
- * corner placement, boop timings, blink and the "dizzy after rapid clicks"
- * payoff. This site is plain static HTML, so it is a dependency-free port.
- * Additions for this site: per-eye tracking, the head rig, a speech bubble,
+ * corner placement and blink. This site is plain static HTML, so it is a
+ * dependency-free port. Clicking the avatar opens the AI Portfolio Guide
+ * (js/concierge.js). Additions for this site: per-eye tracking, the head rig,
  * auto-hide while scrolling on touch screens, hiding near the contact links
  * and the open mobile menu, and the flight from the nav. Cursor tracking is
  * mouse/pen only; touch screens get a still avatar that just blinks.
@@ -106,19 +106,6 @@
   // Head layer: everything above the beard's lower edge. Shoulders: the rest.
   var HEAD_CLIP = 'M82 30 H942 V688 H732 C722 712 704 732 680 752 C640 780 580 800 512 803 C444 800 384 785 340 762 C308 744 286 724 270 700 L262 688 H82 Z';
   var BODY_CLIP = 'M82 688 H262 L270 700 C286 724 308 744 340 762 C384 785 444 800 512 803 C580 800 640 780 680 752 C704 732 722 712 732 688 H942 V890 H82 Z';
-  var REACT_MS = 1000;
-  var DIZZY_MS = 1400;
-  var DIZZY_WINDOW = 1600;
-  var DIZZY_AFTER = 4;
-  var PAYOFFS = ['❤️', '✨', '😉'];
-
-  var LINES = [
-    { text: 'Hi, I’m Afaque 👋 I build mobile apps people actually use.' },
-    { text: 'Those store links are real — go poke them.', href: '#work', cta: 'See the apps' },
-    { text: 'Have an interesting product to build?', href: '#contact', cta: 'Let’s talk' },
-    { text: 'Okay, okay — I’m dizzy now.' }
-  ];
-
   // The nav profile and the scroll flight use the head-and-chest avatar.
   var AVATAR = 'img/mascot/afaque-3d-bust.webp';
 
@@ -226,18 +213,14 @@
     var root = document.createElement('div');
     root.className = 'mascot is-av';
     root.innerHTML =
-      '<div class="mascot-bubble" role="status" aria-live="polite"></div>' +
-      '<button type="button" class="mascot-btn" aria-label="Boop the Afaque mascot">' +
+      '<button type="button" class="mascot-btn" aria-label="Chat with Afaque’s AI Portfolio Guide" aria-haspopup="dialog" aria-controls="concierge" aria-expanded="false">' +
         '<span class="mascot-disc" aria-hidden="true"></span>' +
         '<span class="mascot-body" aria-hidden="true">' + artMarkup() + '</span>' +
-        '<span class="mascot-emoji" aria-hidden="true"></span>' +
       '</button>';
 
     var btn = root.querySelector('.mascot-btn');
     var art = root.querySelector('svg.av');
     var tiltEl = art.querySelector('.av-tilt');
-    var emoji = root.querySelector('.mascot-emoji');
-    var bubble = root.querySelector('.mascot-bubble');
     var eyes = EYES.map(function (g, idx) {
       var group = art.querySelectorAll('.av-eye')[idx];
       return {
@@ -263,10 +246,9 @@
       hx: 0, hy: 0, hxT: 0, hyT: 0,   // head turn (x) and nod (y), each -1…1
       near: 0, nearT: 0,              // 0 … 1 as the cursor approaches the avatar
       pupilT: 0.5,                    // pupil radius as a share of the iris radius
-      dizzyUntil: 0, hold: 0
+      dizzyUntil: 0, hold: 0, calm: false
     };
     var timers = [];
-    var clicks = 0, lastClick = 0, lineIdx = 0, bubbleTimer;
 
     // Everything the mascot listens to, so it can all be removed again.
     var offs = [];
@@ -382,10 +364,11 @@
       });
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       var dist = Math.hypot(x - cx, y - cy);
-      S.hxT = clamp((x - cx) / HEAD_REACH, -1, 1);
-      S.hyT = vy;
+      var calm = S.calm ? 0.3 : 1;
+      S.hxT = clamp((x - cx) / HEAD_REACH, -1, 1) * calm;
+      S.hyT = vy * calm;
       // Approaching: a small curious head tilt and slightly wider pupils.
-      S.nearT = clamp(1 - (dist - r.width * 0.45) / NEAR_PX, 0, 1);
+      S.nearT = S.calm ? 0 : clamp(1 - (dist - r.width * 0.45) / NEAR_PX, 0, 1);
       S.pupilT = 0.5 + S.nearT * 0.08;
     }
     function neutral() {
@@ -473,78 +456,31 @@
       if (e.persisted) return;
       setTracking(false);
       cancelAnimationFrame(loop); loop = 0;
-      clearTimeout(blinkTimer); clearTimeout(glintTimer); clearTimeout(idleTimer); clearTimeout(bubbleTimer);
+      clearTimeout(blinkTimer); clearTimeout(glintTimer); clearTimeout(idleTimer);
       timers.forEach(clearTimeout);
       offs.forEach(function (off) { off(); }); offs = [];
     });
 
-    /* ---- boop ---- */
+    /* ---- click: open the AI Portfolio Guide (js/concierge.js) ---- */
     function clearTimers() { timers.forEach(clearTimeout); timers = []; }
     function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
-    function pop(chars) {
-      emoji.textContent = chars;
-      emoji.classList.remove('pop');
-      void emoji.offsetWidth;
-      emoji.classList.add('pop');
-    }
-
-    function say(line) {
-      clearTimeout(bubbleTimer);
-      bubble.innerHTML = '';
-      var p = document.createElement('span');
-      p.textContent = line.text;
-      bubble.appendChild(p);
-      if (line.href) {
-        var a = document.createElement('a');
-        a.href = line.href;
-        a.textContent = line.cta + ' →';
-        bubble.appendChild(a);
-      }
-      root.classList.add('is-talking');
-      bubbleTimer = setTimeout(function () { root.classList.remove('is-talking'); }, line.href ? 5200 : 3600);
-    }
-
     listen(btn, 'click', function () {
       clearTimers();
-      S.hold = 0;
-      setSmile(0);
-      var now = Date.now();
-      clicks = now - lastClick < DIZZY_WINDOW ? clicks + 1 : 1;
-      lastClick = now;
+      // A quick nod and blink acknowledge the click; the head only, never the body.
+      if (!reduceMQ.matches) { S.hy += 0.45; kick(); }
+      S.hold = 1;
+      blink(null, 110);
+      later(function () { S.hold = 0; }, 400);
+      if (window.Concierge) window.Concierge.toggle(btn);
+    });
 
-      // A small nod of the head only — the body stays still.
-      if (!reduceMQ.matches) { S.hy += 0.55; kick(); }
-
-      if (clicks >= DIZZY_AFTER) {
-        if (!reduceMQ.matches) { S.dizzyUntil = performance.now() + DIZZY_MS; kick(); }
-        pop('😵‍💫');
-        say(LINES[3]);
-        later(function () { S.dizzyUntil = 0; if (px !== null) { aimPending = true; kick(); } else neutral(); blink(); }, DIZZY_MS + 40);
-        clicks = 0;
-        return;
-      }
-
-      var payoff = PAYOFFS[(clicks - 1) % PAYOFFS.length];
-      if (payoff === '😉') {
-        // Wink: his left eye (viewer's right) shuts fully and holds; the other
-        // eye and both cheeks lift a touch.
-        S.hold = 1;
-        blink(1, 420);
-        setLids(0.12, 0);
-        setSmile(0.3);
-        later(function () { S.hold = 0; setLids(0, 0); setSmile(0); }, 640);
-      } else {
-        // A full, natural blink with a slightly longer hold than an idle one.
-        S.hold = 1;
-        blink(null, 150);
-        later(function () { S.hold = 0; }, REACT_MS);
-      }
-      later(function () { pop(payoff); }, 60);
-      glint();
-
-      say(LINES[lineIdx % 3]);
-      lineIdx++;
+    // While the guide is open the avatar stays calm: eyes still follow, the head barely moves.
+    listen(window, 'concierge:state', function (e) {
+      var open = !!(e.detail && e.detail.open);
+      S.calm = open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (px !== null) { aimPending = true; kick(); } else neutral();
     });
 
     /* ---- stay out of the way ---- */
