@@ -270,6 +270,7 @@
   var progress = $('.progress');
   var portraitImg = $('[data-parallax-img]');
   var darkSections = $$('.on-night');
+  var phoneMQ = window.matchMedia('(max-width: 760px)');
   var stages = $$('[data-stage]');
   var activeStages = [];
   var ticking = false;
@@ -303,6 +304,14 @@
         return r.top <= probe && r.bottom >= probe;
       });
       nav.classList.toggle('is-dark', overDark);
+      // Phones: the tab bar sits at the bottom, so it follows the section down there.
+      if (tabs) {
+        var low = phoneMQ.matches ? vh - 40 : -1;
+        tabs.classList.toggle('on-dark', low > 0 && darkSections.some(function (s) {
+          var r = s.getBoundingClientRect();
+          return r.top <= low && r.bottom >= low;
+        }));
+      }
     }
     setActiveTab(currentTab());
     updateRail(vh);

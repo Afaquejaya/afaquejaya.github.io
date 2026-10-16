@@ -361,3 +361,10 @@
   .cg-typing i { animation: none; opacity: 0.6; }
   .cg-spot { animation: none; }
 }
+
+/* Phones/small tablets: the site's section tabs live in a bottom bar there
+   (css/main.css). The guide opens over it, and the pill waits above it. */
+@media (max-width: 760px) {
+  .cg { z-index: 110; }
+  .cg-pill { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 66px); z-index: 105; }
+}

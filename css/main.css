@@ -4486,3 +4486,81 @@ html.no-smooth { scroll-behavior: auto; }
 .ask-zone--contact .ask-ai { color: #171624; }
 .ask-zone--contact .ask-ai { box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.8); }
 .ask-zone--contact .m2-say { background: var(--paper); color: var(--ink); }
+
+/* ==========================================================================
+   Glass navigation — translucent frosted pills that adapt to what's behind
+   them (dark text over light pages, light text over dark sections and the
+   open menu). On phones the section tabs become a bottom tab bar; the
+   profile pill and the menu button stay at the top.
+   ========================================================================== */
+.nav {
+  --pill-bg: rgba(250, 248, 243, 0.5);
+  --pill-line: rgba(255, 255, 255, 0.6);
+  --pill-shadow: 0 10px 30px -14px rgba(18, 17, 16, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --ind-bg: var(--ink);
+  --ind-fg: var(--paper);
+  --role: var(--ink-3);
+  color: var(--ink);
+}
+.nav.is-dark,
+.menu-open .nav {
+  --pill-bg: rgba(24, 24, 27, 0.42);
+  --pill-line: rgba(255, 255, 255, 0.14);
+  --pill-shadow: 0 12px 32px -14px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --ind-bg: var(--paper);
+  --ind-fg: var(--ink);
+  --role: #a19c92;
+  color: var(--night-text);
+}
+.nav .pill {
+  -webkit-backdrop-filter: saturate(1.8) blur(18px);
+  backdrop-filter: saturate(1.8) blur(18px);
+}
+.nav .nav-cta::before { background: var(--ink); }
+.nav.is-dark .nav-cta::before { background: var(--paper); }
+/* Without backdrop blur the glass would be hard to read: fall back to solid. */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .nav { --pill-bg: rgba(250, 248, 243, 0.94); }
+  .nav.is-dark, .menu-open .nav { --pill-bg: rgba(24, 24, 27, 0.92); }
+}
+
+@media (max-width: 760px) {
+  /* Top: profile pill on the left, menu button on the right. */
+  .nav .wrap { justify-content: space-between; }
+
+  /* Bottom tab bar */
+  .nav .tabs {
+    --pill-bg: rgba(250, 248, 243, 0.55);
+    --pill-line: rgba(255, 255, 255, 0.6);
+    --pill-shadow: 0 -2px 24px -10px rgba(18, 17, 16, 0.28), 0 14px 34px -16px rgba(18, 17, 16, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    --ind-bg: var(--ink);
+    --ind-fg: var(--paper);
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    flex: none;
+    height: 56px;
+    padding: 6px;
+    color: var(--ink);
+    -webkit-mask-image: none;
+    mask-image: none;
+    scroll-padding-inline: 12px;
+  }
+  /* Over a dark section the bar turns to dark glass — judged at the bottom of the screen, not the top. */
+  .nav .tabs.on-dark {
+    --pill-bg: rgba(24, 24, 27, 0.48);
+    --pill-line: rgba(255, 255, 255, 0.14);
+    --pill-shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    --ind-bg: var(--paper);
+    --ind-fg: var(--ink);
+    color: var(--night-text);
+  }
+  .nav .tabs a { height: 44px; padding: 0 15px; font-size: 14px; }
+  .nav .tab-ind { top: 6px; height: 44px; }
+
+  /* Keep content, the pinned card strips and pop-ups clear of the bar. */
+  body { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  .hs.hs-on .hs-sticky { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
+  .toast { bottom: calc(86px + env(safe-area-inset-bottom)); }
+}
