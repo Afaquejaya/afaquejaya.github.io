@@ -1,6 +1,14 @@
 # Mascot art
 
-**In use:** `afaque-3d.webp` (full figure) and `afaque-3d-bust.webp` (head and chest) — a 3D illustrated avatar supplied by Afaque, used for the nav profile and the scroll flight. The bottom-right mascot uses the drawn sprite sheets below (its head follows the cursor).
+**In use:**
+- `afaque-3d.webp` (full figure) and `afaque-3d-bust.webp` (head and chest): a 3D illustrated avatar supplied by Afaque, used for the nav profile and the scroll flight.
+- `afaque-head.webp`: the bottom-right mascot's face. It's the 860×860 square at (82, 30) of Afaque's supplied 1024×1536 3D render, scaled to 600×600.
+  - `js/mascot.js` draws live SVG eyes exactly over the render's eyes. The eye openings, iris centres and radii, catch-lights and lens outlines in its `EYES` table were traced in the source's pixel space.
+  - Those eyes give per-eye cursor tracking, pupils that widen as the cursor approaches, blinks and a wink. A glint sweeps across the glasses now and then.
+  - Only the head moves. The render is drawn twice: once clipped to the shoulders (static), and once clipped to the head along the beard line (`HEAD_CLIP` / `BODY_CLIP`). The head copy is rotated and nudged around the neck, never scaled. A soft neck shadow behind the beard hides the seam.
+  - The head and eyes ease back to neutral after 3 s without cursor movement, or when the cursor leaves the window. Touch screens get a still avatar that only blinks.
+  - The `DISC` ellipse matches `.mascot-disc` in `css/main.css`, so change both together. If the render is replaced, re-trace `EYES`.
+- The drawn sprite sheets below are still used by the About-section illustration (`.ab-look`, `.ab-happy`).
 
 An illustrated likeness of Afaque Jaya, drawn as vector art from his profile
 photo (`img/profile/`): black hair with short faded sides and a swept-up top,

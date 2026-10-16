@@ -4467,9 +4467,16 @@ html.no-smooth { scroll-behavior: auto; }
 /* Bottom-right avatar a little larger */
 .mascot { --m: 96px; }
 @media (max-width: 760px) { .mascot.is-docked { --m: 78px; } }
-/* Corner mascot (drawn, cursor-following) — larger */
-.mascot { --m: 104px; }
-@media (max-width: 760px) { .mascot.is-docked { --m: 84px; } }
+/* Corner mascot: 3D avatar with live eyes (js/mascot.js) */
+.mascot { --m: 132px; }
+@media (max-width: 760px) { .mascot.is-docked { --m: 96px; } }
+.mascot.is-av svg.av {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 6px 8px rgba(18, 17, 16, 0.22));
+}
 
 /* Second Ask-AI card under the contact links (dark section) */
 .ask-zone--contact { margin-top: clamp(84px, 9vw, 110px); }
