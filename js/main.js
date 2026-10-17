@@ -492,6 +492,12 @@
   /* scrolling moves the card track sideways; then the page continues.  */
   /* Native scrolling is never hijacked — the track just follows it.     */
   /* ------------------------------------------------------------------ */
+  // While an in-page link is smooth-scrolling to a card in a pinned section,
+  // the focus that follows the click must not trigger a second (instant)
+  // scroll — that would cut the smooth scroll short on long jumps.
+  var hsNavUntil = 0;
+  window.addEventListener('scrollend', function () { hsNavUntil = 0; });
+
   var hsList = $$('[data-hscroll]').map(function (sec) {
     var o = {
       sec: sec,
@@ -592,7 +598,7 @@
     }, { passive: true });
     // Keyboard focus on a link in an off-screen card: bring that card in by scrolling the page.
     o.track.addEventListener('focusin', function (e) {
-      if (!o.on) return;
+      if (!o.on || Date.now() < hsNavUntil) return;
       o.viewport.scrollLeft = 0;
       var card = e.target.closest('.hcard');
       if (card && !card.classList.contains('is-current')) {
@@ -650,6 +656,7 @@
     if (hsY !== null) {
       e.preventDefault();
       history.pushState(null, '', '#' + id);
+      if (!reduced) hsNavUntil = Date.now() + 3000;
       window.scrollTo({ top: hsY, behavior: reduced ? 'auto' : 'smooth' });
     }
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');

@@ -495,7 +495,7 @@
         var aEl = el('a', 'cg-act is-link');
         aEl.href = l.href;
         if (l.download) aEl.setAttribute('download', l.download);
-        if (l.newTab) { aEl.target = '_blank'; aEl.rel = 'noopener'; }
+        if (l.newTab) { aEl.target = '_blank'; aEl.rel = 'noopener noreferrer'; }
         aEl.appendChild(el('span', '', a.label || l.label));
         aEl.appendChild(iconEl(l.download ? 'down' : 'out'));
         if (l.newTab) aEl.appendChild(el('span', 'sr-only', ' (opens in a new tab)'));

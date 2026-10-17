@@ -615,11 +615,15 @@
     smallMQ.addEventListener && smallMQ.addEventListener('change', function () { syncTop(false); });
 
     // Hide near the contact links (bottom-right content) and while the mobile menu is open.
-    var avoid = document.querySelector('.contact-links');
-    if (avoid && 'IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        setHidden('contact', entries[0].isIntersecting);
-      }, { rootMargin: '0px 0px 40px 0px' }).observe(avoid);
+    // ...and over the "work with me" cards, so it never covers the payment or contact buttons.
+    var avoidEls = [].slice.call(document.querySelectorAll('.contact-links, .engage'));
+    if (avoidEls.length && 'IntersectionObserver' in window) {
+      var seen = {};
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { seen[avoidEls.indexOf(en.target)] = en.isIntersecting; });
+        setHidden('contact', Object.keys(seen).some(function (k) { return seen[k]; }));
+      }, { rootMargin: '0px 0px 40px 0px' });
+      avoidEls.forEach(function (el) { io.observe(el); });
     }
     new MutationObserver(function () {
       setHidden('menu', document.documentElement.classList.contains('menu-open'));

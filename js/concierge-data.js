@@ -69,8 +69,8 @@ window.CONCIERGE_DATA = {
     roleCsm:    { id: 'role-csm',        label: 'CSM role',                   note: 'Software Engineer at CSM Technologies, Ranchi (Aug 2020 – Sep 2022).' },
     roleJusco:  { id: 'role-jusco',      label: 'JUSCO role',                 note: 'Android App Developer at JUSCO (Tata Steel company), Jamshedpur (Aug 2019 – Aug 2020).' },
     skills:     { id: 'skills',          label: 'View Technical Skills',      note: 'Skills grouped by job; highlighted = daily driver, dashed = still exploring.' },
-    about:      { id: 'about',           label: 'Read About Afaque',          note: 'His background and the principles he works by.' },
-    contact:    { id: 'contact',         label: 'Contact Afaque',             note: 'Email, LinkedIn, GitHub and the CV — all in one place.' }
+    about:      { id: 'about',           label: 'Read About Afaque',          note: 'His background, engineering strengths and links to the evidence behind them.' },
+    contact:    { id: 'work-with-me',    label: 'Contact Afaque',             note: 'Ways to work together: discuss a project by email or WhatsApp; existing clients can pay an agreed invoice here.' }
   },
 
   // ---------------------------------------------------------------- external links allowlist
@@ -78,6 +78,9 @@ window.CONCIERGE_DATA = {
     cv:         { label: 'View CV',           href: 'cv/cv.html', newTab: true },
     pdf:        { label: 'Download CV',       href: 'files/Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf', download: 'Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf' },
     email:      { label: 'Email Afaque',      href: 'mailto:afaquejaya123@gmail.com' },
+    inquiry:    { label: 'Discuss your project', href: 'mailto:afaquejaya123@gmail.com?subject=Project%20inquiry%20%E2%80%94%20via%20afaquejaya.github.io&body=Hi%20Afaque%2C%0D%0A%0D%0AWhat%20I%27d%20like%20to%20build%20%28or%20the%20role%29%3A%0D%0A%0D%0ATimeline%3A%0D%0A%0D%0ABudget%20range%20%28optional%29%3A%0D%0A%0D%0ABest%20way%20to%20reach%20me%3A%0D%0A' },
+    razorpay:   { label: 'Pay via Razorpay',  href: 'https://rzp.io/l/wGVlIuB', newTab: true },
+    whatsapp:   { label: 'Chat on WhatsApp',  href: 'https://wa.me/918797801820?text=Hi%20Afaque%2C%20I%20found%20your%20portfolio%20and%20I%E2%80%99d%20like%20to%20discuss%20a%20project.', newTab: true },
     linkedin:   { label: 'LinkedIn',          href: 'https://www.linkedin.com/in/afaque-jaya', newTab: true },
     github:     { label: 'GitHub',            href: 'https://github.com/Afaquejaya', newTab: true },
     rentalLive: { label: 'Open live SaaS',    href: 'https://rental-property.hatchable.site/', newTab: true },
@@ -95,7 +98,7 @@ window.CONCIERGE_DATA = {
     { id: 'projects',   label: 'Projects',        items: ['impressive', 'apps', 'challenging', 'rental', 'glowfit', 'pregnancy', 'impact'] },
     { id: 'technical',  label: 'Technical',       items: ['mcphow', 'scalable', 'apierrors', 'bookings', 'quality', 'improve'] },
     { id: 'leadership', label: 'Leadership',      items: ['distributed', 'ambiguous', 'qualityspeed', 'communicate'] },
-    { id: 'next',       label: 'CV & contact',    items: ['cv', 'download', 'best', 'contact', 'profiles'] }
+    { id: 'next',       label: 'CV & contact',    items: ['cv', 'download', 'best', 'contact', 'payment', 'profiles'] }
   ],
 
   // ---------------------------------------------------------------- answers
@@ -213,7 +216,7 @@ window.CONCIERGE_DATA = {
       keys: ['ownership', 'own it', 'idea to', 'deployment', 'end to end', 'end-to-end', 'zero to one', '0 to 1', '0→1'],
       answer: [
         'That is the pattern in his record: Jeeb went from zero to one with the founders; at CSM he owned requirements, biometric configuration, development, UAT, rollout and post-launch support; at Kobet he handled releases and CI/CD for both stores.',
-        '“Own it end to end” is also one of the principles he lists on this site.'
+        'His About section describes the same thing: owning the complete journey, from architecture and interface to backend integration and shipping.'
       ],
       actions: [{ nav: 'caseEvv' }, { nav: 'about' }],
       next: ['independent', 'impact']
@@ -456,7 +459,7 @@ window.CONCIERGE_DATA = {
       keys: ['performance', 'testing', 'tests', 'maintainab', 'quality', 'clean code', 'tdd', 'unit test', 'optimi'],
       answer: [
         'Performance: Jeeb’s homepage load was reported 95% faster, and at JUSCO he optimised API and database performance. Testing: he lists unit and UI testing, Mockito, TDD and UAT, and ran UAT for state rollouts at CSM.',
-        'Maintainability: Clean Architecture, MVVM and SOLID, and his principle that “architecture is for people” — clean boundaries so a team across three countries can move safely.'
+        'Maintainability: Clean Architecture, MVVM and SOLID, which he lists among his skills; “build for production” — performance and maintainability — is one of the strengths on his About section.'
       ],
       actions: [{ nav: 'skills' }, { nav: 'about' }],
       next: ['qualityspeed', 'scalable']
@@ -487,7 +490,7 @@ window.CONCIERGE_DATA = {
       keys: ['ambiguous', 'ambiguity', 'unclear', 'vague', 'requirements', 'uncertain'],
       answer: [
         'The closest evidence: at Jeeb he built from zero to one directly with the founders, and at CSM he owned requirements gathering for government apps under COVID-19 time pressure.',
-        'His stated principle is “ship, then sharpen”: get a real build into real hands early, then iterate with data.'
+        'The portfolio doesn’t document a specific process for ambiguity, so it’s a good interview question.'
       ],
       actions: [{ nav: 'about' }, { nav: 'caseJeeb' }],
       next: ['qualityspeed', 'communicate']
@@ -496,8 +499,8 @@ window.CONCIERGE_DATA = {
       id: 'qualityspeed', q: 'How does he balance engineering quality with delivery speed?',
       keys: ['balance', 'delivery speed', 'trade-off', 'tradeoff', 'trade off', 'deadline', 'quality vs', 'speed vs'],
       answer: [
-        'His listed principles cover both sides: “ship, then sharpen” for speed, “measure what matters” (load time, engagement, delivery speed — not lines of code) and clean architecture so teams can move without breaking each other.',
-        'In practice that shows up as server-driven UI at Jeeb (change content without a release) and a CI/CD release rhythm at Kobet.'
+        'The evidence on the site: server-driven UI at Jeeb (content changes without an app release), a CI/CD release rhythm at Kobet, and measured outcomes such as a 95% faster homepage.',
+        'The portfolio doesn’t document how he weighs this trade-off, so it’s worth asking him directly.'
       ],
       actions: [{ nav: 'about' }, { nav: 'caseKobet' }],
       next: ['quality', 'distributed']
@@ -536,10 +539,20 @@ window.CONCIERGE_DATA = {
     },
     {
       id: 'contact', q: 'How can I contact him?',
-      keys: ['^contact', 'email', 'reach him', 'get in touch', 'message him', 'talk to him', 'interview', 'available', 'availability'],
-      answer: ['The quickest way is email: afaquejaya123@gmail.com. He’s also on LinkedIn, and the contact section has everything in one place.'],
-      actions: [{ link: 'email' }, { link: 'linkedin' }, { nav: 'contact', label: 'Contact section' }],
-      next: ['cv', 'profiles']
+      keys: ['^contact', 'email', '^whatsapp', 'reach him', 'get in touch', 'message him', 'talk to him', 'interview', 'available', 'availability'],
+      answer: ['Email afaquejaya123@gmail.com — “Discuss your project” opens a short inquiry template — or message him on WhatsApp. He’s also on LinkedIn, and the contact section has everything in one place.'],
+      actions: [{ link: 'inquiry' }, { link: 'whatsapp' }, { nav: 'contact', label: 'Contact section' }],
+      next: ['cv', 'payment']
+    },
+    {
+      id: 'payment', q: 'How do payments work?',
+      keys: ['^pay', '^payment', '^payments', '^razorpay', 'invoice', 'milestone', '^pricing', '^price', '^prices', '^rates', 'hourly', 'cost', 'fees', 'charge', 'quote'],
+      answer: [
+        'Start by discussing your project — scope and terms are agreed with Afaque directly, and the portfolio doesn’t list prices.',
+        'Existing clients with an agreed invoice or milestone can pay through Razorpay (it opens Razorpay’s secure page in a new tab). Paying there doesn’t book a consultation.'
+      ],
+      actions: [{ link: 'inquiry' }, { link: 'razorpay' }, { nav: 'contact', label: 'Contact section' }],
+      next: ['contact', 'hire']
     },
     {
       id: 'profiles', q: 'Show me his GitHub and professional profiles.',
