@@ -88,3 +88,90 @@ opens on its own.
   should rate-limit, ground the model in the CV, and accept
   `POST { "question": string }` → `{ "answer": string }`. Then set its URL
   in `config.aiEndpoint`. Failures fall back to the local answer.
+
+### How the avatar chatbot works
+
+Three files work together: `js/mascot.js` draws the avatar,
+`js/concierge.js` runs the chat, and `js/concierge-data.js` holds
+everything the chat can say or do.
+
+```text
+click avatar ──▶ mascot.js ──▶ Concierge.toggle() ──▶ chat panel opens
+                                                          │
+visitor types or taps a chip ─────────────────────────────┘
+        │
+        ▼
+  clean + safety check ──(link / code / HTML?)──▶ "I can't open that"
+        │
+        ├─ "take me to …"? ──▶ allowlisted section ──▶ scroll + highlight
+        │
+        ├─ score every intent ──▶ confident match ──▶ stored answer + buttons
+        │
+        └─ no match ──▶ AI endpoint (only if configured) ──▶ honest fallback
+```
+
+**1. The avatar (`js/mascot.js`).** The 3D render
+`img/mascot/afaque-head.webp` is drawn twice: once clipped to the
+shoulders, which never move, and once clipped to the head, which rotates
+around the neck. SVG eyes sit over the render's eyes. On mouse and pen
+devices the eyes follow the cursor, the head leans after them, and both
+ease back to neutral after 3 s of no movement. It blinks at random, and a
+glint sweeps across the glasses. Touch screens get a still avatar that only
+blinks. Below 760 px wide it docks inside the About section rather than
+floating bottom-right. It hides while you scroll on touch screens, near the
+contact links and when the mobile menu is open.
+
+The first time it is settled and on screen, a "Hi, I'm Afaque's AI guide"
+bubble appears for about 7 s. It shows once per browser session, which is
+tracked in `sessionStorage`. Clicking the avatar or the bubble makes the
+head nod and blink, then calls `window.Concierge.toggle()`. While the panel
+is open the avatar stays calm: the eyes still track, but the head barely
+moves.
+
+**2. Understanding a question (`js/concierge.js`).** Each message goes
+through these steps in order:
+
+1. **Clean:** control characters are stripped and the text is cut to
+   `config.maxInput` (300) characters. Sends closer than 450 ms apart are
+   dropped.
+2. **Safety check:** text that looks like a URL, a domain, HTML,
+   `javascript:` or code gets a fixed "I can only show sections of this
+   portfolio" reply.
+3. **Navigation:** text that starts with a verb like "go to", "take me" or
+   "show me the" is matched against `SECTION_WORDS`. If a section is found,
+   the page scrolls there through `window.PortfolioNav`, the section glows
+   for a moment, and a "Now showing" note appears. On phones the panel
+   shrinks to a pill so it doesn't cover the content.
+4. **Intent scoring:** the text is lower-cased and split into words, and
+   filler words ("the", "how", "afaque", …) are dropped. Each intent in
+   `concierge-data.js` gets a score:
+
+   | Match | Points |
+   | --- | --- |
+   | Exact question text | 100 |
+   | Strong phrase key (`'^two words'`) | 3.5 |
+   | Strong word key (`'^word'`) | 3 |
+   | Phrase key (`'two words'`) | 2.6 |
+   | Word key, including prefixes of 4+ letters like `communicat` → `communication` | 1.25 |
+
+   The best intent wins if it scores 2.4 or more, or 1.25 or more with a
+   clear lead over the runner-up. The bot then shows a short typing
+   indicator, the stored answer, its action buttons and 2–3 follow-up
+   chips from `next`.
+5. **Fallback:** if nothing matches and `config.aiEndpoint` is set, the
+   question is posted there (at most 20 calls per visit, 2.5 s apart, 9 s
+   timeout). Otherwise, or if that call fails, the bot says the portfolio
+   doesn't answer that question and offers the closest questions, the
+   Ask-AI card and an email link.
+
+**3. Rendering and actions.** Messages are built with `textContent` only and
+never with `innerHTML` from visitor input. A button can do just two things:
+`{ nav: key }` scrolls to an id listed in `sections`, and `{ link: key }`
+opens a URL listed in `links`. Visitors can also browse questions by
+category (`categories`) without typing anything. Nothing they type is
+stored or sent anywhere unless an AI endpoint is configured.
+
+**Adding a question:** add an object to `intents` in
+`js/concierge-data.js` with `id`, `q`, `keys`, `answer` and, optionally,
+`actions` and `next`. For a new destination, add it to `sections` (with a
+real element id from `index.html`) or `links` first.

@@ -55,7 +55,7 @@ window.CONCIERGE_DATA = {
     builds:     { id: 'builds',          label: 'Explore SaaS & AI work',     note: 'His own products: the rental SaaS, its MCP integration, GlowFit AI, the Pregnancy Tracker and an AI expense tracker.' },
     rental:     { id: 'build-rental',    label: 'View the Rental SaaS',       note: 'The Rental Property Management SaaS: leases, billing, payments, owner and tenant portals.', next: 'mcphow' },
     mcp:        { id: 'build-mcp',       label: 'View SaaS & MCP Architecture', note: 'The MCP flow: AI client → owner-scoped auth → MCP tools → the SaaS APIs → the owner’s records only.', next: 'mcpauth' },
-    glowfit:    { id: 'build-glowfit',   label: 'Explore GlowFit AI',         note: 'GlowFit AI — real screenshots of skin analysis and virtual try-on, with live demo and GitHub links.' },
+    glowfit:    { id: 'build-glowfit',   label: 'Explore GlowFit AI',         note: 'GlowFit AI — real screenshots of skin analysis and virtual try-on, with live demo, video and GitHub links.' },
     pregnancy:  { id: 'build-pregnancy', label: 'See the Pregnancy Tracker',  note: 'The Pregnancy Tracker’s home screen, next to a representation of its 4×2 home-screen widget.', thumb: 'img/projects/pregnancy/icon.webp' },
     expense:    { id: 'build-expense',   label: 'See the AI Expense Tracker', note: 'Plain-language expenses in, structured JSON out — Flutter app with a FastAPI and LangChain backend.' },
     impact:     { id: 'impact',          label: 'See measured impact',        note: 'Each number here is tied to the product and team where it happened.' },
@@ -86,6 +86,7 @@ window.CONCIERGE_DATA = {
     github:     { label: 'GitHub',            href: 'https://github.com/Afaquejaya', newTab: true },
     rentalLive: { label: 'Open live SaaS',    href: 'https://rental-property.hatchable.site/', newTab: true },
     glowfitLive:{ label: 'GlowFit live demo', href: 'https://glowfit-ai.vercel.app', newTab: true },
+    glowfitVideo:{ label: 'Watch GlowFit video', href: 'https://www.youtube.com/watch?v=EdBg7vJooeQ', newTab: true },
     glowfitGit: { label: 'GlowFit on GitHub', href: 'https://github.com/Afaquejaya/glowfit-ai', newTab: true },
     expenseCode:{ label: 'Expense tracker code & notes', href: 'https://gist.github.com/Afaquejaya/a4d157d4255799bd6e3521320f6d9537', newTab: true },
     tbayPlay:   { label: 'Tbay on Google Play', href: 'https://play.google.com/store/apps/details?id=com.gonglian.tbay', newTab: true },
@@ -318,9 +319,9 @@ window.CONCIERGE_DATA = {
       keys: ['^glowfit', 'glow fit', 'beauty', 'makeup', 'skin', 'try on', 'try-on', 'youcam', 'perfect corp', 'hackathon'],
       answer: [
         'GlowFit AI is a web app built for a Perfect Corp hackathon: one selfie in, skin analysis (a score, 8 metrics and a GlowMap) plus virtual try-on of three looks with a score for which suits you, a budget mode and “change one thing” previews.',
-        'It’s built with Next.js and TypeScript on YouCam’s APIs and MediaPipe, with a live demo and source on GitHub.'
+        'It’s built with Next.js and TypeScript on YouCam’s APIs and MediaPipe, with a live demo, a video walkthrough on YouTube and source on GitHub.'
       ],
-      actions: [{ nav: 'glowfit', label: 'Explore GlowFit AI' }, { link: 'glowfitLive' }, { link: 'glowfitGit' }],
+      actions: [{ nav: 'glowfit', label: 'Explore GlowFit AI' }, { link: 'glowfitLive' }, { link: 'glowfitVideo' }, { link: 'glowfitGit' }],
       next: ['aimcp', 'pregnancy']
     },
     {
