@@ -107,7 +107,7 @@
           ? '<span class="ix-grid" aria-hidden="true"><i></i><i></i><i></i><i></i></span>'
           : src ? '<img src="' + esc(src) + '" width="28" height="28" alt="" decoding="async">' : '<span class="ix-dot" aria-hidden="true"></span>';
         return '<a href="#' + c.id + '">' + pic + esc(c.getAttribute('data-short') || name) + '</a>';
-      }).join('');
+      }).join('') + '<span class="ix-ind" aria-hidden="true"></span>'; // the sliding pill behind the active tab
     }
   }
 
@@ -507,6 +507,7 @@
       bar: $('.hs-progress i', sec),
       count: $('.hs-count', sec),
       index: $$('.app-index a', sec),
+      ind: $('.app-index .ix-ind', sec),
       cards: [],
       dist: 0,
       on: false,
@@ -531,6 +532,8 @@
       o.sec.style.height = (o.dist + window.innerHeight) + 'px';
     });
     hsFit();
+    // Tab widths may have changed (resize, fonts): re-seat the pill without sliding.
+    hsList.forEach(function (o) { hsIndicator(o, true); });
   }
 
   var FIT_MAX = 5;
@@ -552,6 +555,20 @@
     return o.dist ? Math.min(1, Math.max(0, -r.top / o.dist)) : 0;
   }
 
+  // App tabs: like the section tabs up top, a filled pill slides to the
+  // active app instead of each tab switching its own background.
+  function hsIndicator(o, instant) {
+    if (!o.ind) return;
+    var link = o.index[o.current];
+    var show = !!(link && link.offsetWidth);
+    o.ind.classList.toggle('is-on', show);
+    if (!show) return;
+    if (instant) o.ind.style.transition = 'opacity .35s';
+    o.ind.style.width = link.offsetWidth + 'px';
+    o.ind.style.transform = 'translateX(' + link.offsetLeft + 'px)';
+    if (instant) { void o.ind.offsetWidth; o.ind.style.transition = ''; }
+  }
+
   function hsUpdate() {
     hsList.forEach(function (o) {
       var p;
@@ -568,10 +585,13 @@
       if (o.bar) o.bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
       var i = Math.round(p * (o.cards.length - 1));
       if (i !== o.current && o.cards.length) {
+        var first = o.current === -1;
         o.current = i;
         if (o.count) o.count.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(o.cards.length).padStart(2, '0');
         o.index.forEach(function (a, j) { j === i ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'); });
         o.cards.forEach(function (c, j) { c.classList.toggle('is-current', j === i); });
+        // First placement appears in place; afterwards it slides tab to tab.
+        hsIndicator(o, first);
       }
     });
   }

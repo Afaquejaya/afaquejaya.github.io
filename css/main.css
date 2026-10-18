@@ -1745,7 +1745,30 @@ section[tabindex="-1"]:focus, article[tabindex="-1"]:focus { outline: none; }
   font-weight: 600;
 }
 .mascot-bubble span { display: block; }
-.mascot.is-talking .mascot-bubble { opacity: 1; transform: none; pointer-events: auto; }
+.mascot-bubble b { display: block; margin-bottom: 3px; font-weight: 600; letter-spacing: -0.01em; }
+.mascot-bubble small { display: block; margin-top: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.mascot-bubble:empty { display: none; }
+/* Tail pointing at the avatar */
+.mascot-bubble::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 8px;
+  width: 14px;
+  height: 14px;
+  background: inherit;
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+.mascot.is-talking .mascot-bubble { opacity: 1; transform: none; pointer-events: auto; cursor: pointer; }
+.mascot.is-talking .mascot-disc { animation: mascot-ping 1.6s var(--ease-out) 2; }
+@keyframes mascot-ping {
+  0% { box-shadow: 0 0 0 3px var(--paper), 0 0 0 3px var(--accent), 0 14px 30px -12px rgba(18, 17, 16, 0.55); }
+  100% { box-shadow: 0 0 0 3px var(--paper), 0 0 0 18px rgba(255, 255, 255, 0), 0 14px 30px -12px rgba(18, 17, 16, 0.55); }
+}
+/* Docked (phones) the bubble can sit over the dark Skills panel — a thin paper ring keeps its edge. */
+.mascot.is-docked .mascot-bubble { bottom: calc(100% - 2px); right: calc(100% - 14px); box-shadow: 0 0 0 1.5px var(--paper), 0 18px 40px -18px rgba(0, 0, 0, 0.6); }
+@media (prefers-reduced-motion: reduce) { .mascot.is-talking .mascot-disc { animation: none; } }
 
 /* --------------------------------------------------------------------------
    Tech logos inside chips / skill items (added by js/main.js)
@@ -2796,17 +2819,39 @@ a.logo-item:hover, a.logo-item:focus-visible {
   backdrop-filter: saturate(1.6) blur(18px);
 }
 .work-light .app-index a {
+  position: relative;
+  z-index: 1;
   border: 0;
   background: transparent;
   color: var(--ink-2);
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.3s, color 0.4s var(--ease-out), box-shadow 0.3s;
 }
 .work-light .app-index a:hover { background: rgba(255, 255, 255, 0.75); color: var(--ink); border: 0; }
 .work-light .app-index a[aria-current="true"] {
-  background: var(--ink);
+  background: transparent;
   color: var(--paper);
-  box-shadow: 0 8px 18px -10px rgba(18, 17, 16, 0.7);
+  box-shadow: none;
 }
+.work-light .app-index a[aria-current="true"]:hover { background: transparent; color: var(--paper); }
+/* The filled pill that glides from tab to tab (js/main.js → hsIndicator) */
+.app-index .ix-ind {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: 0 8px 18px -10px rgba(18, 17, 16, 0.7);
+  opacity: 0;
+  transform: translateX(0);
+  transition: transform 0.6s var(--ease-out), width 0.6s var(--ease-out), opacity 0.35s;
+  pointer-events: none;
+}
+.app-index .ix-ind.is-on { opacity: 1; }
+/* Without the script's pill (e.g. before it has measured), fall back to a filled tab. */
+.work-light .app-index:not(:has(.ix-ind.is-on)) a[aria-current="true"] { background: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .app-index .ix-ind { transition: opacity 0.35s; } }
 .work-light .app-index img { background: #fff; box-shadow: 0 0 0 1px var(--line); object-fit: cover; }
 .ix-grid {
   display: grid;

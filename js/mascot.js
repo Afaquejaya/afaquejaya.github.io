@@ -216,7 +216,9 @@
       '<button type="button" class="mascot-btn" aria-label="Chat with Afaque’s AI Portfolio Guide" aria-haspopup="dialog" aria-controls="concierge" aria-expanded="false">' +
         '<span class="mascot-disc" aria-hidden="true"></span>' +
         '<span class="mascot-body" aria-hidden="true">' + artMarkup() + '</span>' +
-      '</button>';
+      '</button>' +
+      // A short hello that appears once, so visitors know the avatar opens a chat.
+      '<span class="mascot-bubble" role="status" aria-live="polite"></span>';
 
     var btn = root.querySelector('.mascot-btn');
     var art = root.querySelector('svg.av');
@@ -467,6 +469,7 @@
 
     listen(btn, 'click', function () {
       clearTimers();
+      hush();
       // A quick nod and blink acknowledge the click; the head only, never the body.
       if (!reduceMQ.matches) { S.hy += 0.45; kick(); }
       S.hold = 1;
@@ -479,6 +482,7 @@
     listen(window, 'concierge:state', function (e) {
       var open = !!(e.detail && e.detail.open);
       S.calm = open;
+      if (open) hush();
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (px !== null) { aimPending = true; kick(); } else neutral();
     });
@@ -492,8 +496,56 @@
     function applyHidden() {
       var hidden = !root.classList.contains('is-docked') && Object.keys(hideReasons).length > 0;
       root.classList.toggle('is-away', hidden);
-      if (hidden) root.classList.remove('is-talking');
+      if (hidden) hush(false); else maybeGreet();
       btn.tabIndex = hidden ? -1 : 0;
+    }
+
+    /* ---- hello bubble ----
+       The first time the avatar is settled and in view, a speech bubble says
+       what it is and invites a question. It stays ~7s, goes away as soon as
+       the visitor opens the guide, and shows once per browser session. */
+    var bubble = root.querySelector('.mascot-bubble');
+    var GREET_KEY = 'aj-guide-hello';
+    var greeted = false, greetTimer = null, greetHide = null, inView = true;
+    try { greeted = sessionStorage.getItem(GREET_KEY) === '1'; } catch (e) {}
+
+    // Stop any pending or showing hello. done=true: never show it again this session.
+    function hush(done) {
+      clearTimeout(greetTimer); clearTimeout(greetHide); greetTimer = greetHide = null;
+      root.classList.remove('is-talking');
+      if (done !== false) {
+        greeted = true;
+        try { sessionStorage.setItem(GREET_KEY, '1'); } catch (e) {}
+      }
+    }
+    function canGreet() { return !greeted && !S.calm && inView && !root.classList.contains('is-away'); }
+    function greet() {
+      if (!canGreet()) return;
+      greeted = true;
+      try { sessionStorage.setItem(GREET_KEY, '1'); } catch (e) {}
+      bubble.innerHTML =
+        '<b>Hi, I’m Afaque’s AI guide 👋</b>' +
+        '<span>Ask me anything — his apps, stack, rates or availability.</span>' +
+        '<small>Tap to chat</small>';
+      void bubble.offsetWidth; // it was display:none while empty — let the fade-in run
+      root.classList.add('is-talking');
+      greetHide = setTimeout(function () { root.classList.remove('is-talking'); }, 7000);
+    }
+    function maybeGreet() {
+      if (greetTimer || !canGreet()) return;
+      greetTimer = setTimeout(function () { greetTimer = null; greet(); }, 1400);
+    }
+    // The bubble opens the guide too.
+    listen(bubble, 'click', function () { btn.click(); });
+    // Docked in the About section on phones: wait until it has scrolled into view.
+    if ('IntersectionObserver' in window) {
+      inView = false;
+      var seeMe = new IntersectionObserver(function (entries) {
+        inView = entries.some(function (en) { return en.isIntersecting; });
+        if (inView) maybeGreet(); else if (!greeted) hush(false);
+      }, { threshold: 0.6 });
+      seeMe.observe(root);
+      offs.push(function () { seeMe.disconnect(); });
     }
 
     // Below 760px the mascot sits inline in the About section instead of floating
