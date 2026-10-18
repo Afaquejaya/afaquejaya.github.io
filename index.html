@@ -78,6 +78,7 @@
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
         <a href="#about">About</a>
+        <a href="#feedback">Feedback</a>
         <a href="#contact" class="tab-contact">Contact</a>
       </nav>
 
@@ -98,6 +99,7 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#feedback">Feedback</a></li>
       <li><a href="#contact">Contact</a></li>
     </ol>
     <div class="menu-foot">
@@ -1231,12 +1233,36 @@
       </div>
     </section>
 
+    <!-- ===================================================== Feedback -->
+    <section class="feedback" id="feedback" aria-labelledby="feedback-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow"><span class="num">08</span> Feedback</p>
+            <h2 class="section-title" id="feedback-title" style="margin-top:18px">What it’s like <span class="serif">working with me.</span></h2>
+          </div>
+          <p class="section-lead">Short notes from the kinds of people I ship with — engineering managers, product owners, teammates and clients — each tied to the work it came from.</p>
+        </div>
+
+        <div class="fb-bar" id="feedback-bar" hidden>
+          <!-- js/main.js: the “send a note” link -->
+        </div>
+      </div>
+
+      <!-- One slow, continuous row (pauses on hover; swipeable on touch screens) -->
+      <div class="fb-row marquee" id="feedback-row" data-reveal="fade">
+        <ul class="fb-track marquee-track" id="feedback-grid" aria-label="Professional feedback">
+          <!-- js/main.js inserts the cards from js/testimonials.js here -->
+        </ul>
+      </div>
+    </section>
+
     <!-- ===================================================== Contact -->
     <section class="contact on-night" id="contact" aria-labelledby="contact-title">
       <div class="wrap">
         <div class="contact-top">
         <div class="contact-intro">
-        <p class="eyebrow"><span class="num">08</span> Contact</p>
+        <p class="eyebrow"><span class="num">09</span> Contact</p>
         <h2 class="contact-title" id="contact-title" style="margin-top:22px" data-reveal>Have an interesting product to build? <span class="serif">Let’s talk.</span></h2>
         <p class="contact-lead" data-reveal style="--d:.08s">I’m happy to talk about senior mobile and full-stack roles, 0→1 product builds, or a team that needs someone who can ship across Android, iOS and the web.</p>
 
@@ -1363,6 +1389,7 @@
   <div class="toast" role="status" aria-live="polite"></div>
 
   <script src="js/data.js" defer></script>
+  <script src="js/testimonials.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/concierge-data.js" defer></script>
   <script src="js/concierge.js" defer></script>

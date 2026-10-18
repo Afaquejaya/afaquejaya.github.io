@@ -64,6 +64,7 @@ window.CONCIERGE_DATA = {
     caseKobet:  { id: 'case-kobet',      label: 'Kobet case study',           note: 'Kobet: a FinTech app family built by one team across Dubai, China and Sri Lanka.', thumb: 'img/logos/kobet.webp' },
     caseEvv:    { id: 'case-evv',        label: 'eVV case study',             note: 'eVV: keeping a state’s schools running through COVID-19.', thumb: 'img/apps/evv/icon.webp' },
     experience: { id: 'experience',      label: 'Review Experience',          note: 'His career path from 2018 to 2026, newest role first, with outcomes per role.' },
+    feedback:   { id: 'feedback',        label: 'What it’s like working with him', note: 'Short working-style notes from managers, product owners, teammates and clients. Cards marked “Sample” are illustrative drafts until verified testimonials replace them.' },
     roleKobet:  { id: 'role-kobet',      label: 'Kobet role',                 note: 'Senior Software Engineer at Kobet Technology, Dubai (Sep 2024 – Jul 2026).' },
     roleJeeb:   { id: 'role-jeeb',       label: 'Jeeb role',                  note: 'Software Engineer at Jeeb, Doha (Sep 2022 – Sep 2024).' },
     roleCsm:    { id: 'role-csm',        label: 'CSM role',                   note: 'Software Engineer at CSM Technologies, Ranchi (Aug 2020 – Sep 2022).' },

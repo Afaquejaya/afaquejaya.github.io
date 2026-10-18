@@ -14,6 +14,7 @@ no build step and no runtime dependencies.
 | `index.html` | The page: hero + logo strip, published apps, SaaS & AI builds (Rental SaaS + MCP, GlowFit AI, Pregnancy Tracker), impact, case studies, career journey, skills, about, contact |
 | `css/main.css` | Design system and all styles (tokens at the top) |
 | `js/data.js` | **Published apps** and the **logo strip** — names, copy, metrics, store links, screenshots. Edit them here |
+| `js/testimonials.js` | **Feedback cards** for “What it’s like working with me”. Ships with clearly marked *sample* drafts — replace them with verified testimonials (see below) |
 | `js/main.js` | Renders the apps, adds tech logos to skill chips (`TECH` map), sliding section tabs, pinned horizontal-scroll sections (`data-hscroll`), scroll reveals, parallax, mobile menu, counters |
 | `js/mascot.js` | The bottom-right 3D avatar: head and eyes follow the cursor; clicking it opens the AI Portfolio Guide (behaviour adapted from [page-mascot](https://github.com/nilbuild/page-mascot), MIT) |
 | `js/concierge.js` + `css/concierge.css` | **AI Portfolio Guide** — the chat panel behind the avatar: answers, allowlisted navigation, highlights, follow-ups |
@@ -40,6 +41,30 @@ Then open <http://localhost:5173/>.
 Add or edit an entry in `js/data.js`. Screenshots marked `kind: 'ui'` are
 raw app captures and get a phone frame; `kind: 'store'` are store marketing
 panels that already include device art and are shown as cards.
+
+## Updating testimonials
+
+The “What it’s like working with me” section (`#feedback`) is rendered from
+`js/testimonials.js` as one slow, continuously scrolling row (it pauses on
+hover and becomes a swipeable row on touch screens). The entries it ships with
+are **illustrative drafts**, written from the projects on this site — they are
+not quotes from real people, and nothing on the page marks them as drafts.
+`verified: false` in the data file is the only record of which ones they are.
+
+To publish real feedback:
+
+1. Ask the person for a short note (20–40 words) and for permission to show it,
+   together with what they are happy to display (role and context are enough;
+   name or a profile link only if they agree).
+2. Replace a sample entry: paste the quote into `quote` (wrap one phrase in
+   `*asterisks*` to highlight it), set `rating` (1–5, halves allowed), fill
+   `who` (`role`, `context`, optional `name`, `link`) and point `ref` at the
+   matching case study or app. For the avatar, add the person's `photo`
+   (drop it in `img/feedback/`) or, for company feedback, the company `logo`
+   (e.g. one from `img/logos/`); otherwise initials are shown.
+3. Set `verified: true` so the file records which entries are real.
+4. Delete any sample entry you have not replaced — do not leave drafts
+   presented as real reviews.
 
 ## AI Portfolio Guide
 

@@ -125,6 +125,79 @@
     }).join('');
   }
 
+  /* Feedback row (js/testimonials.js). Cards are rendered twice for a
+     seamless marquee (the copy is aria-hidden and unfocusable). */
+  var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 6.2 6.8.8-5 4.7 1.3 6.8L12 17.8l-6 3.3 1.3-6.8-5-4.7 6.8-.8z"/></svg>';
+  function renderFeedback() {
+    var sec = $('#feedback');
+    var row = $('#feedback-row');
+    var track = $('#feedback-grid');
+    var bar = $('#feedback-bar');
+    var t = window.TESTIMONIALS;
+    if (!sec || !track) return;
+    if (!t || !t.items || !t.items.length) { sec.hidden = true; return; }
+    // *phrase* → highlighted phrase (after escaping, so markup in data stays text)
+    function rich(str) { return esc(str).replace(/\*([^*]+)\*/g, '<em class="hl">$1</em>'); }
+    function initials(w) {
+      if (w.initials) return String(w.initials).slice(0, 2);
+      return String(w.name || w.role || '').split(/\s+/).slice(0, 2).map(function (p) { return p.charAt(0); }).join('').toUpperCase();
+    }
+    // photo → logo → initials
+    function avatar(w) {
+      if (w.photo) return '<img class="fb-av is-photo" src="' + esc(w.photo) + '" width="44" height="44" alt="" loading="lazy" decoding="async">';
+      if (w.logo) return '<span class="fb-av is-logo" aria-hidden="true"><img src="' + esc(w.logo) + '" alt="" loading="lazy" decoding="async"></span>';
+      return '<span class="fb-av" aria-hidden="true">' + esc(initials(w)) + '</span>';
+    }
+    function stars(r) {
+      r = Number(r);
+      if (!(r > 0)) return '';
+      r = Math.min(5, r);
+      var five = STAR + STAR + STAR + STAR + STAR;
+      return '<span class="fb-stars" role="img" aria-label="Rated ' + r + ' out of 5">' +
+        '<span class="fb-stars-off">' + five + '</span>' +
+        '<span class="fb-stars-on" style="width:' + (r / 5 * 100).toFixed(1) + '%">' + five + '</span></span>';
+    }
+    function card(it, i, dup) {
+      var w = it.who || {};
+      var tab = dup ? ' tabindex="-1"' : '';
+      var lines = w.name
+        ? '<b>' + esc(w.name) + '</b><span>' + esc([w.role, w.context].filter(Boolean).join(' · ')) + '</span>'
+        : '<b>' + esc(w.role || '') + '</b>' + (w.context ? '<span>' + esc(w.context) + '</span>' : '');
+      var meta = w.link
+        ? '<a class="fb-meta" href="' + esc(w.link) + '" target="_blank" rel="noopener"' + tab + '>' + lines + '</a>'
+        : '<span class="fb-meta">' + lines + '</span>';
+      var ref = it.ref && it.ref.href
+        ? '<a class="fb-ref" href="' + esc(it.ref.href) + '"' + tab + '>' + esc(it.ref.label || 'See the work') + ' <span aria-hidden="true">→</span></a>'
+        : '';
+      return '<li class="fb-card"' + (dup ? ' aria-hidden="true"' : '') + '>' +
+        '<div class="fb-top"><span class="fb-tag">' + esc(it.strength || '') + '</span>' +
+          stars(it.rating) +
+        '</div>' +
+        '<blockquote class="fb-quote"><p>' + rich(it.quote || '') + '</p></blockquote>' +
+        '<footer class="fb-who">' + avatar(w) + meta + ref + '</footer>' +
+      '</li>';
+    }
+    track.innerHTML =
+      t.items.map(function (it, i) { return card(it, i, false); }).join('') +
+      t.items.map(function (it, i) { return card(it, i, true); }).join('');
+
+    if (bar) {
+      bar.innerHTML = t.cta && t.cta.href
+        ? '<a class="btn ghost fb-cta" href="' + esc(t.cta.href) + '">' + esc(t.cta.label || 'Send a note') + ' <span class="arrow" aria-hidden="true">→</span></a>'
+        : '';
+      bar.hidden = !bar.innerHTML;
+    }
+    if (!row) return;
+    // Constant reading speed whatever the number of cards (~40px per second).
+    function pace() { row.style.setProperty('--marquee-dur', Math.max(20, Math.round(track.scrollWidth / 2 / 40)) + 's'); }
+    pace();
+    window.addEventListener('resize', pace, { passive: true });
+    // Pause the loop while it's off screen.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { row.classList.toggle('is-offscreen', !e[0].isIntersecting); }).observe(row);
+    }
+  }
+
   /* Logo strip: one list rendered twice for a seamless CSS marquee */
   function renderLogos() {
     var track = $('#logo-track');
@@ -217,6 +290,7 @@
   renderMore();
   renderRoleApps();
   renderLogos();
+  renderFeedback();
   decorateTech(document);
 
   /* ------------------------------------------------------------------ */
