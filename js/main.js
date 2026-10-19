@@ -288,6 +288,8 @@
 
   renderApps();
   renderMore();
+  // "Explore All Projects" → the showcase site (configurable in js/data.js).
+  if (data.showcaseUrl) $$('[data-showcase-link]').forEach(function (a) { a.setAttribute('href', data.showcaseUrl); });
   renderRoleApps();
   renderLogos();
   renderFeedback();

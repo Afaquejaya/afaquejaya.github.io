@@ -1,0 +1,1141 @@
+// @ts-check
+/**
+ * The project catalog. Every page of the showcase is rendered from this file.
+ *
+ * To add a project: append an object to PROJECTS (only the fields marked
+ * required are needed), drop its images in /img/projects/<id>/, done.
+ *
+ * Ground rules for content (keep them when editing):
+ *  - Only claims backed by the CV PDF, the store listings or the project's
+ *    own code/README. Metrics carry a `source`.
+ *  - Mark limits honestly: `planned` features, `notes` callouts, `status`.
+ *  - No secrets, customer data, private repo links or employer internals.
+ *
+ * Sources checked 19 Oct 2026: files/Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf,
+ * js/data.js (store listings, 15 Oct 2026), the public repos on
+ * github.com/Afaquejaya, and the local project folders.
+ *
+ * Image paths are relative to the portfolio root (they resolve through
+ * SITE.assetBase in config.js), so the main site and the showcase share one
+ * copy of each file.
+ */
+
+/**
+ * @typedef {'mobile'|'web'|'saas'|'ai'|'agents'|'backend'|'experiments'} CategoryId
+ * @typedef {'live'|'shipped'|'in-development'|'prototype'|'learning'} Status
+ * @typedef {'public'|'private'|'internal'|'client'} Visibility
+ *
+ * @typedef {Object} Image
+ * @property {string} src            Path from the portfolio root
+ * @property {number} w
+ * @property {number} h
+ * @property {string} alt
+ * @property {'phone'|'web'|'logo'|'panel'|'art'} [frame]  How to present it (default: phone if portrait, web if landscape)
+ *                                  'art' = a full-bleed 16:10 composition (already includes its own devices)
+ * @property {boolean} [illustrative] Concept artwork, not a screenshot — labelled as such wherever it is shown
+ * @property {string} [caption]
+ *
+ * @typedef {Object} Link
+ * @property {'live'|'play'|'ios'|'github'|'video'|'code'|'case'|'web'} type
+ * @property {string} url
+ * @property {string} [label]
+ * @property {string} [note]         e.g. "sign-in required"
+ *
+ * @typedef {Object} Feature
+ * @property {string} title
+ * @property {string} [detail]
+ * @property {boolean} [planned]     Not built yet — rendered with a "Planned" tag
+ *
+ * @typedef {Object} ArchNode
+ * @property {string} title
+ * @property {string} [detail]
+ * @property {boolean} [hot]         Highlight the node that carries the interesting logic
+ *
+ * @typedef {Object} Architecture
+ * @property {string} [summary]
+ * @property {ArchNode[]} flow
+ * @property {string[]} [guards]     Safety boundaries / guarantees shown under the flow
+ * @property {string} [caption]
+ *
+ * @typedef {Object} AgentProfile   For AI-agent projects
+ * @property {string} objective
+ * @property {string} input          How it receives a task
+ * @property {string} reasoning      How it chooses an action
+ * @property {string[]} tools
+ * @property {string} execution      How execution and results are handled
+ * @property {string} safety         Human approval and safety boundaries
+ * @property {string} models         Local vs cloud model strategy
+ *
+ * @typedef {Object} Metric
+ * @property {string} value
+ * @property {string} label
+ * @property {string} [source]
+ *
+ * @typedef {Object} Challenge
+ * @property {string} title
+ * @property {string} detail
+ * @property {string} [resolution]
+ *
+ * @typedef {Object} Decision
+ * @property {string} title
+ * @property {string} detail
+ * @property {string} [tradeoff]
+ *
+ * @typedef {Object} Project
+ * @property {string} id                       required — also the URL slug
+ * @property {string} title                    required
+ * @property {string} tagline                  required — one-line value proposition
+ * @property {CategoryId[]} categories         required — first one is the primary label
+ * @property {Status} status                   required
+ * @property {string[]} technologies           required
+ * @property {string} [summary]                Short problem/solution line for cards
+ * @property {string} [description]            Overview paragraph(s), split on blank lines
+ * @property {string} [period]                 e.g. "2024 – 2026"
+ * @property {string} [context]                Where it was built (employer, hackathon, personal)
+ * @property {string[]} [platforms]
+ * @property {Visibility} [visibility]
+ * @property {number} [featured]               Order in the Featured section (lower first)
+ * @property {string} [accent]                 Hex colour for the project's glow
+ * @property {string} [icon]
+ * @property {Image} [thumbnail]
+ * @property {Image[]} [screenshots]
+ * @property {string} [screenshotsNote]
+ * @property {string} [problem]
+ * @property {string} [solution]
+ * @property {Feature[]} [features]
+ * @property {string[]} [role]
+ * @property {Architecture} [architecture]
+ * @property {AgentProfile} [agent]
+ * @property {Record<string, string[]>} [stack] Grouped technology stack for the detail page
+ * @property {Challenge[]} [challenges]
+ * @property {Decision[]} [decisions]
+ * @property {Metric[]} [impact]
+ * @property {string} [impactNote]
+ * @property {Link[]} [links]
+ * @property {string[]} [notes]                Honesty callouts shown on the detail page
+ * @property {string[]} [related]              Project ids; otherwise computed
+ */
+
+/** @type {Project[]} */
+export const PROJECTS = [
+  /* ===================================================================== SaaS */
+  {
+    id: 'rental-saas',
+    title: 'Rental Property Management SaaS',
+    tagline: 'The whole rent cycle for landlords — leases, bills, payments and expenses — in one workspace.',
+    categories: ['saas', 'web', 'backend', 'ai'],
+    status: 'live',
+    visibility: 'private',
+    featured: 1,
+    accent: '#e2a54a',
+    period: 'Sep – Oct 2026',
+    context: 'Personal product',
+    platforms: ['Web', 'Mobile web'],
+    technologies: ['JavaScript', 'PostgreSQL', 'REST API', 'MCP', 'Hatchable', 'Razorpay', 'Stripe'],
+    summary: 'Landlords juggle spreadsheets, chats and receipts. One owner-scoped workspace covers properties, tenants, leases, billing, payments and reports — with a tenant portal and AI access over MCP.',
+    description:
+      'A multi-role SaaS for landlords in the UAE and the Gulf, with three portals: landlord, tenant and admin. It models the full rent cycle — property and unit, lease, bill (including meter readings), payment, receipt — and the costs around it.\n\n' +
+      'An owner can ask an AI assistant about their own portfolio, either inside the app or from an MCP-compatible AI client. Both paths are read-only and scoped to that owner’s data.',
+    thumbnail: { src: 'img/projects/rental/invoices.webp', w: 1280, h: 720, frame: 'web', alt: 'Invoices screen of the Rental SaaS: invoiced, collected, outstanding and overdue totals above a list of rent invoices with statuses', caption: 'Invoices — sample data' },
+    screenshots: [
+      { src: 'img/projects/rental/invoices.webp', w: 1280, h: 720, frame: 'web', alt: 'Invoices screen with totals and a filterable list of rent invoices', caption: 'Invoices and balances' },
+      { src: 'img/projects/rental/property-ai.webp', w: 398, h: 462, frame: 'panel', alt: 'Property AI panel answering “Which tenants have overdue rent?” with two tenants, amounts and days overdue, and a source line', caption: 'Property AI — read-only, cites its source' }
+    ],
+    screenshotsNote: 'Screens from the running app with sample data. The live app is behind sign-in.',
+    problem: 'Small landlords track rent in spreadsheets and chat threads. Overdue rent, expiring leases and utility readings slip, and there is no single view of what each property actually earns.',
+    solution: 'A workspace per owner that ties every invoice to a lease and every payment to an invoice, so the dashboard, reminders and reports all come from the same records — and an assistant can answer questions from them.',
+    features: [
+      { title: 'Properties, units, tenants & leases', detail: 'Lease lifecycle with renewals, terminations and rent history.' },
+      { title: 'Rent billing', detail: 'Batch invoice generation with proration; utility bills refuse to run without current and previous meter readings.' },
+      { title: 'Payments & reconciliation', detail: 'Manual payments, receipts, reconciliation and financial periods; invoice and receipt PDFs.' },
+      { title: 'Expenses', detail: 'One-off and recurring expenses with pause, resume and end.' },
+      { title: 'Financial reports', detail: 'Summary, monthly trend, outstanding ageing, occupancy and more, with CSV export.' },
+      { title: 'Configurable reminders', detail: 'Per-owner rules (rent due soon, overdue, lease expiring, meter reading due) with day offsets, processed hourly.' },
+      { title: 'Tenant portal', detail: 'Invoices, lease, maintenance requests with photos, documents and notifications.' },
+      { title: 'Maintenance & documents', detail: 'Requests, vendors, staff, appointments and costs; versioned documents; audit log.' },
+      { title: 'Property AI assistant', detail: 'Read-only, owner-scoped answers that name their data source.' },
+      { title: 'MCP tools for AI clients', detail: '10 read-only tools — see the MCP integration project.' },
+      { title: 'Online rent payments', detail: 'Razorpay and Stripe adapters are written; no provider is configured or tested live yet.', planned: true },
+      { title: 'WhatsApp Business messaging', detail: 'Today reminders open a wa.me link; there is no WhatsApp API integration.', planned: true }
+    ],
+    role: [
+      'Defined the product, domain model and an 18-step build plan, from data model to release checklist.',
+      'Built it on the Hatchable platform, largely through its AI builder, reviewing and correcting each step.',
+      'Specified the owner-isolation rules, the billing rules and the MCP integration, and documented known limitations honestly in the README.'
+    ],
+    architecture: {
+      summary: 'Serverless API functions on Hatchable over managed PostgreSQL. Every query is scoped to the signed-in owner at the application layer.',
+      flow: [
+        { title: 'Portals', detail: 'Landlord, tenant & admin — HTML/JS' },
+        { title: 'Auth', detail: 'Email OTP / passkeys; role resolved per request' },
+        { title: 'API functions', detail: '/api/v1 — owner-scoped helpers', hot: true },
+        { title: 'Billing & reports', detail: 'NUMERIC maths, proration, ageing' },
+        { title: 'PostgreSQL', detail: '156 migrations; cron for reminders' }
+      ],
+      guards: ['Owner resolved from the session, never from the request body', 'Tenants and suspended owners blocked from owner APIs', 'Payment webhooks HMAC-verified'],
+      caption: 'Simplified. Isolation is enforced in application code (owner_id filters), not database row-level security.'
+    },
+    stack: {
+      'Platform': ['Hatchable', 'Serverless functions', 'Cron jobs', 'Hatchable Storage'],
+      'Data': ['PostgreSQL', 'SQL migrations'],
+      'Frontend': ['HTML', 'CSS', 'JavaScript'],
+      'Integrations': ['MCP', 'Razorpay (adapter)', 'Stripe (adapter)', 'Email']
+    },
+    challenges: [
+      { title: 'Money maths that never drifts', detail: 'Rent, proration and partial payments must reconcile to the cent across invoices, receipts and reports.', resolution: 'Amounts are NUMERIC in the database and handled as integers in code; reports read the same ledger the invoices write.' },
+      { title: 'One owner must never see another’s data', detail: 'Every endpoint touches properties, tenants or money.', resolution: 'All queries go through ownership helpers (ownedProperty, ownedLease, ownedInvoice) keyed on the authenticated owner.' }
+    ],
+    decisions: [
+      { title: 'Application-level isolation instead of database RLS', detail: 'Ownership checks live in shared helpers used by every function.', tradeoff: 'Simpler to build on the platform, but a missed helper is a leak — so cross-account (IDOR) tests are next on the release checklist.' },
+      { title: 'One payment interface, two providers', detail: 'A single provider module with Razorpay and Stripe adapters, picked by a setting.', tradeoff: 'Ships disabled (NOT_CONFIGURED) until a provider account is connected and tested end to end.' }
+    ],
+    links: [
+      { type: 'live', url: 'https://rental-property.hatchable.site/', label: 'Open the live app', note: 'sign-in required' }
+    ],
+    notes: [
+      'Most of the code was generated through Hatchable’s AI builder from my step-by-step specifications, then reviewed and corrected.',
+      'Not yet done: two-account isolation (IDOR) testing, a configured payment provider, and verification of the MCP tools with a real AI client.',
+      'The source repository is private.'
+    ],
+    related: ['rental-mcp', 'ai-job-agent', 'careersync-ai']
+  },
+
+  /* ==================================================================== Agents */
+  {
+    id: 'rental-mcp',
+    title: 'Rental SaaS MCP Server',
+    tagline: 'Lets an authorised AI client ask a landlord’s own rental data questions — read-only.',
+    categories: ['agents', 'backend', 'ai'],
+    status: 'live',
+    visibility: 'private',
+    accent: '#ff7a4a',
+    period: 'Oct 2026',
+    context: 'Part of the Rental SaaS',
+    technologies: ['MCP', 'OAuth', 'JavaScript', 'PostgreSQL'],
+    thumbnail: { src: 'img/projects/rental-mcp/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: an AI assistant calls the get_outstanding_rent MCP tool, the MCP server lists its ten read-only tools, and results come only from the owner’s data' },
+    summary: 'Ten read-only Model Context Protocol tools expose rent, leases and expenses to MCP-compatible assistants, each answer scoped to the authenticated owner.',
+    description:
+      'An MCP endpoint on the Rental SaaS. A compatible AI client connects, authenticates, and can then call a small set of tools — the same business rules the dashboard uses, never raw SQL.\n\n' +
+      'Write tools (record a payment, create an invoice) are deliberately not exposed yet.',
+    problem: 'Owners want to ask “who hasn’t paid?” in the assistant they already use, without exporting data or handing an AI a database login.',
+    solution: 'A narrow, read-only tool surface behind authentication, resolved to one owner per call.',
+    features: [
+      { title: 'Portfolio tools', detail: 'get_properties, get_units, get_tenants, get_active_leases' },
+      { title: 'Money tools', detail: 'get_monthly_billing_summary, get_outstanding_rent, get_payment_history, get_outstanding_aging' },
+      { title: 'Cost & summary tools', detail: 'get_expenses, get_financial_summary' },
+      { title: 'Write tools', detail: 'Payments, invoices and reminders from an AI client.', planned: true }
+    ],
+    agent: {
+      objective: 'Answer an owner’s questions about their portfolio from inside an MCP-compatible AI client.',
+      input: 'The AI client decides to call a tool while answering the owner; the call arrives at the /mcp endpoint.',
+      reasoning: 'The client’s model chooses which tool to call. The server holds no model — it only executes tools.',
+      tools: ['get_properties', 'get_units', 'get_tenants', 'get_active_leases', 'get_monthly_billing_summary', 'get_outstanding_rent', 'get_payment_history', 'get_expenses', 'get_financial_summary', 'get_outstanding_aging'],
+      execution: 'Each tool resolves the owner from the authenticated identity, runs the same owner-scoped queries as the app, and returns structured results.',
+      safety: 'Every tool is read-only and requires project-member access. If the owner can’t be resolved unambiguously, the call fails rather than guessing.',
+      models: 'Model-agnostic — whichever MCP-compatible client the owner authorises.'
+    },
+    architecture: {
+      flow: [
+        { title: 'AI client', detail: 'MCP-compatible assistant' },
+        { title: 'MCP auth', detail: 'Platform OAuth, member access' },
+        { title: 'Owner resolution', detail: 'Identity → one owner, or fail', hot: true },
+        { title: 'Read-only tools', detail: '10 tools, same business rules' },
+        { title: 'PostgreSQL', detail: 'That owner’s rows only' }
+      ],
+      guards: ['Read-only tools', 'One owner per call', 'Fails closed on ambiguity'],
+      caption: 'Simplified flow of a single tool call.'
+    },
+    stack: { 'Protocol': ['Model Context Protocol', 'OAuth (platform-provided)'], 'Server': ['JavaScript', 'Hatchable functions'], 'Data': ['PostgreSQL'] },
+    decisions: [
+      { title: 'Read-only first', detail: 'The first version only answers questions.', tradeoff: 'Less useful than an assistant that can act, but nothing an AI client does can change financial records.' }
+    ],
+    links: [{ type: 'case', url: 'project.html?id=rental-saas', label: 'Rental SaaS case study' }],
+    notes: ['The tools have not yet been fully verified end to end with a real MCP client — treat this as working but unproven.'],
+    related: ['rental-saas', 'ai-job-agent', 'careeros']
+  },
+
+  {
+    id: 'ai-job-agent',
+    title: 'AI Job Agent',
+    tagline: 'A local-first agent that finds jobs, ranks them against your CV and explains every match with quotes.',
+    categories: ['agents', 'ai', 'web', 'backend'],
+    status: 'in-development',
+    visibility: 'public',
+    featured: 3,
+    accent: '#ff7a4a',
+    period: 'Oct 2026 —',
+    context: 'Personal project',
+    platforms: ['Web (self-hosted)'],
+    technologies: ['TypeScript', 'Next.js', 'Node.js', 'PostgreSQL', 'Prisma', 'Redis', 'Ollama', 'Anthropic API', 'Docker', 'Playwright'],
+    summary: 'Job hunting means reading hundreds of listings against your own CV. The agent searches allowlisted job boards, scores each listing in code and backs every claim with a verbatim quote — it never applies or messages anyone.',
+    description:
+      'A self-hosted web app with a background worker. Upload a CV, mark which profile answers are verified, and ask the agent to find roles in India and the Middle East. It searches allowlisted public job sources, saves matches, and runs a match analysis that quotes your CV for every point.\n\n' +
+      'Phases 1–3 of a 12-phase roadmap are complete. Applying, tailored CVs and outreach are later phases and are not built.',
+    thumbnail: { src: 'img/projects/job-agent/jobs.webp', w: 800, h: 620, frame: 'web', alt: 'AI Job Agent Jobs page: “Find jobs for me” form with roles and countries, a completed search that saved 13 jobs, and a list of matched roles with skills percentages', caption: 'Jobs — sample account' },
+    screenshots: [
+      { src: 'img/projects/job-agent/jobs.webp', w: 800, h: 620, frame: 'web', alt: 'Jobs page with a completed search and matched roles', caption: 'Find jobs → ranked by skills match' },
+      { src: 'img/projects/job-agent/agent.webp', w: 800, h: 460, frame: 'web', alt: 'Agent page explaining what the agent can and cannot do, showing the local Ollama model in use', caption: 'Agent chat — states its limits and the model in use' },
+      { src: 'img/projects/job-agent/activity.webp', w: 800, h: 380, frame: 'web', alt: 'Activity page listing a running match analysis and completed job search and CV extraction tasks', caption: 'Durable background tasks' }
+    ],
+    screenshotsNote: 'Captured from a sample account.',
+    problem: 'Matching a CV to job listings is slow, and AI tools that “auto-apply” are a liability: they invent experience and act on your behalf without asking.',
+    solution: 'Keep the agent’s power deliberately small — read, search allowlisted sources, save, analyse — and make every output checkable: quotes are verified word for word, scores are computed by code, and every step is logged.',
+    features: [
+      { title: 'Encrypted CV upload', detail: 'PDF/DOCX with text extraction and suggested contact details.' },
+      { title: 'Verified answers', detail: 'Only answers you marked verified are ever reused.' },
+      { title: '“Find jobs for me”', detail: 'Greenhouse, Lever, Ashby, Remotive and optional JSearch; deny-by-default source registry.' },
+      { title: 'Match analysis with quotes', detail: 'Every claim cites your CV; quotes are checked verbatim, the score is calculated in code.' },
+      { title: 'Agent chat', detail: 'Paste a job; the agent saves it and explains the fit, showing each step.' },
+      { title: 'Activity timeline', detail: 'Durable tasks with leases, retries, cancellation and a per-step log.' },
+      { title: 'Per-user isolation & health checks', detail: 'Better Auth sessions; Docker, database and model health page.' },
+      { title: 'Apply & fill forms', detail: 'Browser-agent interfaces only.', planned: true },
+      { title: 'Tailored CV, cover letters & outreach', detail: 'Roadmap phases 7–12.', planned: true }
+    ],
+    role: ['Sole developer: architecture, agent loop, tool policy, worker, UI, tests and CI.'],
+    agent: {
+      objective: 'Find relevant roles and explain, with evidence, how well your CV fits each one.',
+      input: 'A chat message on the Agent page, or a background job (search, analysis, CV processing) picked up by the worker from a queue.',
+      reasoning: 'A hand-written loop over native tool calling (Anthropic tool_use / Ollama tool_calls). It stops on a step limit, a deadline, an exhausted budget, a refusal or cancellation.',
+      tools: ['get_my_profile', 'get_my_verified_answers', 'get_primary_cv_text', 'save_job_posting', 'list_saved_jobs', 'analyze_job_match'],
+      execution: 'Tasks are durable: leased, reconciled, retried and cancellable, with every step recorded and shown on the Activity page. Analysis output is validated — quotes must match the source text exactly.',
+      safety: 'Each tool declares its side effect (none, internal write, external read, external write, irreversible); the executor uses that to decide when a policy check or approval is required. No AI call runs without consent, a key and budget. It never logs in, scrapes behind sign-in, or submits anything.',
+      models: 'Local first: Ollama with qwen3:4b-instruct on your own machine, so the CV never leaves it. Anthropic is an opt-in paid alternative with a monthly budget cap.'
+    },
+    architecture: {
+      flow: [
+        { title: 'Next.js web app', detail: 'Chat, jobs, CVs, activity' },
+        { title: 'Task queue', detail: 'PostgreSQL + Redis' },
+        { title: 'Agent loop', detail: 'Tool calling, limits, budget', hot: true },
+        { title: 'Tool executor', detail: 'Side-effect policy per tool' },
+        { title: 'Model adapter', detail: 'Ollama (local) or Anthropic' }
+      ],
+      guards: ['Side-effect-aware tool policy', 'Deny-by-default job sources', 'Verbatim quote verification', 'Budget & step limits'],
+      caption: 'Simplified. The worker runs the same loop for background tasks.'
+    },
+    stack: {
+      'App': ['Next.js', 'TypeScript', 'Better Auth', 'Zod'],
+      'Worker & data': ['Node.js', 'Prisma', 'PostgreSQL 17', 'Redis 7'],
+      'AI': ['Ollama (qwen3:4b-instruct)', 'Anthropic API', 'Native tool calling'],
+      'Quality': ['Playwright e2e', 'GitHub Actions CI', 'pnpm + Turbo monorepo', 'Docker Compose']
+    },
+    challenges: [
+      { title: 'Small local models hallucinate evidence', detail: 'A 4B model will happily “quote” lines that aren’t in your CV.', resolution: 'Quotes are verified verbatim against the source; anything that doesn’t match is rejected, and the score comes from code, not the model.' },
+      { title: 'Long-running work on a laptop', detail: 'A local analysis takes minutes and the tab may close.', resolution: 'Analyses run as durable background tasks with leases, recovery and a visible timeline.' }
+    ],
+    decisions: [
+      { title: 'No agent framework', detail: 'The loop, tool registry and policy are hand-written TypeScript.', tradeoff: 'More code to own, but every limit and approval point is explicit and testable.' },
+      { title: 'Local model by default', detail: 'Privacy and zero cost over speed.', tradeoff: 'Slower and less capable than a cloud model; the paid provider is one setting away.' }
+    ],
+    links: [{ type: 'github', url: 'https://github.com/Afaquejaya/ai-job-agent', label: 'Source on GitHub' }],
+    related: ['local-agent-lab', 'careersync-ai', 'careeros']
+  },
+
+  {
+    id: 'careersync-ai',
+    title: 'CareerSync AI',
+    tagline: 'Upload a CV once, review every extracted change, then sync it to job portals and your portfolio.',
+    categories: ['ai', 'web', 'agents'],
+    status: 'prototype',
+    visibility: 'private',
+    accent: '#b493f0',
+    period: 'Oct 2026',
+    context: 'Personal project',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Anthropic API', 'Drizzle ORM', 'PostgreSQL', 'Chrome extension', 'Vitest'],
+    thumbnail: { src: 'img/projects/careersync-ai/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a review screen with a source CV on the left and three proposed profile changes, one blocked because it is not in the CV, above the sync destinations' },
+    summary: 'Keeping LinkedIn, Naukri, Indeed and a portfolio in sync with your CV is tedious and error-prone. An LLM extraction pipeline proposes the changes; a human approves each one.',
+    description:
+      'A dashboard that parses a CV with Claude (or an offline heuristic parser), shows every extracted field as a reviewable change, and pushes approved changes to LinkedIn, Indeed, Naukri, Naukri Gulf, a portfolio repository (as a GitHub pull request) or a custom webhook.\n\n' +
+      'It is an extraction pipeline with a review step, not an autonomous agent: nothing is published without an explicit approval.',
+    problem: 'Profiles drift out of date, and an AI that rewrites them unsupervised can invent experience.',
+    solution: 'Every value the model extracts is checked against the source CV before it is shown, and every change set needs approval — portfolio publishing has its own separate approval.',
+    features: [
+      { title: 'CV parsing with Claude', detail: 'Offline heuristic parser as a fallback when no key is set.' },
+      { title: 'Anti-fabrication checks', detail: 'Extracted values must be traceable to the CV text.' },
+      { title: 'Prompt-injection defence', detail: 'CV text is treated as untrusted input.' },
+      { title: 'Review & approve', detail: 'Change sets per destination, approved one by one.' },
+      { title: 'Portfolio sync via GitHub PR', detail: 'Proposes changes as a pull request rather than pushing.' },
+      { title: 'Browser extension', detail: 'Fills portal forms only when you click, and never presses Save.' },
+      { title: 'GitHub App install flow, S3 storage, multi-instance Redis', planned: true }
+    ],
+    role: ['Sole developer: pipeline design, safety checks, dashboard, extension and tests.'],
+    architecture: {
+      flow: [
+        { title: 'CV upload', detail: 'PDF / DOCX text extraction' },
+        { title: 'LLM extraction', detail: 'Claude, or offline parser', hot: true },
+        { title: 'Verification', detail: 'Values checked against source' },
+        { title: 'Human review', detail: 'Approve per change set' },
+        { title: 'Destinations', detail: 'Portals, GitHub PR, webhook' }
+      ],
+      guards: ['Untrusted-input handling', 'Approval before any publish', 'Extension never submits'],
+      caption: 'Simplified pipeline.'
+    },
+    stack: { 'App': ['Next.js 16', 'React 19', 'TypeScript', 'Zod'], 'Data': ['Drizzle ORM', 'PostgreSQL / PGlite'], 'AI': ['Anthropic API'], 'Other': ['Chrome extension', 'unpdf', 'mammoth', 'Vitest'] },
+    links: [],
+    notes: ['Runs locally; there is no public demo or repository.'],
+    related: ['ai-job-agent', 'careeros', 'rental-saas']
+  },
+
+  {
+    id: 'careeros',
+    title: 'CareerOS',
+    tagline: 'A local command centre that runs an open-source job-search agent’s workflows safely from the browser.',
+    categories: ['agents', 'web', 'experiments'],
+    status: 'prototype',
+    visibility: 'private',
+    accent: '#ff7a4a',
+    period: 'Oct 2026',
+    context: 'Personal project built on the open-source career-ops engine (MIT)',
+    technologies: ['React', 'Vite', 'Node.js', 'TypeScript', 'Zod', 'Server-Sent Events', 'Claude Code CLI'],
+    thumbnail: { src: 'img/projects/careeros/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a local command centre with allowlisted actions, a streaming run log showing AI write tools denied, and a safety checklist' },
+    summary: 'The career-ops engine is driven from a terminal. CareerOS puts a web UI on top, so its modes run from buttons — with an allowlist, no shell, and no AI write access.',
+    description:
+      'A local web UI and Node server for career-ops, an open-source AI job-search engine by another author. CareerOS is my addition: it lists the engine’s actions, runs them as child processes, and streams progress to the browser.\n\n' +
+      'The interesting part is the safety model around running an AI coding CLI on your machine.',
+    problem: 'Running agent workflows through a CLI is powerful but easy to misuse — one wrong flag and the AI can edit or delete files.',
+    solution: 'The browser can only trigger allowlisted actions by id; the server never uses a shell; and when an AI mode runs, its write and shell tools are denied.',
+    agent: {
+      objective: 'Run job-search workflows (evaluations, tracking, drafts) without touching a terminal.',
+      input: 'A button in the UI sends an action id to the local server.',
+      reasoning: 'The underlying engine’s modes run through the Claude Code CLI (other CLIs are detected); CareerOS orchestrates rather than reasons.',
+      tools: ['Allowlisted engine scripts', 'Claude Code CLI with Write, Edit and Bash denied'],
+      execution: 'Child processes run with shell disabled; output streams to the browser over Server-Sent Events and is persisted by the engine’s own scripts.',
+      safety: 'Server bound to 127.0.0.1. Allowlisted actions only. Destructive operations need confirmation, tracker tools offer a dry-run preview, and nothing is ever submitted or sent — drafts are for you to copy.',
+      models: 'Whatever the installed CLI uses (Claude by default); the engine also ships Gemini, OpenAI and Ollama evaluators.'
+    },
+    architecture: {
+      flow: [
+        { title: 'Browser UI', detail: 'React + Vite' },
+        { title: 'Local server', detail: '127.0.0.1 only', hot: true },
+        { title: 'Action allowlist', detail: 'By id, validated with Zod' },
+        { title: 'Child process', detail: 'shell: false' },
+        { title: 'career-ops engine', detail: 'Scripts & AI modes' }
+      ],
+      guards: ['Loopback only', 'Allowlisted actions', 'AI write/shell tools denied', 'Dry-run before changes'],
+      caption: 'Simplified.'
+    },
+    stack: { 'UI': ['React', 'Vite', 'TypeScript'], 'Server': ['Node.js', 'Zod', 'Server-Sent Events'], 'AI': ['Claude Code CLI'] },
+    links: [{ type: 'github', url: 'https://github.com/career-ops-hq/career-ops', label: 'career-ops engine (not mine)' }],
+    notes: ['The career-ops engine is third-party open source (MIT). Only the CareerOS UI and server described here are my work, and they are not published.'],
+    related: ['ai-job-agent', 'local-agent-lab', 'careersync-ai']
+  },
+
+  {
+    id: 'local-agent-lab',
+    title: 'Local AI Agent Lab',
+    tagline: 'Learning how agents work by building one by hand — no framework, local model only.',
+    categories: ['agents', 'experiments'],
+    status: 'learning',
+    visibility: 'public',
+    accent: '#c9a7a0',
+    period: 'Oct 2026 —',
+    context: 'Learning project',
+    technologies: ['TypeScript', 'Node.js', 'SQLite', 'Zod', 'React', 'Vite', 'Vitest', 'Ollama'],
+    thumbnail: { src: 'img/projects/local-agent-lab/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: the planned agent loop — context, model decision, argument validation, policy check, execution — next to a human approval prompt' },
+    summary: 'A from-scratch agent in TypeScript, planned in nine phases. Phase 1 (configuration, environment doctor, tests) is done; the agent loop is designed but not built.',
+    description:
+      'A deliberately framework-free project for understanding agents: context building, decisions, tool validation, policy and approvals, written out explicitly.\n\n' +
+      'Status: phase 1 of 9. There is no working agent yet — the architecture below is the plan, and the interfaces exist in code.',
+    features: [
+      { title: 'Config validation & `npm run doctor`', detail: 'Checks Node, Ollama and the model before anything runs.' },
+      { title: 'Local-only guard', detail: 'Rejects cloud models and non-loopback addresses.' },
+      { title: '15 tests', detail: 'Vitest.' },
+      { title: 'Ollama adapter & tools', detail: 'Calculator, workspace read/search, notes — sandboxed to workspace/.', planned: true },
+      { title: 'Agent loop, approvals, SQLite memory, dashboard', planned: true }
+    ],
+    agent: {
+      objective: 'Understand each part of an agent by implementing it explicitly.',
+      input: 'Planned: a task from a local dashboard.',
+      reasoning: 'Planned loop: build context → call the model → parse its decision → validate tool arguments with Zod → policy check (allow / require approval / deny).',
+      tools: ['Planned: calculator', 'Planned: workspace read & search', 'Planned: notes'],
+      execution: 'Planned: execute, observe, verify, persist to SQLite.',
+      safety: 'Designed in from the start: an approval manager that waits for a human decision, and file tools confined to a workspace folder.',
+      models: 'Local only — Ollama with qwen3:4b; cloud models are rejected by configuration.'
+    },
+    architecture: {
+      flow: [
+        { title: 'Context', detail: 'Task + history' },
+        { title: 'Model decision', detail: 'Ollama, local' },
+        { title: 'Validate', detail: 'Zod tool schemas' },
+        { title: 'Policy', detail: 'Allow / approve / deny', hot: true },
+        { title: 'Execute & verify', detail: 'Sandboxed tools' }
+      ],
+      guards: ['Human approval step', 'Workspace sandbox', 'Local models only'],
+      caption: 'Planned architecture — phase 1 of 9 is implemented.'
+    },
+    stack: { 'Runtime': ['Node.js 24', 'node:sqlite', 'TypeScript'], 'Validation & tests': ['Zod 4', 'Vitest'], 'UI (planned)': ['React 19', 'Vite'], 'Model': ['Ollama'] },
+    links: [{ type: 'github', url: 'https://github.com/Afaquejaya/learn-basic-ai-agent', label: 'Source on GitHub' }],
+    related: ['ai-job-agent', 'careeros', 'expense-tracker']
+  },
+
+  /* ======================================================================== AI */
+  {
+    id: 'glowfit-ai',
+    title: 'GlowFit AI',
+    tagline: 'One selfie in, a confident look out — skin analysis, virtual try-on and a score for which look suits you.',
+    categories: ['ai', 'web'],
+    status: 'live',
+    visibility: 'public',
+    featured: 5,
+    accent: '#d58f86',
+    period: 'Oct 2026',
+    context: 'YouCam API Skin AI & eCommerce VTO Hackathon (Perfect Corp)',
+    platforms: ['Web'],
+    technologies: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Zustand', 'YouCam API', 'MediaPipe'],
+    summary: 'Beauty shoppers guess which products and looks will suit them. GlowFit scans the skin, renders three looks on your own face and scores them — then lets you change one thing at a time.',
+    description:
+      'A hackathon build on Perfect Corp’s YouCam APIs. It turns skin analysis and virtual try-on into a decision flow: understand your skin, compare looks on your own face, adjust one variable, and leave with a look and a product list.',
+    thumbnail: { src: 'img/projects/glowfit/screen-1.webp', w: 1200, h: 675, frame: 'web', alt: 'GlowFit Skin Intelligence screen: skin score, eight skin metrics and an AI GlowMap on the face' },
+    screenshots: [
+      { src: 'img/projects/glowfit/screen-1.webp', w: 1200, h: 675, frame: 'web', alt: 'Skin Intelligence: skin score, eight metrics and a GlowMap', caption: 'Skin scan' },
+      { src: 'img/projects/glowfit/screen-2.webp', w: 1200, h: 675, frame: 'web', alt: 'Decision Lab: three makeup looks rendered on the same face with match scores', caption: 'Three looks, scored' },
+      { src: 'img/projects/glowfit/screen-3.webp', w: 1200, h: 675, frame: 'web', alt: 'Change One Thing: lip shade options with a before and after slider', caption: 'Change one thing' },
+      { src: 'img/projects/glowfit/screen-4.webp', w: 1200, h: 675, frame: 'web', alt: 'Final decision screen with the chosen look and product list', caption: 'The decision' }
+    ],
+    screenshotsNote: 'Real screenshots from the live app.',
+    problem: 'Try-on tools show you a look, but don’t help you decide between looks — or explain why one suits your skin better.',
+    solution: 'A five-step Decision Lab that combines skin metrics, face analysis and try-on renders into a comparable score, plus budget mode and single-variable previews.',
+    features: [
+      { title: 'Skin Intelligence', detail: 'YouCam Skin AI score, eight metrics and a GlowMap.' },
+      { title: 'Decision Lab', detail: 'Three looks rendered on your face, each with a match score.' },
+      { title: 'Change one thing', detail: 'Swap a single product with a before/after slider.' },
+      { title: 'Hairstyles & budget mode', detail: 'AI hairstyle try-on and budget-aware product picks.' },
+      { title: 'Assistant', detail: 'Rule-based answers; an optional OpenAI-compatible model only rewrites the wording.' }
+    ],
+    role: ['Solo build: product flow, UI, API integration and deployment.'],
+    architecture: {
+      flow: [
+        { title: 'Selfie', detail: 'Browser capture' },
+        { title: 'Next.js API routes', detail: 'Keys stay server-side', hot: true },
+        { title: 'YouCam APIs', detail: 'Skin, face, makeup, hair' },
+        { title: 'Scoring', detail: 'Looks compared on metrics' },
+        { title: 'Decision UI', detail: 'Zustand + IndexedDB cache' }
+      ],
+      caption: 'Simplified. No database or accounts — results are cached in the browser.'
+    },
+    stack: { 'App': ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'Zustand'], 'AI services': ['YouCam Skin Analysis', 'AI Face Analyzer', 'Makeup VTO', 'AI Hairstyle', 'MediaPipe'], 'Hosting': ['Vercel'] },
+    decisions: [
+      { title: 'Proxy every AI call through API routes', detail: 'The browser never sees provider keys.', tradeoff: 'Adds a hop, but it’s the only safe option on a public demo.' }
+    ],
+    links: [
+      { type: 'live', url: 'https://glowfit-ai.vercel.app', label: 'Live demo' },
+      { type: 'video', url: 'https://www.youtube.com/watch?v=EdBg7vJooeQ', label: 'Demo video' },
+      { type: 'github', url: 'https://github.com/Afaquejaya/glowfit-ai', label: 'Source on GitHub' }
+    ],
+    related: ['expense-tracker', 'face-detection', 'portfolio-guide']
+  },
+
+  {
+    id: 'expense-tracker',
+    title: 'AI Smart Expense Tracker',
+    tagline: 'Type how you spent money — even in Hinglish — and get structured expense cards back.',
+    categories: ['ai', 'mobile', 'experiments'],
+    status: 'learning',
+    visibility: 'public',
+    accent: '#8f7ae0',
+    period: 'Jun 2026',
+    context: 'Learning project',
+    platforms: ['Flutter'],
+    technologies: ['Flutter', 'Dart', 'Python', 'FastAPI'],
+    summary: 'A Flutter client and FastAPI backend built around an “AI hook” — start, end and error callbacks modelled on LangChain’s callback lifecycle — that drives loading, structured JSON and error states.',
+    description:
+      'A small project for practising how an app should behave around an LLM call: show progress, accept only structured JSON, and fail gracefully.\n\n' +
+      'The backend currently simulates the model’s response; connecting a real LLM is the next step.',
+    thumbnail: { src: 'img/projects/expense/screen.webp', w: 640, h: 831, frame: 'phone', alt: 'App screen: a Hinglish sentence about dinner at Dubai Mall and a taxi turned into two expense cards — 120 AED food and 15 AED transport' },
+    screenshots: [
+      { src: 'img/projects/expense/screen.webp', w: 640, h: 831, frame: 'phone', alt: 'Natural-language sentence turned into two expense cards', caption: 'Sentence in, expense cards out' }
+    ],
+    features: [
+      { title: 'Natural-language entry', detail: 'One sentence can produce several expenses.' },
+      { title: 'AI hook lifecycle', detail: 'Start / end / error callbacks drive the UI states.' },
+      { title: 'Strict JSON contract', detail: 'Item, category, amount, currency.' },
+      { title: 'Graceful failure', detail: 'An error state with an offline fallback view.' },
+      { title: 'Real LLM parsing', detail: 'The backend returns a simulated response today.', planned: true }
+    ],
+    stack: { 'App': ['Flutter', 'Dart'], 'Backend': ['Python', 'FastAPI', 'Uvicorn'] },
+    links: [
+      { type: 'github', url: 'https://github.com/Afaquejaya/ai-expense-tracker', label: 'Source on GitHub' },
+      { type: 'code', url: 'https://gist.github.com/Afaquejaya/a4d157d4255799bd6e3521320f6d9537', label: 'Notes (gist)' }
+    ],
+    notes: ['The AI response is simulated in this version — the project demonstrates the hook pattern and UI states, not LLM accuracy.'],
+    related: ['glowfit-ai', 'local-agent-lab', 'pregnancy-tracker']
+  },
+
+  {
+    id: 'portfolio-guide',
+    title: 'AI Portfolio Guide',
+    tagline: 'A recruiter-facing chat on my portfolio that answers only from verified facts — and says so when it can’t.',
+    categories: ['ai', 'web'],
+    status: 'live',
+    visibility: 'public',
+    accent: '#b493f0',
+    period: 'Oct 2026',
+    context: 'Part of afaquejaya.github.io',
+    technologies: ['JavaScript', 'HTML', 'CSS'],
+    thumbnail: { src: 'img/projects/portfolio-guide/screen.webp', w: 1280, h: 800, frame: 'web', alt: 'The AI Portfolio Guide panel answering “How is MCP access authenticated?” and declining to guess details the portfolio doesn’t publish', caption: 'Real capture of the live site' },
+    summary: 'Chatbots on portfolios tend to invent things. This one matches questions to a knowledge base built from the CV, can only navigate to allowlisted sections, and never turns visitor text into a URL or code.',
+    description:
+      'Click the avatar on my portfolio and a chat panel opens. Questions are cleaned, safety-checked and scored against intents written from the CV. A confident match returns a stored answer with action buttons; anything else gets an honest “the portfolio doesn’t say” and the closest questions.\n\n' +
+      'An optional LLM fallback is designed (a serverless endpoint holding the key) but deliberately not enabled on GitHub Pages.',
+    features: [
+      { title: 'Deterministic answers', detail: 'Weighted intent scoring over phrase and word keys.' },
+      { title: 'Allowlisted actions', detail: 'Buttons can only scroll to listed sections or open listed links.' },
+      { title: 'Input safety', detail: 'URLs, HTML, code and javascript: get a fixed reply; rendering uses textContent only.' },
+      { title: '3D avatar', detail: 'Head and eyes follow the cursor; reduced-motion aware.' },
+      { title: 'LLM fallback', detail: 'Endpoint contract defined; off by default.', planned: true }
+    ],
+    architecture: {
+      flow: [
+        { title: 'Visitor question', detail: 'Max 300 chars, rate-limited' },
+        { title: 'Safety check', detail: 'Links, HTML, code rejected' },
+        { title: 'Intent scoring', detail: 'Verified knowledge base', hot: true },
+        { title: 'Allowlisted action', detail: 'Scroll or open known link' },
+        { title: 'Honest fallback', detail: 'No match → no guess' }
+      ],
+      guards: ['No free-form generation', 'No visitor text in URLs or selectors', 'Nothing stored or sent'],
+      caption: 'How a message is handled.'
+    },
+    stack: { 'Frontend': ['Vanilla JavaScript', 'HTML', 'CSS'], 'Hosting': ['GitHub Pages'] },
+    links: [
+      { type: 'live', url: 'https://afaquejaya.github.io/', label: 'Try it on the portfolio' },
+      { type: 'github', url: 'https://github.com/Afaquejaya/afaquejaya.github.io', label: 'Source on GitHub' }
+    ],
+    related: ['portfolio-site', 'glowfit-ai', 'rental-mcp']
+  },
+
+  {
+    id: 'face-detection',
+    title: 'Face Detection',
+    tagline: 'Pick a photo; the app finds every face and reads age, emotion, hair, glasses and head pose.',
+    categories: ['ai', 'mobile', 'experiments'],
+    status: 'learning',
+    visibility: 'public',
+    accent: '#8fa0c9',
+    period: 'Jan 2020',
+    context: 'Personal project',
+    platforms: ['Android'],
+    technologies: ['Java', 'Kotlin', 'Android', 'Microsoft Face API'],
+    summary: 'An early computer-vision project: detect faces in a photo and show per-face attributes from Microsoft’s Face API.',
+    thumbnail: { src: 'img/projects/face/screen-1.webp', w: 480, h: 976, frame: 'phone', alt: 'Face detection result: landmarks drawn on a face with age, gender, emotion and accessories listed' },
+    screenshots: [
+      { src: 'img/projects/face/screen-1.webp', w: 480, h: 976, frame: 'phone', alt: 'Single face with landmarks and attributes', caption: 'Single face' },
+      { src: 'img/projects/face/screen-2.webp', w: 480, h: 974, frame: 'phone', alt: 'Two faces detected with attributes for each', caption: 'Multiple faces' }
+    ],
+    features: [
+      { title: 'Multi-face detection', detail: 'Landmarks drawn on each face.' },
+      { title: 'Attributes', detail: 'Age, gender, emotion, hair, glasses, make-up, head pose and image quality.' }
+    ],
+    stack: { 'App': ['Android', 'Java', 'Kotlin'], 'AI service': ['Microsoft Face API'] },
+    related: ['glowfit-ai', 'social-app', 'video-calling']
+  },
+
+  /* ==================================================================== Mobile */
+  {
+    id: 'jeeb',
+    title: 'Jeeb — Grocery & Logistics Platform',
+    tagline: 'A 0→1 grocery e-commerce and delivery platform for Qatar, fully in Arabic.',
+    categories: ['mobile', 'backend'],
+    status: 'shipped',
+    visibility: 'internal',
+    featured: 4,
+    accent: '#3f86ef',
+    period: 'Sep 2022 – Sep 2024',
+    context: 'Software Engineer · Jeeb E-Commerce & Logistics (start-up), Doha',
+    platforms: ['Android', 'iOS', 'Web'],
+    technologies: ['Flutter', 'React Native', 'Swift', 'Kotlin', 'Java', 'Python', 'Algolia', 'IoT'],
+    thumbnail: { src: 'img/projects/jeeb/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: an Arabic-first grocery home screen with categories and offers, and a delivery tracking map' },
+    summary: 'A fast-growing Qatari start-up needed a customer app, operations apps and the delivery chain behind them. A server-driven homepage and instant search made it 95% faster and lifted engagement 50%.',
+    description:
+      'Built with the founders from zero: the customer grocery app with Arabic localisation, a server-driven personalised homepage, Algolia instant search, real-time GPS tracking, route optimisation and secure payments.\n\n' +
+      'I also led a remote team building the Driver, Collector and Storekeeper apps that run the delivery side.',
+    icon: 'img/logos/jeeb-icon.webp',
+    screenshotsNote: 'The store listings have been retired, so there are no published screenshots to show.',
+    problem: 'An omnichannel grocery business needed to launch fast in an Arabic-first market, with a homepage merchandisers could change without app releases.',
+    solution: 'A server-driven homepage rendered natively by the app, Algolia instead of in-house search, and a set of operations apps for the delivery chain.',
+    features: [
+      { title: 'Server-driven personalised homepage', detail: 'Merchandising changes without an app release.' },
+      { title: 'Algolia instant search', detail: 'Typo-tolerant search replacing in-house search.' },
+      { title: 'Real-time GPS tracking & route optimisation' },
+      { title: 'Secure payments' },
+      { title: 'Driver, Collector & Storekeeper apps', detail: 'Built with a remote team I led.' },
+      { title: 'Arabic localisation', detail: 'Arabic-first UI.' }
+    ],
+    role: [
+      'Built and launched the 0→1 platform working directly with the founders.',
+      'Architected the server-driven personalised homepage with Algolia search.',
+      'Engineered GPS tracking, route optimisation and payment integration.',
+      'Led the remote team building the Driver, Collector and Storekeeper apps.'
+    ],
+    architecture: {
+      flow: [
+        { title: 'Server', detail: 'Layout + personalised content' },
+        { title: 'App renderer', detail: 'Layout blocks → native widgets', hot: true },
+        { title: 'Algolia', detail: 'Instant search' },
+        { title: 'Customer', detail: 'Personalised home, in Arabic' }
+      ],
+      caption: 'Server-driven UI, simplified — an illustration of the idea, not a production diagram.'
+    },
+    stack: { 'Mobile': ['Flutter', 'React Native', 'Swift', 'Kotlin', 'Java'], 'Backend & services': ['Python', 'Algolia', 'Payments', 'GPS / IoT'] },
+    impact: [
+      { value: '95%', label: 'faster homepage load', source: 'CV' },
+      { value: '+50%', label: 'user engagement', source: 'CV' },
+      { value: '+60%', label: 'delivery speed (operations apps)', source: 'CV' },
+      { value: '+20%', label: 'delivery & checkout efficiency', source: 'CV' }
+    ],
+    decisions: [
+      { title: 'Server-driven homepage', detail: 'Layout comes from the server and maps to native components.', tradeoff: 'More upfront contract design between server and app, in exchange for shipping merchandising changes instantly.' },
+      { title: 'Buy search, don’t build it', detail: 'Algolia for instant, typo-tolerant search.', tradeoff: 'A paid dependency, but far faster to a good search experience than an in-house engine.' }
+    ],
+    links: [],
+    notes: ['Employer product. The store listings are no longer public, so there are no app links or screenshots here.'],
+    related: ['pass-delivery', 'tbay', 'evv']
+  },
+
+  {
+    id: 'pass-delivery',
+    title: 'Pass Delivery & Operations Apps',
+    tagline: 'On-demand delivery in Qatar — customer, Driver, Collector and Storekeeper apps.',
+    categories: ['mobile'],
+    status: 'shipped',
+    visibility: 'internal',
+    accent: '#1cc4cc',
+    period: '2022 – 2024',
+    context: 'Jeeb E-Commerce & Logistics, Doha',
+    platforms: ['Android', 'iOS'],
+    technologies: ['Flutter', 'Kotlin', 'Java', 'Python', 'IoT'],
+    summary: 'Couriers, collectors and storekeepers needed purpose-built tools. Real-time tracking and dedicated operations apps lifted delivery speed by 60%.',
+    icon: 'img/logos/pass-icon.webp',
+    thumbnail: { src: 'img/apps/pass/screen-1.webp', w: 560, h: 957, frame: 'phone', alt: 'Pass store screenshot: live tracking with a courier’s car on the map and “Pickup in 2 min”' },
+    screenshots: [
+      { src: 'img/apps/pass/screen-1.webp', w: 560, h: 957, frame: 'phone', alt: 'Live tracking with the courier on the map', caption: 'Live tracking' },
+      { src: 'img/apps/pass/screen-2.webp', w: 560, h: 957, frame: 'phone', alt: 'Driver orders list with pick-up and drop-off addresses in Doha and fares', caption: 'Driver orders' }
+    ],
+    screenshotsNote: 'Screens from the former store listing.',
+    features: [
+      { title: 'Real-time GPS tracking' },
+      { title: 'Route optimisation' },
+      { title: 'Secure payments' },
+      { title: 'Driver, Collector & Storekeeper apps', detail: 'One app per role in the delivery chain.' }
+    ],
+    role: ['Engineered the logistics features and led the remote team building the operations apps.'],
+    impact: [
+      { value: '+60%', label: 'delivery speed', source: 'CV' },
+      { value: '+20%', label: 'delivery efficiency', source: 'CV' },
+      { value: '3', label: 'operations apps' }
+    ],
+    stack: { 'Mobile': ['Flutter', 'Kotlin', 'Java'], 'Backend': ['Python', 'IoT'] },
+    notes: ['The Play Store listing is no longer public.'],
+    related: ['jeeb', 'tbay', 'evv']
+  },
+
+  {
+    id: 'tbay',
+    title: 'Tbay',
+    tagline: 'A gift-card marketplace for Nigeria and Ghana — escrow-protected trades, live rates, fast payouts.',
+    categories: ['mobile'],
+    status: 'live',
+    visibility: 'public',
+    featured: 2,
+    accent: '#2bb3a3',
+    period: '2024 – 2026',
+    context: 'Senior Software Engineer · Kobet Technology DMCC, Dubai',
+    platforms: ['Android', 'iOS'],
+    technologies: ['Flutter', 'React Native', 'Kotlin', 'Swift', 'Dart', 'CI/CD'],
+    summary: 'Selling an unused gift card for cash is slow and risky when you don’t trust the buyer. Tbay puts escrow and bonded vendors between both sides.',
+    description:
+      'A peer-to-peer marketplace where people trade gift cards for local currency. Vetted vendors compete on rates, trades are escrow-protected, and payouts go straight to a bank or mobile-money wallet.\n\n' +
+      'Part of the Kobet FinTech family — Tbay, VivaKard, TimuCard and BitOwi — that I helped architect and ship with a team across Dubai, China and Sri Lanka.',
+    icon: 'img/apps/tbay/icon.webp',
+    thumbnail: { src: 'img/apps/tbay/screen-1.webp', w: 560, h: 996, frame: 'phone', alt: 'Tbay app showing live gift-card rates for Razer, Steam, Vanilla, Sephora and more' },
+    screenshots: [
+      { src: 'img/apps/tbay/screen-1.webp', w: 560, h: 996, frame: 'phone', alt: 'Live gift-card rates', caption: 'Live rates' },
+      { src: 'img/apps/tbay/screen-2.webp', w: 560, h: 996, frame: 'phone', alt: 'Store panel: the most trusted gift card trading platform', caption: 'Store panel' },
+      { src: 'img/apps/tbay/screen-3.webp', w: 560, h: 996, frame: 'phone', alt: 'Store panel: sell 30+ gift cards instantly at best rates', caption: 'Store panel' }
+    ],
+    screenshotsNote: 'From the public store listings.',
+    problem: 'Gift-card holders want cash without the risk of trading with strangers.',
+    solution: 'Escrow-protected trades with vetted vendors competing on live rates, and payouts to bank or mobile money.',
+    features: [
+      { title: 'Escrow-protected trades' },
+      { title: 'Live vendor rates' },
+      { title: 'Bank & mobile-money payouts' },
+      { title: 'KYC and two-factor authentication', detail: 'Across the Kobet app family.' }
+    ],
+    role: [
+      'Architected and delivered cross-platform FinTech apps (crypto, wallet, KYC, 2FA) with real-time data.',
+      'Led a cross-country team across Dubai, China and Sri Lanka: planning, releases, documentation and CI/CD.',
+      'Shipped production releases to Google Play and the App Store.'
+    ],
+    stack: { 'Mobile': ['Flutter', 'React Native', 'Kotlin', 'Swift', 'Dart'], 'Web & tooling': ['Vue.js', 'React', 'Python', 'CI/CD'] },
+    impact: [
+      { value: '1M+', label: 'downloads on Google Play', source: 'Google Play listing, Oct 2026' },
+      { value: '4.6★', label: 'from 42.6K reviews', source: 'Google Play listing, Oct 2026' },
+      { value: '3', label: 'countries in the delivery team', source: 'CV' }
+    ],
+    links: [
+      { type: 'play', url: 'https://play.google.com/store/apps/details?id=com.gonglian.tbay', label: 'Google Play' },
+      { type: 'ios', url: 'https://apps.apple.com/us/app/gift-card-on-tbay/id6472409948', label: 'App Store' }
+    ],
+    related: ['vivakard', 'timucard', 'bitowi']
+  },
+
+  {
+    id: 'vivakard',
+    title: 'VivaKard',
+    tagline: 'Turns gift cards into naira with transparent rates — plus referrals, check-ins and a leaderboard.',
+    categories: ['mobile'],
+    status: 'live',
+    visibility: 'public',
+    accent: '#a6d14a',
+    period: '2024 – 2026',
+    context: 'Kobet Technology DMCC, Dubai',
+    platforms: ['Android', 'iOS'],
+    technologies: ['Flutter', 'React Native', 'Kotlin', 'Swift', 'Google Sign-In'],
+    summary: 'Gift-card holders want a fast, fair cash-out without haggling or hidden fees. VivaKard covers 20+ brands with clear rates and engagement loops that bring users back.',
+    icon: 'img/apps/vivakard/icon.webp',
+    thumbnail: { src: 'img/apps/vivakard/screen-1.webp', w: 560, h: 1212, frame: 'phone', alt: 'VivaKard store panel: get cash for your gift cards in minutes' },
+    screenshots: [
+      { src: 'img/apps/vivakard/screen-1.webp', w: 560, h: 1212, frame: 'phone', alt: 'Get cash for your gift cards in minutes', caption: 'Home' },
+      { src: 'img/apps/vivakard/screen-2.webp', w: 560, h: 1212, frame: 'phone', alt: 'Trade 50+ gift cards', caption: 'Gift cards' },
+      { src: 'img/apps/vivakard/screen-3.webp', w: 560, h: 1212, frame: 'phone', alt: 'One-tap Google login', caption: 'Google sign-in' }
+    ],
+    screenshotsNote: 'Store marketing panels from the public listings.',
+    features: [
+      { title: 'Gift cards to cash', detail: 'Amazon, iTunes, Steam, Google Play, Xbox and more.' },
+      { title: 'One-tap Google sign-in' },
+      { title: 'Referrals, daily check-ins & leaderboard' }
+    ],
+    role: ['Cross-platform delivery and production releases on both stores with the team I led.'],
+    stack: { 'Mobile': ['Flutter', 'React Native', 'Kotlin', 'Swift'] },
+    impact: [
+      { value: '100K+', label: 'downloads on Google Play', source: 'Google Play listing, Oct 2026' },
+      { value: '4.4★', label: 'from 1.1K reviews', source: 'Google Play listing, Oct 2026' }
+    ],
+    links: [
+      { type: 'play', url: 'https://play.google.com/store/apps/details?id=com.gift.vivakard&hl=en', label: 'Google Play' },
+      { type: 'ios', url: 'https://apps.apple.com/us/app/vivakard-plus/id6749223091', label: 'App Store' }
+    ],
+    related: ['tbay', 'timucard', 'bitowi']
+  },
+
+  {
+    id: 'timucard',
+    title: 'TimuCard',
+    tagline: 'Gift cards to instant payouts — then pay electricity, cable, airtime and data bills from the balance.',
+    categories: ['mobile'],
+    status: 'live',
+    visibility: 'public',
+    accent: '#ff5a3c',
+    period: '2024 – 2026',
+    context: 'Kobet Technology DMCC, Dubai',
+    platforms: ['Android', 'iOS'],
+    technologies: ['Flutter', 'React Native', 'Kotlin', 'Swift', 'Biometrics'],
+    summary: 'Money stuck on unused gift cards becomes a balance people can withdraw or spend on everyday bills, with a live rate ticker and device-level fraud monitoring.',
+    icon: 'img/apps/timucard/icon.webp',
+    thumbnail: { src: 'img/apps/timucard/screen-1.webp', w: 554, h: 1200, frame: 'phone', alt: 'TimuCard store panel: highest rates, instant cashouts' },
+    screenshots: [
+      { src: 'img/apps/timucard/screen-1.webp', w: 554, h: 1200, frame: 'phone', alt: 'Highest rates, instant cashouts', caption: 'Rates & cashouts' },
+      { src: 'img/apps/timucard/screen-2.webp', w: 554, h: 1200, frame: 'phone', alt: 'Invite friends and earn', caption: 'Referrals' },
+      { src: 'img/apps/timucard/screen-3.webp', w: 554, h: 1200, frame: 'phone', alt: 'Bill payments and biometrics', caption: 'Bills & biometrics' }
+    ],
+    screenshotsNote: 'Store marketing panels from the public listings.',
+    features: [
+      { title: 'Instant payouts with live rate ticker' },
+      { title: 'Bill payments', detail: 'Electricity, cable, airtime and data.' },
+      { title: 'Biometric security & fraud monitoring' },
+      { title: 'Referral rewards' }
+    ],
+    role: ['Part of the FinTech app family I helped architect and ship on both stores.'],
+    stack: { 'Mobile': ['Flutter', 'React Native', 'Kotlin', 'Swift'] },
+    impact: [
+      { value: '50K+', label: 'downloads on Google Play', source: 'Google Play listing, Oct 2026' },
+      { value: '4.6★', label: 'rating', source: 'Google Play listing, Oct 2026' }
+    ],
+    links: [
+      { type: 'play', url: 'https://play.google.com/store/apps/details?id=com.timucard.gift&hl=en', label: 'Google Play' },
+      { type: 'ios', url: 'https://apps.apple.com/us/app/timucard/id6752526295', label: 'App Store' }
+    ],
+    related: ['tbay', 'vivakard', 'bitowi']
+  },
+
+  {
+    id: 'bitowi',
+    title: 'BitOwi',
+    tagline: 'A crypto wallet — store, send and receive crypto with balances and history in one place.',
+    categories: ['mobile'],
+    status: 'live',
+    visibility: 'public',
+    accent: '#e2a54a',
+    period: '2024 – 2026',
+    context: 'Kobet Technology DMCC, Dubai',
+    platforms: ['Android'],
+    technologies: ['Flutter', 'Kotlin', 'KYC', '2FA'],
+    thumbnail: { src: 'img/projects/bitowi/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a crypto wallet with total balance, send and receive, asset list, and a receive screen' },
+    summary: 'Part of the Kobet FinTech family: a crypto wallet with KYC and two-factor authentication, shipped on Google Play.',
+    icon: 'img/apps/bitowi/icon.webp',
+    features: [
+      { title: 'Store, send & receive crypto' },
+      { title: 'Balances & history' },
+      { title: 'KYC & two-factor authentication', detail: 'Shared across the Kobet app family.' }
+    ],
+    role: ['Architected and delivered with the Kobet team; production release on Google Play.'],
+    links: [{ type: 'play', url: 'https://play.google.com/store/apps/details?id=com.bitowi.app&hl=en_US', label: 'Google Play' }],
+    related: ['tbay', 'vivakard', 'timucard']
+  },
+
+  {
+    id: 'evv',
+    title: 'eVV 2.0',
+    tagline: 'Jharkhand’s school-education platform — enrolment, biometric attendance, teachers and schemes in one app.',
+    categories: ['mobile'],
+    status: 'live',
+    visibility: 'public',
+    featured: 6,
+    accent: '#4f8df5',
+    period: 'Aug 2020 – Sep 2022',
+    context: 'Software Engineer · CSM Technologies (CMMI Level 5), Ranchi',
+    platforms: ['Android'],
+    technologies: ['Flutter', 'React Native', 'Kotlin', 'Java', '.NET', 'PHP', 'Biometrics'],
+    summary: 'With schools closed by COVID-19, a state government needed to track students, teachers and schemes across thousands of schools. The state’s ed-tech apps passed 500K downloads with state-wide adoption.',
+    description:
+      'The Department of School Education & Literacy’s platform for running and monitoring schools across Jharkhand, used by officers, schools and teachers. I owned delivery from requirements and biometric configuration through UAT, rollout and support.',
+    icon: 'img/apps/evv/icon.webp',
+    thumbnail: { src: 'img/apps/evv/screen-1.webp', w: 560, h: 996, frame: 'phone', alt: 'eVV home grid: data download, student enrolment, student attendance, teacher enrolment, monitoring and more' },
+    screenshots: [
+      { src: 'img/apps/evv/screen-1.webp', w: 560, h: 996, frame: 'phone', alt: 'Home grid of modules', caption: 'Modules' },
+      { src: 'img/apps/evv/screen-2.webp', w: 560, h: 996, frame: 'phone', alt: 'Login with Officer, School and Teacher roles', caption: 'Role-based login' },
+      { src: 'img/apps/evv/screen-3.webp', w: 560, h: 996, frame: 'phone', alt: 'Student enrolment form', caption: 'Student enrolment' }
+    ],
+    screenshotsNote: 'Screens show the current store version, maintained by the department.',
+    problem: 'Keeping school management, attendance, mid-day meals and learning running state-wide when classrooms closed.',
+    solution: 'Role-based mobile apps for officers, schools and teachers, with biometric attendance configured for real schools, plus training and rollout support.',
+    features: [
+      { title: 'Biometric attendance', detail: 'Configured for real schools.' },
+      { title: 'Student & teacher enrolment and tracking' },
+      { title: 'Role-based logins', detail: 'Officer, school and teacher.' },
+      { title: 'Monitoring, schemes & grievances' }
+    ],
+    role: [
+      'Owned delivery end to end: requirements, biometric configuration, development, UAT, rollout and post-launch support.',
+      'Led client demos and user training for state-wide adoption.'
+    ],
+    stack: { 'Mobile': ['Flutter', 'React Native', 'Kotlin', 'Java'], 'Backend': ['.NET', 'PHP'] },
+    impact: [
+      { value: '500K+', label: 'downloads on Google Play', source: 'Google Play listing, Oct 2026' },
+      { value: 'State-wide', label: 'rollout and adoption', source: 'CV' },
+      { value: '3', label: 'roles: officer, school, teacher' }
+    ],
+    links: [{ type: 'play', url: 'https://play.google.com/store/apps/details?id=com.evidyavahini.app', label: 'Google Play' }],
+    related: ['digischool', 'jmr', 'ecampuslink']
+  },
+
+  {
+    id: 'digischool',
+    title: 'DigiSchool',
+    tagline: 'E-learning for state-government schools during COVID-19.',
+    categories: ['mobile'],
+    status: 'shipped',
+    visibility: 'internal',
+    accent: '#6b9cf5',
+    period: '2020 – 2022',
+    context: 'CSM Technologies, Ranchi',
+    platforms: ['Android'],
+    technologies: ['Flutter', 'React Native', 'Kotlin', 'Java'],
+    thumbnail: { src: 'img/projects/digischool/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: two phone screens of an e-learning app — today’s lesson and subjects, and a video lesson with notes and a quiz' },
+    summary: 'Part of the state ed-tech suite alongside eVV: e-learning so students could keep studying while schools were closed.',
+    role: ['Built and launched as part of the state-government ed-tech apps.'],
+    impact: [{ value: '500K+', label: 'downloads across the state’s ed-tech apps', source: 'CV' }],
+    notes: ['The store listing is no longer public.'],
+    related: ['evv', 'jmr', 'ecampuslink']
+  },
+
+  {
+    id: 'jmr',
+    title: 'JMR — Vendor Register App',
+    tagline: 'A native app that replaced paper vendor registers at a Tata Steel company.',
+    categories: ['mobile', 'backend'],
+    status: 'shipped',
+    visibility: 'internal',
+    accent: '#2f6fb0',
+    period: 'Aug 2019 – Aug 2020',
+    context: 'Android App Developer · JUSCO (Tata Steel company), Jamshedpur',
+    platforms: ['Android'],
+    technologies: ['Kotlin', 'Java', '.NET', 'C#', 'SQL'],
+    thumbnail: { src: 'img/projects/jmr/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a vendor register on a tablet with entries and statuses, and a phone form for a new entry' },
+    summary: 'Vendor registers were kept by hand. A native app backed by .NET APIs cut data-entry time by 70% and improved accuracy by 50%.',
+    features: [
+      { title: 'Digital vendor register', detail: 'Replaces manual paper processes.' },
+      { title: 'Scalable .NET backend APIs' }
+    ],
+    role: ['Built the native app and its .NET backend APIs; optimised API and database performance.'],
+    stack: { 'Mobile': ['Kotlin', 'Java'], 'Backend': ['.NET', 'C#', 'SQL'] },
+    impact: [
+      { value: '70%', label: 'less data-entry time', source: 'CV' },
+      { value: '+50%', label: 'data accuracy', source: 'CV' }
+    ],
+    notes: ['The store listing is no longer public.'],
+    related: ['ecampuslink', 'tgs-dashboard', 'evv']
+  },
+
+  {
+    id: 'ecampuslink',
+    title: 'e-CampusLink',
+    tagline: 'Cross-platform web and mobile school apps built on .NET and Xamarin.',
+    categories: ['mobile', 'web', 'backend'],
+    status: 'shipped',
+    visibility: 'internal',
+    accent: '#6b9cf5',
+    period: '2019 – 2020',
+    context: 'JUSCO (Tata Steel company) · LHS + MFK Software',
+    platforms: ['Android', 'Web'],
+    technologies: ['Xamarin', 'C#', '.NET', 'SQL', 'ERP integration'],
+    thumbnail: { src: 'img/projects/ecampuslink/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a school portal dashboard with attendance, fees and the day’s timetable, and a phone showing school notices' },
+    summary: 'School apps for web and mobile, connected to an ERP and third-party APIs.',
+    role: ['Built the cross-platform apps and their integrations with the ERP and third-party APIs.'],
+    stack: { 'Apps': ['Xamarin', 'C#'], 'Backend': ['.NET', 'SQL', 'ERP & third-party APIs'] },
+    impact: [{ value: '+40%', label: 'sales after API & database optimisation (role-wide)', source: 'CV' }],
+    notes: ['The store listing is no longer public.'],
+    related: ['jmr', 'evv', 'digischool']
+  },
+
+  {
+    id: 'pregnancy-tracker',
+    title: 'Pregnancy Tracker',
+    tagline: 'A calm, offline week-by-week companion — with today’s week on the home screen.',
+    categories: ['mobile', 'experiments'],
+    status: 'prototype',
+    visibility: 'private',
+    accent: '#e58a80',
+    period: 'Aug – Oct 2026',
+    context: 'Personal project',
+    platforms: ['Android'],
+    technologies: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Room', 'AppWidget', 'Robolectric'],
+    summary: 'Progress, what’s changing, care tips, reminders and a wellness challenge — fully offline, no account, with two home-screen widgets.',
+    description:
+      'A native Android app: set a due date (or last period), then follow a 40-week timeline, nutrition and care guidance, reminders and a wellness challenge with streaks. Everything stays on the device.\n\n' +
+      'It started from a Google AI Studio generation that I extended into the current app.',
+    thumbnail: { src: 'img/projects/pregnancy/dark-home.webp', w: 540, h: 1202, frame: 'phone', alt: 'Pregnancy Tracker home in dark mode: week 25, 108 days to go, progress bar, week selector and baby size this week' },
+    screenshots: [
+      { src: 'img/projects/pregnancy/dark-home.webp', w: 540, h: 1202, frame: 'phone', alt: 'Home: week, days to go and baby size', caption: 'Home' },
+      { src: 'img/projects/pregnancy/dark-timeline.webp', w: 540, h: 1202, frame: 'phone', alt: '40-week timeline', caption: '40-week timeline' },
+      { src: 'img/projects/pregnancy/dark-widgets.webp', w: 540, h: 462, frame: 'panel', alt: 'Two home-screen widgets: pregnancy timeline and wellness progress', caption: 'Home-screen widgets' }
+    ],
+    screenshotsNote: 'Rendered from demo data with Roborazzi screenshot tests.',
+    features: [
+      { title: '40-week timeline', detail: 'Filterable by trimester.' },
+      { title: 'Nutrition & care' },
+      { title: 'Reminders that survive reboots', detail: 'AlarmManager + boot receiver.' },
+      { title: 'Wellness challenge', detail: 'Onboarding, streaks, achievements, progress and learn.' },
+      { title: 'Two home-screen widgets' },
+      { title: 'Light & dark themes, fully offline' },
+      { title: 'Play Store release', planned: true }
+    ],
+    stack: { 'App': ['Kotlin', 'Jetpack Compose', 'Material 3'], 'Data': ['Room'], 'Testing': ['JUnit', 'Robolectric', 'Roborazzi'] },
+    notes: ['Not published on Google Play; distributed as a test APK. The source repository is private.'],
+    related: ['expense-tracker', 'social-app', 'face-detection']
+  },
+
+  /* ===================================================================== Web */
+  {
+    id: 'portfolio-site',
+    title: 'afaquejaya.github.io',
+    tagline: 'My hand-built portfolio — no framework, no build step, no templates.',
+    categories: ['web'],
+    status: 'live',
+    visibility: 'public',
+    accent: '#ff5b24',
+    period: '2026',
+    context: 'Personal',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages'],
+    thumbnail: { src: 'img/projects/portfolio-site/screen.webp', w: 1280, h: 800, frame: 'web', alt: 'The portfolio’s hero: headline, introduction, call-to-action buttons and the ID-badge portrait', caption: 'Real capture of the live site' },
+    summary: 'An editorial portfolio with pinned horizontal-scroll sections, a 3D avatar guide and an Ask-an-AI card — all vanilla, accessible and reduced-motion aware.',
+    features: [
+      { title: 'Pinned horizontal scrolling', detail: 'Follows native scroll, never hijacks it.' },
+      { title: '3D avatar & AI Portfolio Guide' },
+      { title: 'Data-driven app and logo sections' },
+      { title: 'Accessible by default', detail: 'Skip link, focus states, reduced motion.' },
+      { title: 'This showcase', detail: 'A data-driven companion site for the full catalog.' }
+    ],
+    stack: { 'Frontend': ['HTML', 'CSS', 'Vanilla JavaScript'], 'Hosting': ['GitHub Pages'] },
+    links: [
+      { type: 'live', url: 'https://afaquejaya.github.io/', label: 'Open the portfolio' },
+      { type: 'github', url: 'https://github.com/Afaquejaya/afaquejaya.github.io', label: 'Source on GitHub' }
+    ],
+    related: ['portfolio-guide', 'glowfit-ai', 'rental-saas']
+  },
+
+  /* ================================================================= Backend */
+  {
+    id: 'tgs-dashboard',
+    title: 'IoT Monitoring Dashboard',
+    tagline: 'A Windows dashboard monitoring 100+ IoT devices.',
+    categories: ['backend', 'experiments'],
+    status: 'shipped',
+    visibility: 'internal',
+    accent: '#8fb36b',
+    period: 'Mar – Apr 2018',
+    context: 'Data Analyst intern · Tata Growth Shop, Jamshedpur',
+    platforms: ['Windows'],
+    technologies: ['.NET', 'C#', 'SQL'],
+    thumbnail: { src: 'img/projects/tgs-dashboard/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a desktop IoT monitoring dashboard with device counts, a grid of device tiles, a throughput chart and alerts' },
+    summary: 'An internship project: one dashboard to watch 100+ IoT devices, improving operational efficiency by 30%.',
+    role: ['Built the dashboard and its data layer.'],
+    impact: [
+      { value: '100+', label: 'IoT devices monitored', source: 'CV' },
+      { value: '+30%', label: 'operational efficiency', source: 'CV' }
+    ],
+    related: ['jmr', 'ecampuslink', 'rental-saas']
+  },
+
+  /* ============================================================= Experiments */
+  {
+    id: 'social-app',
+    title: 'Social Media App',
+    tagline: 'Posts, likes, comments, friends, chat and calls — a full social app on Android.',
+    categories: ['experiments', 'mobile'],
+    status: 'learning',
+    visibility: 'public',
+    accent: '#c9a7a0',
+    period: 'Feb 2019',
+    context: 'Personal project',
+    platforms: ['Android'],
+    technologies: ['Java', 'Kotlin', 'PHP', 'Firebase', 'Firestore', 'Agora'],
+    summary: 'A full social app with Google Sign-In, posts with photos, friend requests, one-to-one chat, voice and video calls and real-time notifications.',
+    thumbnail: { src: 'img/projects/social/feed.webp', w: 480, h: 973, frame: 'phone', alt: 'Social app feed: a post with a photo, likes and comments, and Home, Friends, Notification and Profile tabs' },
+    screenshots: [
+      { src: 'img/projects/social/feed.webp', w: 480, h: 973, frame: 'phone', alt: 'Feed with a photo post', caption: 'Feed' },
+      { src: 'img/projects/social/profile.webp', w: 480, h: 973, frame: 'phone', alt: 'Profile screen', caption: 'Profile' }
+    ],
+    features: [
+      { title: 'Google Sign-In' },
+      { title: 'Posts, likes & comments' },
+      { title: 'Friend requests & one-to-one chat' },
+      { title: 'Voice & video calls' },
+      { title: 'Real-time notifications' }
+    ],
+    stack: { 'App': ['Android', 'Java', 'Kotlin'], 'Backend': ['PHP (XAMPP)', 'Firebase', 'Firestore', 'Postman'], 'Calls': ['Agora'] },
+    related: ['video-calling', 'face-detection', 'pregnancy-tracker']
+  },
+
+  {
+    id: 'video-calling',
+    title: 'Video Calling App',
+    tagline: 'One-to-one video and voice calls plus single-channel live streaming.',
+    categories: ['experiments', 'mobile'],
+    status: 'learning',
+    visibility: 'private',
+    accent: '#c9a7a0',
+    period: 'Feb 2022',
+    context: 'Personal project',
+    platforms: ['Android'],
+    technologies: ['Java', 'Agora', 'Truecaller SDK'],
+    thumbnail: { src: 'img/projects/video-calling/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: a one-to-one video call screen and a live stream with viewer comments' },
+    summary: 'Real-time communication on Android with Agora, and Truecaller for sign-in.',
+    features: [
+      { title: 'One-to-one video & voice calls' },
+      { title: 'Live streaming through one channel' },
+      { title: 'Truecaller sign-in' }
+    ],
+    stack: { 'App': ['Android', 'Java'], 'Real-time': ['Agora'], 'Identity': ['Truecaller SDK'] },
+    related: ['social-app', 'face-detection', 'pregnancy-tracker']
+  }
+];

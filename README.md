@@ -27,6 +27,7 @@ no build step and no runtime dependencies.
 | `img/mascot/` | Avatar sprite sheets + vector masters — see `img/mascot/README.md` |
 | `tools/mascot/build.cjs` | Regenerates the avatar sprite sheets |
 | `cv/` | The online CV (separate page) |
+| `projects/` | **Project showcase** — the full catalog, a separate dark-themed site at `/projects/` (see below) |
 
 ## Preview locally
 
@@ -35,6 +36,51 @@ python -m http.server 5173
 ```
 
 Then open <http://localhost:5173/>.
+
+## Project showcase (`projects/`)
+
+A separate site with every project: search, category / technology / status
+filters, featured case studies and one case-study page per project. Same
+no-build stack as the portfolio: static HTML, one stylesheet, ES modules.
+
+| Path | What it is |
+| --- | --- |
+| `projects/index.html` | Hero, discovery dashboard, featured case studies, about, contact |
+| `projects/project.html?id=<id>` | Case-study template, rendered from the project's data |
+| `projects/js/projects-data.js` | **The catalog.** One object per project, typed with JSDoc (`// @ts-check`) |
+| `projects/js/config.js` | Categories, status labels, profile links, `assetBase`, `featuredLimit` |
+| `projects/js/ui.js` | Reusable components: nav, cards, thumbnails, architecture diagram, contact, footer |
+| `projects/js/catalog.js` / `detail.js` | Behaviour for the two pages |
+| `projects/css/showcase.css` | Design system (tokens at the top) |
+| `img/projects/<id>/` | Screenshots used by both sites, plus `concept.webp` concept art where no screenshots exist |
+| `tools/project-art/` | Source and re-render steps for the concept art |
+
+**Adding a project:** append an object to `PROJECTS` in
+`projects/js/projects-data.js`. Required: `id`, `title`, `tagline`,
+`categories`, `status`, `technologies`. Everything else is optional and the
+page skips sections that have no data. Put screenshots in `img/projects/<id>/`
+as WebP, at 16:10 for cards. If a project has no screenshots, draw a concept
+scene in `tools/project-art/art.html` and save it as
+`img/projects/<id>/concept.webp`. Reference it with `frame: 'art',
+illustrative: true` so it is labelled as a concept everywhere it appears (see
+`tools/project-art/README.md`). Without any `thumbnail`, or if an image fails
+to load, the card falls back to a neutral illustration that is labelled as one. Mark unbuilt features with `planned: true`, and give every
+metric a `source`.
+
+Content rules: only claims backed by the CV, the store listings or the
+project's own code. Never link a private repository. Never use screenshots
+that show real names, customer data or employer internals.
+
+**URLs:** the showcase is served by GitHub Pages from this repo at
+<https://afaquejaya.github.io/projects/>. The "Explore All Projects" button at
+the end of the published-apps section reads its target from
+`showcaseUrl` in `js/data.js` (default `projects/`) and opens it in a new
+tab. To host the showcase elsewhere, copy `projects/` and set
+`SITE.assetBase` (and `portfolioUrl`) in `projects/js/config.js` to
+`https://afaquejaya.github.io/`, then point `showcaseUrl` at the new URL.
+
+Preview with the same local server as the portfolio, then open
+<http://localhost:5173/projects/>. Modules don't load from `file://`.
 
 ## Updating apps
 

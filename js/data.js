@@ -16,6 +16,11 @@
  *             art, shown as a card (no second frame around it)
  */
 window.PORTFOLIO = {
+  // Where the "Explore All Projects" button opens (in a new tab). The
+  // showcase lives in /projects/ of this repo; if it is ever deployed on its
+  // own domain, put that URL here.
+  showcaseUrl: 'projects/',
+
   featured: [
     {
       id: 'tbay',

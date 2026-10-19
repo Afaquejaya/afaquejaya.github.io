@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Project concept art — source</title>
+<!--
+  Source for the illustrative concept images in img/projects/<id>/concept.webp.
+  Each <section class="art"> is one 1600×1000 image. Render: serve the repo
+  (python -m http.server 5173), open /tools/project-art/art.html, screenshot
+  each #art-<id> element at 1600×1000, encode to WebP — see README.md here.
+  These are concepts, not product screenshots; every frame carries a label.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: #222; font-family: Geist, "Segoe UI", system-ui, sans-serif; color: #f3efe7; }
+  .art {
+    --c: #ff5b24;
+    position: relative; width: 1600px; height: 1000px; overflow: hidden; margin: 0 0 40px;
+    background:
+      radial-gradient(900px 620px at 50% 62%, color-mix(in srgb, var(--c) 22%, transparent), transparent 70%),
+      radial-gradient(700px 500px at 100% 0%, rgba(255,91,36,.08), transparent 70%),
+      #0b0c0e;
+  }
+  .art::before { content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(243,239,231,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(243,239,231,.045) 1px, transparent 1px);
+    background-size: 64px 64px; -webkit-mask-image: radial-gradient(ellipse at 50% 45%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse at 50% 45%, #000 20%, transparent 75%); }
+  .tag { position: absolute; left: 36px; bottom: 28px; z-index: 5; font-family: "Geist Mono", monospace; font-size: 17px; letter-spacing: .06em; text-transform: uppercase; color: rgba(243,239,231,.42); display: flex; gap: 10px; align-items: center; }
+  .tag::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--c); transform: rotate(45deg); }
+  .stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 48px; z-index: 1; transform: scale(var(--s, 1)); }
+  .stage > * { flex: none; }
+  .mono { font-family: "Geist Mono", monospace; }
+  .disp { font-family: "Bricolage Grotesque", Geist, sans-serif; letter-spacing: -.03em; }
+
+  /* Phone */
+  .phone { position: relative; width: 340px; height: 700px; padding: 12px; border-radius: 54px; background: #050506; box-shadow: 0 0 0 2px rgba(255,255,255,.09), 0 60px 120px -40px #000, 0 0 0 10px rgba(255,255,255,.02); flex: none; }
+  .phone::before { content: ""; position: absolute; top: 22px; left: 50%; width: 96px; height: 26px; margin-left: -48px; border-radius: 20px; background: #050506; z-index: 3; }
+  .screen { position: relative; height: 100%; border-radius: 43px; overflow: hidden; background: #fff; color: #121418; padding: 62px 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+  .screen.dark { background: #101216; color: #f3efe7; }
+  .phone.tilt-l { transform: rotate(-4deg) translateY(20px); }
+  .phone.tilt-r { transform: rotate(4deg) translateY(-14px); }
+
+  /* Window */
+  .win { position: relative; border-radius: 22px; background: #15171b; box-shadow: 0 0 0 1.5px rgba(243,239,231,.12), 0 60px 120px -50px #000; overflow: hidden; flex: none; }
+  .win .bar { height: 46px; display: flex; align-items: center; gap: 10px; padding: 0 18px; background: #111316; border-bottom: 1.5px solid rgba(243,239,231,.08); }
+  .win .bar i { width: 12px; height: 12px; border-radius: 50%; background: #2a2e35; }
+  .win .bar span { margin-left: 10px; font-family: "Geist Mono", monospace; font-size: 15px; color: #8d887f; }
+  .win.light { background: #f7f6f3; color: #15171b; }
+  .win.light .bar { background: #ecebe6; border-bottom-color: rgba(0,0,0,.08); }
+  .win.light .bar i { background: #d3d0c8; }
+
+  .card { border-radius: 16px; background: #1b1e23; border: 1.5px solid rgba(243,239,231,.08); padding: 18px; }
+  .light .card, .screen:not(.dark) .card { background: #fff; border-color: rgba(0,0,0,.08); }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; border: 1.5px solid rgba(243,239,231,.16); font-size: 16px; color: #cfc9bf; white-space: nowrap; }
+  .chip.ok::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #5fd18b; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 18px; border-radius: 12px; font-weight: 600; font-size: 16px; background: var(--c); color: #fff; }
+  .btn.ghost { background: transparent; border: 1.5px solid rgba(243,239,231,.2); color: #f3efe7; }
+  .muted { color: #9a958c; }
+  .bar-l { height: 10px; border-radius: 6px; background: rgba(243,239,231,.1); }
+  .light .bar-l, .screen:not(.dark) .bar-l { background: #e9e7e1; }
+  .arrow { color: rgba(243,239,231,.4); font-size: 44px; flex: none; }
+  .row { display: flex; align-items: center; gap: 12px; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+  .label { font-family: "Geist Mono", monospace; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: #8d887f; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ rental-mcp -->
+<section class="art" id="art-rental-mcp" style="--c:#ff7a4a;--s:1.06">
+  <div class="stage" style="gap:36px">
+    <div class="win" style="width:520px">
+      <div class="bar"><i></i><i></i><i></i><span>AI assistant</span></div>
+      <div class="col" style="padding:26px;gap:18px">
+        <div style="align-self:flex-end;max-width:360px;padding:14px 18px;border-radius:18px 18px 4px 18px;background:#f3efe7;color:#121418;font-size:20px">Which tenants have overdue rent?</div>
+        <div class="card" style="border-color:color-mix(in srgb,var(--c) 45%,transparent);background:color-mix(in srgb,var(--c) 9%,#1b1e23)">
+          <div class="label" style="color:var(--c)">Tool call · MCP</div>
+          <div class="mono" style="margin-top:10px;font-size:19px">get_outstanding_rent()</div>
+          <div class="muted mono" style="margin-top:6px;font-size:15px">server: rental-saas · read-only</div>
+        </div>
+        <div style="max-width:420px;padding:16px 18px;border-radius:18px 18px 18px 4px;background:#23272d;font-size:19px;line-height:1.45">
+          <b>3 invoices are overdue</b> across 2 properties.
+          <div class="col" style="gap:8px;margin-top:12px">
+            <div class="row" style="justify-content:space-between"><span class="muted">Unit A-101</span><span>17 days</span></div>
+            <div class="row" style="justify-content:space-between"><span class="muted">Unit V-3</span><span>9 days</span></div>
+            <div class="row" style="justify-content:space-between"><span class="muted">Unit C-12</span><span>3 days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="win" style="width:400px">
+      <div class="bar"><i></i><i></i><i></i><span>/mcp · tools</span></div>
+      <div class="col" style="padding:22px;gap:9px">
+        <div class="row" style="justify-content:space-between;margin-bottom:6px"><span class="disp" style="font-size:26px;font-weight:600">MCP server</span><span class="chip ok">auth</span></div>
+        <div class="mono" style="font-size:16.5px;line-height:2;color:#cfc9bf">
+          get_properties<br>get_units<br>get_tenants<br>get_active_leases<br>get_monthly_billing_summary<br>
+          <span style="color:#fff;background:color-mix(in srgb,var(--c) 30%,transparent);padding:3px 8px;border-radius:6px;margin-left:-8px">get_outstanding_rent</span><br>
+          get_payment_history<br>get_expenses<br>get_financial_summary<br>get_outstanding_aging
+        </div>
+      </div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="col" style="align-items:center;gap:22px;width:250px">
+      <svg width="160" height="190" viewBox="0 0 160 190" fill="none"><ellipse cx="80" cy="30" rx="70" ry="24" fill="#23272d" stroke="rgba(243,239,231,.25)" stroke-width="2"/><path d="M10 30v130c0 13 31 24 70 24s70-11 70-24V30" fill="#1b1e23" stroke="rgba(243,239,231,.25)" stroke-width="2"/><path d="M10 75c0 13 31 24 70 24s70-11 70-24M10 120c0 13 31 24 70 24s70-11 70-24" stroke="rgba(243,239,231,.18)" stroke-width="2"/></svg>
+      <div class="disp" style="font-size:26px;font-weight:600">Owner’s data only</div>
+      <div class="col" style="gap:10px;align-items:center"><span class="chip ok">read-only tools</span><span class="chip ok">one owner per call</span><span class="chip ok">fails closed</span></div>
+    </div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ========================================================= careersync-ai -->
+<section class="art" id="art-careersync-ai" style="--c:#b493f0">
+  <div class="stage">
+    <div class="win light" style="width:1300px;height:800px">
+      <div class="bar"><i></i><i></i><i></i><span>CareerSync AI · Review changes</span></div>
+      <div style="display:grid;grid-template-columns:420px 1fr;gap:28px;padding:30px;height:calc(100% - 46px)">
+        <div class="card" style="padding:28px;display:flex;flex-direction:column;gap:14px">
+          <div class="label">Source CV · uploaded</div>
+          <div class="disp" style="font-size:30px;font-weight:600;color:#15171b">Curriculum vitae</div>
+          <div class="bar-l" style="width:70%"></div><div class="bar-l" style="width:90%"></div>
+          <div style="height:12px;border-radius:6px;background:color-mix(in srgb,var(--c) 45%,#fff);width:84%"></div>
+          <div class="bar-l" style="width:60%"></div><div class="bar-l" style="width:88%"></div>
+          <div style="height:12px;border-radius:6px;background:color-mix(in srgb,var(--c) 45%,#fff);width:72%"></div>
+          <div class="bar-l" style="width:94%"></div><div class="bar-l" style="width:52%"></div><div class="bar-l" style="width:80%"></div>
+          <div style="height:12px;border-radius:6px;background:color-mix(in srgb,var(--c) 45%,#fff);width:64%"></div>
+          <div class="bar-l" style="width:76%"></div><div class="bar-l" style="width:58%"></div>
+          <div style="margin-top:auto;font-size:15px;color:#6f6a61">Highlighted lines = evidence for each change</div>
+        </div>
+        <div class="col" style="gap:16px">
+          <div class="row" style="justify-content:space-between"><span class="disp" style="font-size:34px;font-weight:600">3 proposed changes</span><span style="font-size:17px;color:#6f6a61">Nothing is published until you approve</span></div>
+          <div class="card" style="display:grid;grid-template-columns:1fr auto;gap:10px 20px;align-items:center">
+            <div><div class="label">Headline</div><div style="margin-top:8px;font-size:19px"><s style="color:#a8a39a">Mobile Developer</s> → <b>Senior Software Engineer</b></div></div>
+            <div class="row"><span style="font-size:15px;color:#2f8a55;font-weight:600">✓ found in CV</span><span class="btn">Approve</span></div>
+          </div>
+          <div class="card" style="display:grid;grid-template-columns:1fr auto;gap:10px 20px;align-items:center">
+            <div><div class="label">Skills</div><div style="margin-top:8px;font-size:19px">+ MCP &nbsp;+ LangChain &nbsp;+ Next.js</div></div>
+            <div class="row"><span style="font-size:15px;color:#2f8a55;font-weight:600">✓ found in CV</span><span class="btn">Approve</span></div>
+          </div>
+          <div class="card" style="display:grid;grid-template-columns:1fr auto;gap:10px 20px;align-items:center;border-color:#e8c48a;background:#fffaf0">
+            <div><div class="label">Experience</div><div style="margin-top:8px;font-size:19px">“Led a team of 12” <span style="color:#a06a00;font-size:16px">— not in source, blocked</span></div></div>
+            <div class="row"><span style="padding:10px 18px;border-radius:12px;border:1.5px solid #ddd;font-weight:600;color:#8d887f">Skip</span></div>
+          </div>
+          <div class="label" style="margin-top:8px">Sync approved changes to</div>
+          <div class="row" style="flex-wrap:wrap;gap:10px">
+            <span class="chip" style="color:#3d3a35;border-color:#d6d2c9">LinkedIn</span><span class="chip" style="color:#3d3a35;border-color:#d6d2c9">Naukri</span><span class="chip" style="color:#3d3a35;border-color:#d6d2c9">Naukri Gulf</span><span class="chip" style="color:#3d3a35;border-color:#d6d2c9">Indeed</span><span class="chip" style="color:#3d3a35;border-color:#d6d2c9">Portfolio · GitHub PR</span><span class="chip" style="color:#3d3a35;border-color:#d6d2c9">Webhook</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ============================================================== careeros -->
+<section class="art" id="art-careeros" style="--c:#ff7a4a">
+  <div class="stage">
+    <div class="win" style="width:1320px;height:780px">
+      <div class="bar"><i></i><i></i><i></i><span>127.0.0.1 · CareerOS</span></div>
+      <div style="display:grid;grid-template-columns:300px 1fr 300px;height:calc(100% - 46px)">
+        <div class="col" style="padding:26px;gap:12px;border-right:1.5px solid rgba(243,239,231,.08)">
+          <div class="disp" style="font-size:30px;font-weight:700">CareerOS</div>
+          <div class="label" style="margin-top:10px">Allowlisted actions</div>
+          <div class="card" style="padding:14px 16px;border-color:color-mix(in srgb,var(--c) 55%,transparent);background:color-mix(in srgb,var(--c) 10%,#1b1e23);font-size:18px">▶ Evaluate an offer</div>
+          <div class="card" style="padding:14px 16px;font-size:18px">▶ Scan job portals</div>
+          <div class="card" style="padding:14px 16px;font-size:18px">▶ Update tracker <span class="muted" style="font-size:14px">· dry-run</span></div>
+          <div class="card" style="padding:14px 16px;font-size:18px">▶ Draft outreach</div>
+          <div class="card" style="padding:14px 16px;font-size:18px">▶ Compare offers</div>
+        </div>
+        <div class="col" style="padding:26px;gap:16px">
+          <div class="row" style="justify-content:space-between"><span class="disp" style="font-size:30px;font-weight:600">Evaluate an offer</span><span class="chip" style="border-color:color-mix(in srgb,var(--c) 50%,transparent);color:var(--c)">● running</span></div>
+          <div class="mono" style="flex:1;border-radius:16px;background:#0b0c0e;border:1.5px solid rgba(243,239,231,.08);padding:22px;font-size:17px;line-height:1.9;color:#cfc9bf">
+            <span style="color:#8d887f">$</span> spawn engine mode <span style="color:#f3efe7">evaluate</span> <span style="color:#8d887f">(shell: false)</span><br>
+            <span style="color:#8d887f">›</span> AI CLI started · tools denied: <span style="color:#ffb08a">Write, Edit, Bash</span><br>
+            <span style="color:#8d887f">›</span> reading offer and profile…<br>
+            <span style="color:#8d887f">›</span> scoring role fit, compensation, growth…<br>
+            <span style="color:#5fd18b">✓</span> report saved by engine script<br>
+            <span style="color:#5fd18b">✓</span> tracker preview ready — confirm to apply<br>
+            <span style="color:#f3efe7">▍</span>
+          </div>
+          <div class="row"><span class="btn">Confirm changes</span><span class="btn ghost">Discard</span><span class="muted" style="font-size:16px">Streaming over Server-Sent Events</span></div>
+        </div>
+        <div class="col" style="padding:26px;gap:14px;border-left:1.5px solid rgba(243,239,231,.08)">
+          <div class="label">Safety</div>
+          <span class="chip ok">Loopback only</span><span class="chip ok">Actions by id</span><span class="chip ok">No shell</span><span class="chip ok">AI can’t write files</span><span class="chip ok">Confirm destructive</span><span class="chip ok">Nothing is sent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ======================================================= local-agent-lab -->
+<section class="art" id="art-local-agent-lab" style="--c:#e0a48f;--s:1.05">
+  <div class="stage" style="gap:80px">
+    <div style="position:relative;width:640px;height:640px;flex:none">
+      <svg width="640" height="640" viewBox="0 0 640 640" fill="none" style="position:absolute;inset:0">
+        <circle cx="320" cy="320" r="230" stroke="rgba(243,239,231,.16)" stroke-width="2" stroke-dasharray="4 10"/>
+        <circle cx="320" cy="320" r="230" stroke="var(--c)" stroke-width="3" stroke-dasharray="180 1265" stroke-linecap="round" transform="rotate(-100 320 320)"/>
+      </svg>
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:200px;height:200px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 35% 30%,#2a2d33,#121418);box-shadow:0 0 0 2px rgba(243,239,231,.14),0 40px 80px -30px color-mix(in srgb,var(--c) 60%,transparent)">
+        <div><div class="disp" style="font-size:32px;font-weight:700">Agent<br>loop</div><div class="mono muted" style="font-size:14px;margin-top:6px">hand-written · TS</div></div>
+      </div>
+      <!-- 5 nodes on the circle -->
+      <div class="card" style="position:absolute;left:320px;top:90px;transform:translate(-50%,-50%);width:200px;text-align:center"><div class="label" style="color:var(--c)">01</div><b style="font-size:20px">Build context</b></div>
+      <div class="card" style="position:absolute;left:539px;top:249px;transform:translate(-50%,-50%);width:200px;text-align:center"><div class="label" style="color:var(--c)">02</div><b style="font-size:20px">Model decides</b></div>
+      <div class="card" style="position:absolute;left:455px;top:506px;transform:translate(-50%,-50%);width:200px;text-align:center"><div class="label" style="color:var(--c)">03</div><b style="font-size:20px">Validate args</b><div class="mono muted" style="font-size:13px">Zod</div></div>
+      <div class="card" style="position:absolute;left:185px;top:506px;transform:translate(-50%,-50%);width:200px;text-align:center;border-color:color-mix(in srgb,var(--c) 60%,transparent);background:color-mix(in srgb,var(--c) 12%,#1b1e23)"><div class="label" style="color:var(--c)">04</div><b style="font-size:20px">Policy check</b><div class="mono muted" style="font-size:13px">allow · approve · deny</div></div>
+      <div class="card" style="position:absolute;left:101px;top:249px;transform:translate(-50%,-50%);width:200px;text-align:center"><div class="label" style="color:var(--c)">05</div><b style="font-size:20px">Execute &amp; verify</b></div>
+    </div>
+    <div class="col" style="width:520px;gap:22px">
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i><span>Approval required</span></div>
+        <div class="col" style="padding:26px;gap:16px">
+          <div class="disp" style="font-size:28px;font-weight:600">The agent wants to read a file</div>
+          <div class="mono card" style="font-size:18px">workspace.read("notes/plan.md")</div>
+          <div class="muted" style="font-size:17px">Sandboxed to <span class="mono">workspace/</span> · nothing outside it is reachable.</div>
+          <div class="row"><span class="btn">Allow once</span><span class="btn ghost">Deny</span></div>
+        </div>
+      </div>
+      <div class="row" style="flex-wrap:wrap;gap:10px"><span class="chip ok">Ollama · qwen3:4b</span><span class="chip ok">local only</span><span class="chip">cloud models rejected</span></div>
+      <div class="mono muted" style="font-size:16px">Planned design · phase 1 of 9 built</div>
+    </div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ============================================================ digischool -->
+<section class="art" id="art-digischool" style="--c:#6b9cf5">
+  <div class="stage" style="gap:70px">
+    <div class="phone tilt-l"><div class="screen" style="background:#f4f7ff">
+      <div class="row" style="justify-content:space-between"><div><div style="font-size:15px;color:#6b7280">Good morning</div><div class="disp" style="font-size:28px;font-weight:700;color:#1d3fae">DigiSchool</div></div><div style="width:44px;height:44px;border-radius:50%;background:#dbe5ff"></div></div>
+      <div style="border-radius:20px;padding:18px;background:linear-gradient(135deg,#3b6cf0,#5b8cff);color:#fff">
+        <div style="font-size:14px;opacity:.85">Today’s lesson · Class 6</div>
+        <div class="disp" style="font-size:24px;font-weight:600;margin-top:4px">Science — Light &amp; Shadows</div>
+        <div class="row" style="margin-top:14px;gap:10px"><span style="width:38px;height:38px;border-radius:50%;background:#fff;color:#3b6cf0;display:grid;place-items:center;font-size:16px">▶</span><span style="font-size:15px">Video · 12 min</span></div>
+      </div>
+      <div style="font-weight:600;font-size:18px">Subjects</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div style="border-radius:16px;background:#fff;padding:14px 8px;text-align:center;font-size:15px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="font-size:26px">➗</div>Maths</div>
+        <div style="border-radius:16px;background:#fff;padding:14px 8px;text-align:center;font-size:15px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="font-size:26px">🔬</div>Science</div>
+        <div style="border-radius:16px;background:#fff;padding:14px 8px;text-align:center;font-size:15px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="font-size:26px">📖</div>Hindi</div>
+        <div style="border-radius:16px;background:#fff;padding:14px 8px;text-align:center;font-size:15px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="font-size:26px">✏️</div>English</div>
+        <div style="border-radius:16px;background:#fff;padding:14px 8px;text-align:center;font-size:15px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="font-size:26px">🌍</div>Social</div>
+        <div style="border-radius:16px;background:#fff;padding:14px 8px;text-align:center;font-size:15px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="font-size:26px">🌱</div>EVS</div>
+      </div>
+      <div style="border-radius:16px;background:#fff;padding:14px 16px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div class="row" style="justify-content:space-between;font-size:15px"><b>This week</b><span style="color:#3b6cf0">4 / 6 lessons</span></div><div style="margin-top:10px;height:8px;border-radius:6px;background:#e3e9fb"><div style="width:66%;height:100%;border-radius:6px;background:#3b6cf0"></div></div></div>
+    </div></div>
+    <div class="phone tilt-r"><div class="screen dark" style="padding:62px 0 20px">
+      <div style="height:260px;margin:0;background:linear-gradient(160deg,#1d3fae,#0b1640);display:grid;place-items:center;position:relative">
+        <svg width="180" height="140" viewBox="0 0 180 140"><circle cx="50" cy="50" r="26" fill="#ffd25e"/><path d="M50 50 L180 20 L180 120 Z" fill="rgba(255,210,94,.18)"/><rect x="100" y="60" width="30" height="50" rx="4" fill="#5b8cff"/><path d="M130 110 L180 130 L180 140 L130 140 Z" fill="rgba(0,0,0,.4)"/></svg>
+        <span style="position:absolute;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.9);color:#1d3fae;display:grid;place-items:center;font-size:24px">▶</span>
+        <div style="position:absolute;left:16px;right:16px;bottom:14px;height:6px;border-radius:4px;background:rgba(255,255,255,.25)"><div style="width:38%;height:100%;border-radius:4px;background:#fff"></div></div>
+      </div>
+      <div class="col" style="padding:20px;gap:12px">
+        <div style="font-size:14px;color:#9fb6ff">Class 6 · Science · Chapter 11</div>
+        <div class="disp" style="font-size:26px;font-weight:600">Light &amp; Shadows</div>
+        <div class="muted" style="font-size:16px;line-height:1.5">How shadows form, and why they change through the day.</div>
+        <div class="card" style="background:#181b22"><div class="row" style="justify-content:space-between;font-size:16px"><span>📄 Notes (PDF)</span><span class="muted">2.1 MB</span></div></div>
+        <div class="card" style="background:#181b22"><div class="row" style="justify-content:space-between;font-size:16px"><span>✅ Practice quiz</span><span style="color:#9fb6ff">10 questions</span></div></div>
+        <div style="margin-top:6px;padding:14px;border-radius:14px;text-align:center;background:#3b6cf0;font-weight:600;font-size:17px">Next lesson →</div>
+      </div>
+    </div></div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- =================================================================== jmr -->
+<section class="art" id="art-jmr" style="--c:#4a86d8">
+  <div class="stage" style="gap:60px">
+    <div class="win light" style="width:800px;height:640px;border-radius:30px">
+      <div class="bar" style="height:40px"><span style="margin:0">Vendor register</span></div>
+      <div class="col" style="padding:26px;gap:16px">
+        <div class="row" style="justify-content:space-between"><span class="disp" style="font-size:32px;font-weight:600">Vendor register</span><span style="padding:10px 16px;border-radius:12px;background:#2f6fb0;color:#fff;font-weight:600;font-size:16px">+ New entry</span></div>
+        <div class="row" style="gap:12px">
+          <div class="card" style="flex:1;padding:14px 16px"><div style="font-size:14px;color:#6f6a61">Entries this month</div><b class="disp" style="font-size:30px">248</b></div>
+          <div class="card" style="flex:1;padding:14px 16px"><div style="font-size:14px;color:#6f6a61">Pending review</div><b class="disp" style="font-size:30px;color:#b26a00">6</b></div>
+          <div class="card" style="flex:1;padding:14px 16px"><div style="font-size:14px;color:#6f6a61">Paper forms</div><b class="disp" style="font-size:30px;color:#2f6fb0">0</b></div>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden">
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;padding:12px 18px;background:#f1efe9;font-size:14px;color:#6f6a61;font-weight:600;letter-spacing:.04em;text-transform:uppercase"><span>Vendor</span><span>Category</span><span>Date</span><span>Status</span></div>
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;padding:14px 18px;border-top:1px solid #eee;font-size:17px"><span>Vendor 0142</span><span>Maintenance</span><span>12 Mar</span><span style="color:#2f8a55;font-weight:600">Approved</span></div>
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;padding:14px 18px;border-top:1px solid #eee;font-size:17px"><span>Vendor 0139</span><span>Supplies</span><span>12 Mar</span><span style="color:#2f8a55;font-weight:600">Approved</span></div>
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;padding:14px 18px;border-top:1px solid #eee;font-size:17px"><span>Vendor 0137</span><span>Services</span><span>11 Mar</span><span style="color:#b26a00;font-weight:600">Pending</span></div>
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;padding:14px 18px;border-top:1px solid #eee;font-size:17px"><span>Vendor 0131</span><span>Maintenance</span><span>10 Mar</span><span style="color:#2f8a55;font-weight:600">Approved</span></div>
+          <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr .8fr;padding:14px 18px;border-top:1px solid #eee;font-size:17px"><span>Vendor 0128</span><span>Supplies</span><span>10 Mar</span><span style="color:#2f8a55;font-weight:600">Approved</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="phone tilt-r" style="margin-left:-30px"><div class="screen" style="background:#f6f5f2">
+      <div class="disp" style="font-size:26px;font-weight:700">New entry</div>
+      <div class="col" style="gap:10px">
+        <div><div style="font-size:14px;color:#6f6a61;margin-bottom:6px">Vendor name</div><div style="padding:13px 14px;border-radius:12px;background:#fff;border:1.5px solid #e2dfd8;font-size:17px">Vendor 0143</div></div>
+        <div><div style="font-size:14px;color:#6f6a61;margin-bottom:6px">Category</div><div style="padding:13px 14px;border-radius:12px;background:#fff;border:1.5px solid #e2dfd8;font-size:17px">Maintenance ▾</div></div>
+        <div><div style="font-size:14px;color:#6f6a61;margin-bottom:6px">Date</div><div style="padding:13px 14px;border-radius:12px;background:#fff;border:1.5px solid #e2dfd8;font-size:17px">13 Mar</div></div>
+        <div><div style="font-size:14px;color:#6f6a61;margin-bottom:6px">Remarks</div><div style="padding:13px 14px;height:90px;border-radius:12px;background:#fff;border:1.5px solid #e2dfd8;font-size:17px;color:#a8a39a">Optional</div></div>
+      </div>
+      <div style="margin-top:auto;padding:15px;border-radius:14px;background:#2f6fb0;color:#fff;text-align:center;font-weight:600;font-size:17px">Save to register</div>
+      <div style="text-align:center;font-size:14px;color:#2f8a55">✓ Synced with the server</div>
+    </div></div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- =========================================================== ecampuslink -->
+<section class="art" id="art-ecampuslink" style="--c:#5aa9e6">
+  <div class="stage" style="gap:0">
+    <div class="win light" style="width:960px;height:660px">
+      <div class="bar"><i></i><i></i><i></i><span>e-CampusLink · School portal</span></div>
+      <div style="display:grid;grid-template-columns:220px 1fr;height:calc(100% - 46px)">
+        <div class="col" style="padding:22px;gap:6px;background:#12304d;color:#cfe3f5;font-size:17px">
+          <div class="disp" style="font-size:24px;font-weight:700;color:#fff;margin-bottom:16px">e-CampusLink</div>
+          <div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.12);color:#fff">Dashboard</div>
+          <div style="padding:10px 12px">Attendance</div><div style="padding:10px 12px">Timetable</div><div style="padding:10px 12px">Fees</div><div style="padding:10px 12px">Notices</div><div style="padding:10px 12px">Results</div>
+        </div>
+        <div class="col" style="padding:26px;gap:18px">
+          <div class="disp" style="font-size:30px;font-weight:600">Class 8 · Section B</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+            <div class="card"><div style="font-size:14px;color:#6f6a61">Attendance</div><b class="disp" style="font-size:34px;color:#1f7ac2">94%</b></div>
+            <div class="card"><div style="font-size:14px;color:#6f6a61">Fees due</div><b class="disp" style="font-size:34px">2</b></div>
+            <div class="card"><div style="font-size:14px;color:#6f6a61">New notices</div><b class="disp" style="font-size:34px">3</b></div>
+          </div>
+          <div class="card">
+            <div style="font-weight:600;font-size:18px;margin-bottom:12px">Today’s timetable</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;font-size:15px;text-align:center">
+              <div style="padding:14px 6px;border-radius:12px;background:#e6f1fb">Maths<br><span style="color:#6f6a61">8:00</span></div>
+              <div style="padding:14px 6px;border-radius:12px;background:#eef6e8">Science<br><span style="color:#6f6a61">9:00</span></div>
+              <div style="padding:14px 6px;border-radius:12px;background:#fbefe4">English<br><span style="color:#6f6a61">10:00</span></div>
+              <div style="padding:14px 6px;border-radius:12px;background:#f1ebfb">History<br><span style="color:#6f6a61">11:30</span></div>
+              <div style="padding:14px 6px;border-radius:12px;background:#e6f1fb">Computer<br><span style="color:#6f6a61">12:30</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone tilt-r" style="margin-left:-24px;width:300px;height:620px"><div class="screen" style="background:#f3f7fb">
+      <div class="disp" style="font-size:24px;font-weight:700;color:#12304d">Notices</div>
+      <div class="card" style="padding:14px"><div style="font-size:13px;color:#1f7ac2;font-weight:600">EXAMS</div><div style="font-size:16px;margin-top:4px">Term exam schedule published</div></div>
+      <div class="card" style="padding:14px"><div style="font-size:13px;color:#2f8a55;font-weight:600">EVENT</div><div style="font-size:16px;margin-top:4px">Sports day — Friday</div></div>
+      <div class="card" style="padding:14px"><div style="font-size:13px;color:#b26a00;font-weight:600">FEES</div><div style="font-size:16px;margin-top:4px">Quarter 2 fees due on 15th</div></div>
+      <div style="margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;font-size:13px;color:#6f6a61"><span style="color:#1f7ac2">Home</span><span>Classes</span><span>Fees</span><span>Profile</span></div>
+    </div></div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ========================================================= tgs-dashboard -->
+<section class="art" id="art-tgs-dashboard" style="--c:#8fb36b">
+  <div class="stage">
+    <div class="win" style="width:1340px;height:800px;border-radius:12px">
+      <div class="bar" style="height:40px;justify-content:space-between"><span style="margin:0">IoT Device Monitor</span><span style="margin:0;letter-spacing:.3em">— ▢ ✕</span></div>
+      <div style="display:grid;grid-template-columns:1fr 420px;gap:24px;padding:26px;height:calc(100% - 40px)">
+        <div class="col" style="gap:20px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+            <div class="card"><div class="label">Devices</div><b class="disp" style="font-size:44px">104</b></div>
+            <div class="card"><div class="label">Online</div><b class="disp" style="font-size:44px;color:#5fd18b">97</b></div>
+            <div class="card"><div class="label">Offline</div><b class="disp" style="font-size:44px;color:#9a958c">5</b></div>
+            <div class="card"><div class="label">Alerts</div><b class="disp" style="font-size:44px;color:#ff8a5c">2</b></div>
+          </div>
+          <div class="card" style="flex:1">
+            <div class="row" style="justify-content:space-between;margin-bottom:16px"><b style="font-size:19px">Device grid</b><span class="muted" style="font-size:15px">refreshed 5 s ago</span></div>
+            <div id="tgs-grid" style="display:grid;grid-template-columns:repeat(16,1fr);gap:8px"></div>
+          </div>
+        </div>
+        <div class="col" style="gap:20px">
+          <div class="card">
+            <b style="font-size:19px">Throughput · 24 h</b>
+            <svg viewBox="0 0 380 200" style="width:100%;margin-top:14px"><defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8fb36b" stop-opacity=".45"/><stop offset="1" stop-color="#8fb36b" stop-opacity="0"/></linearGradient></defs><g stroke="rgba(243,239,231,.08)"><path d="M0 50H380M0 100H380M0 150H380"/></g><path d="M0 150 L30 140 L60 120 L90 128 L120 96 L150 104 L180 70 L210 82 L240 60 L270 74 L300 48 L330 58 L380 36 L380 200 L0 200Z" fill="url(#g1)"/><path d="M0 150 L30 140 L60 120 L90 128 L120 96 L150 104 L180 70 L210 82 L240 60 L270 74 L300 48 L330 58 L380 36" fill="none" stroke="#8fb36b" stroke-width="3"/></svg>
+          </div>
+          <div class="card col" style="gap:12px">
+            <b style="font-size:19px">Alerts</b>
+            <div class="row" style="justify-content:space-between;font-size:16px"><span><span style="color:#ff8a5c">●</span> Sensor 0417 · temp high</span><span class="muted">2 min</span></div>
+            <div class="row" style="justify-content:space-between;font-size:16px"><span><span style="color:#ff8a5c">●</span> Gateway 07 · latency</span><span class="muted">9 min</span></div>
+            <div class="row" style="justify-content:space-between;font-size:16px"><span><span style="color:#9a958c">●</span> Node 0882 · offline</span><span class="muted">31 min</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ========================================================= video-calling -->
+<section class="art" id="art-video-calling" style="--c:#e58a80">
+  <div class="stage" style="gap:80px">
+    <div class="phone tilt-l"><div class="screen dark" style="padding:0;background:linear-gradient(170deg,#3a2f3f,#14161b)">
+      <svg viewBox="0 0 316 676" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="158" cy="250" r="78" fill="#6f5a6e"/><path d="M28 560c0-90 58-150 130-150s130 60 130 150v116H28z" fill="#6f5a6e"/></svg>
+      <div style="position:absolute;top:70px;left:0;right:0;text-align:center"><div class="disp" style="font-size:26px;font-weight:600">Video call</div><div class="mono" style="font-size:16px;color:#cfc9bf">04:12</div></div>
+      <div style="position:absolute;right:16px;top:118px;width:84px;height:124px;border-radius:16px;background:linear-gradient(160deg,#4b6a7d,#22303a);box-shadow:0 0 0 2px rgba(255,255,255,.3)"></div>
+      <div class="row" style="position:absolute;left:0;right:0;bottom:40px;justify-content:center;gap:22px">
+        <span style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:22px">🎙</span>
+        <span style="width:72px;height:72px;border-radius:50%;background:#e5484d;display:grid;place-items:center;font-size:26px">✕</span>
+        <span style="width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.16);display:grid;place-items:center;font-size:22px">🎥</span>
+      </div>
+    </div></div>
+    <div class="phone tilt-r"><div class="screen dark" style="padding:0;background:linear-gradient(170deg,#1f3442,#0d1116)">
+      <svg viewBox="0 0 316 676" style="position:absolute;inset:0;width:100%;height:100%"><circle cx="158" cy="230" r="70" fill="#4b6a7d"/><path d="M40 520c0-80 52-135 118-135s118 55 118 135v156H40z" fill="#4b6a7d"/></svg>
+      <div class="row" style="position:absolute;top:70px;left:18px;gap:10px"><span style="padding:6px 12px;border-radius:8px;background:#e5484d;font-weight:700;font-size:15px;letter-spacing:.06em">LIVE</span><span style="padding:6px 12px;border-radius:8px;background:rgba(0,0,0,.45);font-size:15px">👁 1.2K</span></div>
+      <div class="col" style="position:absolute;left:16px;right:16px;bottom:96px;gap:8px;font-size:15px">
+        <div style="padding:9px 12px;border-radius:12px;background:rgba(0,0,0,.45);max-width:80%"><b>viewer_21</b> hello from Ranchi 👋</div>
+        <div style="padding:9px 12px;border-radius:12px;background:rgba(0,0,0,.45);max-width:80%"><b>viewer_08</b> audio is clear</div>
+        <div style="padding:9px 12px;border-radius:12px;background:rgba(0,0,0,.45);max-width:80%"><b>viewer_33</b> ❤️❤️</div>
+      </div>
+      <div style="position:absolute;left:16px;right:16px;bottom:30px;padding:14px 16px;border-radius:999px;background:rgba(255,255,255,.12);font-size:16px;color:#cfc9bf">Say something…</div>
+    </div></div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ================================================================== jeeb -->
+<section class="art" id="art-jeeb" style="--c:#3f86ef">
+  <div class="stage" style="gap:80px">
+    <div class="phone tilt-l"><div class="screen" dir="rtl" style="background:#f5f8ff;font-family:'Segoe UI',Tahoma,sans-serif">
+      <div class="row" style="justify-content:space-between"><div><div style="font-size:14px;color:#6b7280">التوصيل إلى</div><b style="font-size:19px">الدوحة ▾</b></div><img src="../../img/logos/jeeb-icon.webp" width="46" height="46" style="border-radius:12px" alt=""></div>
+      <div style="padding:13px 16px;border-radius:14px;background:#fff;border:1.5px solid #e3e8f4;font-size:16px;color:#9aa3b5">🔍 ابحث عن البقالة</div>
+      <div style="border-radius:20px;padding:18px;background:linear-gradient(135deg,#2563eb,#3f86ef);color:#fff">
+        <div style="font-size:14px;opacity:.85">مختارة لك</div><div style="font-size:23px;font-weight:700;margin-top:4px">خضار وفواكه طازجة</div><div style="margin-top:12px;display:inline-block;padding:7px 14px;border-radius:999px;background:#fff;color:#2563eb;font-weight:700;font-size:14px">تسوق الآن</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;font-size:13px">
+        <div><div style="height:58px;border-radius:16px;background:#e7f6ec;display:grid;place-items:center;font-size:26px">🥬</div>خضار</div>
+        <div><div style="height:58px;border-radius:16px;background:#fff2e2;display:grid;place-items:center;font-size:26px">🍊</div>فواكه</div>
+        <div><div style="height:58px;border-radius:16px;background:#e8f0ff;display:grid;place-items:center;font-size:26px">🥛</div>ألبان</div>
+        <div><div style="height:58px;border-radius:16px;background:#fbe9ee;display:grid;place-items:center;font-size:26px">🍞</div>مخبوزات</div>
+      </div>
+      <b style="font-size:17px">الأكثر طلبًا</b>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="border-radius:16px;background:#fff;padding:12px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="height:70px;border-radius:12px;background:#f1f5ff;display:grid;place-items:center;font-size:34px">🍎</div><div style="font-size:14px;margin-top:8px">تفاح أحمر</div><b style="font-size:15px;color:#2563eb">٨٫٥ ر.ق</b></div>
+        <div style="border-radius:16px;background:#fff;padding:12px;box-shadow:0 2px 8px rgba(30,60,140,.08)"><div style="height:70px;border-radius:12px;background:#f1f5ff;display:grid;place-items:center;font-size:34px">🥑</div><div style="font-size:14px;margin-top:8px">أفوكادو</div><b style="font-size:15px;color:#2563eb">١٢ ر.ق</b></div>
+      </div>
+    </div></div>
+    <div class="phone tilt-r"><div class="screen" style="padding:0;background:#eef2f8">
+      <svg viewBox="0 0 316 420" style="width:100%;height:420px;flex:none"><rect width="316" height="420" fill="#e9eef6"/><g fill="#dde4ef"><rect x="10" y="20" width="80" height="70" rx="6"/><rect x="110" y="20" width="90" height="120" rx="6"/><rect x="220" y="20" width="86" height="70" rx="6"/><rect x="10" y="110" width="80" height="110" rx="6"/><rect x="220" y="110" width="86" height="140" rx="6"/><rect x="10" y="240" width="190" height="70" rx="6"/><rect x="10" y="330" width="120" height="80" rx="6"/><rect x="150" y="270" width="156" height="140" rx="6"/></g><g stroke="#fff" stroke-width="9" fill="none"><path d="M0 100H316M0 230H316M100 0V420M210 0V420M0 320H316"/></g><path d="M40 380 C 60 300, 100 300, 105 230 S 180 160, 210 150 S 260 90, 262 60" fill="none" stroke="#3f86ef" stroke-width="6" stroke-linecap="round"/><circle cx="40" cy="380" r="9" fill="#12304d"/><path d="M262 40c-10 0-17 7-17 16 0 12 17 27 17 27s17-15 17-27c0-9-7-16-17-16z" fill="#3f86ef"/><circle cx="262" cy="56" r="6" fill="#fff"/><circle cx="105" cy="230" r="11" fill="#12304d" stroke="#fff" stroke-width="4"/></svg>
+      <div class="col" style="padding:20px;gap:12px;margin-top:-30px;border-radius:26px 26px 0 0;background:#fff;flex:1">
+        <div style="margin:0 auto;width:44px;height:5px;border-radius:4px;background:#d6dbe5"></div>
+        <div class="row" style="justify-content:space-between"><b style="font-size:20px">Your order is on the way</b><span style="color:#3f86ef;font-weight:700">12 min</span></div>
+        <div class="row" style="gap:8px"><i style="flex:1;height:6px;border-radius:4px;background:#3f86ef"></i><i style="flex:1;height:6px;border-radius:4px;background:#3f86ef"></i><i style="flex:1;height:6px;border-radius:4px;background:#3f86ef"></i><i style="flex:1;height:6px;border-radius:4px;background:#dfe5ef"></i></div>
+        <div style="font-size:15px;color:#6b7280">Packed · Picked up · <b style="color:#121418">On the way</b> · Delivered</div>
+        <div class="row" style="padding:12px;border-radius:14px;background:#f4f7fc"><span style="width:42px;height:42px;border-radius:50%;background:#c9d6ee"></span><div style="flex:1"><b style="font-size:16px">Your driver</b><div style="font-size:14px;color:#6b7280">Live GPS tracking</div></div><span style="width:42px;height:42px;border-radius:50%;background:#3f86ef;color:#fff;display:grid;place-items:center">✆</span></div>
+      </div>
+    </div></div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<!-- ================================================================ bitowi -->
+<section class="art" id="art-bitowi" style="--c:#e2a54a">
+  <div class="stage" style="gap:80px">
+    <div class="phone tilt-l"><div class="screen dark" style="background:#0f1115">
+      <div class="row" style="justify-content:space-between"><img src="../../img/apps/bitowi/icon.webp" width="44" height="44" style="border-radius:12px" alt=""><span class="chip ok" style="font-size:13px;padding:5px 10px">KYC verified · 2FA</span></div>
+      <div style="margin-top:6px"><div class="muted" style="font-size:15px">Total balance</div><div class="disp" style="font-size:44px;font-weight:700">$2,480.35</div><div style="font-size:15px;color:#5fd18b">+2.4% today</div></div>
+      <div class="row" style="gap:12px">
+        <div style="flex:1;padding:14px;border-radius:16px;background:#e2a54a;color:#121418;text-align:center;font-weight:700;font-size:16px">↑ Send</div>
+        <div style="flex:1;padding:14px;border-radius:16px;background:#1d2128;text-align:center;font-weight:700;font-size:16px">↓ Receive</div>
+      </div>
+      <div class="label" style="margin-top:6px">Assets</div>
+      <div class="col" style="gap:10px">
+        <div class="row" style="padding:12px 14px;border-radius:16px;background:#171a20"><span style="width:40px;height:40px;border-radius:50%;background:#f7931a;display:grid;place-items:center;font-weight:700">₿</span><div style="flex:1"><b style="font-size:16px">Bitcoin</b><div class="muted" style="font-size:13px">0.0182 BTC</div></div><b style="font-size:16px">$1,204.10</b></div>
+        <div class="row" style="padding:12px 14px;border-radius:16px;background:#171a20"><span style="width:40px;height:40px;border-radius:50%;background:#627eea;display:grid;place-items:center;font-weight:700">Ξ</span><div style="flex:1"><b style="font-size:16px">Ethereum</b><div class="muted" style="font-size:13px">0.31 ETH</div></div><b style="font-size:16px">$812.55</b></div>
+        <div class="row" style="padding:12px 14px;border-radius:16px;background:#171a20"><span style="width:40px;height:40px;border-radius:50%;background:#26a17b;display:grid;place-items:center;font-weight:700">₮</span><div style="flex:1"><b style="font-size:16px">Tether</b><div class="muted" style="font-size:13px">463.70 USDT</div></div><b style="font-size:16px">$463.70</b></div>
+      </div>
+    </div></div>
+    <div class="phone tilt-r"><div class="screen dark" style="background:#0f1115;align-items:center">
+      <div class="disp" style="font-size:26px;font-weight:600;align-self:flex-start">Receive BTC</div>
+      <div style="padding:18px;border-radius:24px;background:#fff;margin-top:18px"><canvas id="qr" width="210" height="210"></canvas></div>
+      <div class="muted" style="font-size:15px;margin-top:6px">Your wallet address</div>
+      <div class="mono" style="padding:12px 16px;border-radius:14px;background:#171a20;font-size:15px">bc1q·····x7kf</div>
+      <div class="row" style="gap:12px;width:100%"><div style="flex:1;padding:14px;border-radius:16px;background:#1d2128;text-align:center;font-weight:600">Copy</div><div style="flex:1;padding:14px;border-radius:16px;background:#e2a54a;color:#121418;text-align:center;font-weight:700">Share</div></div>
+      <div class="label" style="margin-top:auto;align-self:flex-start">History</div>
+      <div class="row" style="width:100%;justify-content:space-between;font-size:15px"><span>↓ Received</span><span style="color:#5fd18b">+0.0040 BTC</span></div>
+    </div></div>
+  </div>
+  <span class="tag">Illustrative concept · not a product screenshot</span>
+</section>
+
+<script>
+  // Device tiles for the IoT grid (deterministic, so re-renders match).
+  (function () {
+    var g = document.getElementById('tgs-grid'); if (!g) return;
+    var html = '';
+    for (var i = 0; i < 112; i++) {
+      var s = (i * 37 + 11) % 53;
+      var c = i === 23 || i === 71 ? '#ff8a5c' : (s < 3 ? '#4a4f57' : '#5fd18b');
+      html += '<i style="aspect-ratio:1;border-radius:6px;background:' + c + ';opacity:' + (c === '#5fd18b' ? (0.55 + (s % 5) * 0.1).toFixed(2) : 1) + '"></i>';
+    }
+    g.innerHTML = html;
+  })();
+  // A decorative QR-like pattern (not a real code).
+  (function () {
+    var cv = document.getElementById('qr'); if (!cv) return;
+    var x = cv.getContext('2d'), n = 25, s = 210 / n, seed = 7;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    x.fillStyle = '#111';
+    for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (rnd() > 0.52) x.fillRect(c * s, r * s, s, s);
+    [[0, 0], [n - 7, 0], [0, n - 7]].forEach(function (p) {
+      x.fillStyle = '#fff'; x.fillRect(p[0] * s, p[1] * s, 7 * s, 7 * s);
+      x.fillStyle = '#111'; x.fillRect(p[0] * s, p[1] * s, 7 * s, 7 * s);
+      x.fillStyle = '#fff'; x.fillRect((p[0] + 1) * s, (p[1] + 1) * s, 5 * s, 5 * s);
+      x.fillStyle = '#111'; x.fillRect((p[0] + 2) * s, (p[1] + 2) * s, 3 * s, 3 * s);
+    });
+  })();
+</script>
+</body>
+</html>
