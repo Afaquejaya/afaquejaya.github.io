@@ -5222,59 +5222,49 @@ a.fb-meta:hover b { text-decoration: underline; text-underline-offset: 3px; }
   .fb-track li[aria-hidden] { display: none; }
 }
 
-/* "Explore All Projects" — closes the More shipped apps card, opens the showcase */
-.all-projects {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px 24px;
-  margin-top: 24px;
-  padding: 18px 18px 18px 22px;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  background:
-    radial-gradient(120% 160% at 100% 50%, rgba(255, 91, 36, 0.12), transparent 55%),
-    rgba(255, 255, 255, 0.55);
-}
-.all-projects p { flex: 1 1 260px; max-width: 54ch; color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+/* "Explore All Projects" — sits right after the app tab bar ("More apps"), opens the showcase */
+.app-index-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; }
 
-/* The CTA: an ink pill with an accent medallion, distinct from the store links */
+/* An ink pill with an accent medallion, distinct from the tabs and store links */
 .all-projects-btn {
   flex: none;
-  gap: 14px;
-  min-height: 56px;
-  padding: 0 7px 0 24px;
+  gap: 12px;
   font-weight: 600;
-  font-size: 16px;
   box-shadow: 0 0 0 1px rgba(18, 17, 16, 0.9), 0 14px 30px -18px rgba(18, 17, 16, 0.65);
 }
 .all-projects-btn .ap-ico {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
   border-radius: 50%;
   background: var(--accent);
   color: #fff;
   transition: transform 0.4s var(--ease-out), background-color 0.3s, color 0.3s;
 }
-.all-projects-btn .ap-ico svg { width: 18px; height: 18px; }
+.all-projects-btn .ap-ico svg { width: 16px; height: 16px; }
 @media (hover: hover) {
   .all-projects-btn:hover { box-shadow: 0 0 0 1px var(--accent), 0 18px 36px -16px rgba(255, 91, 36, 0.55); }
   .all-projects-btn:hover .ap-ico { background: #fff; color: var(--accent-ink); transform: rotate(45deg); }
 }
-.all-projects-btn:active { transform: translateY(0) scale(0.98); transition-duration: 0.1s; }
+.all-projects-btn:active { transform: translateY(0) scale(0.97); transition-duration: 0.1s; }
 .all-projects-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; box-shadow: 0 0 0 6px var(--accent-soft); }
-.hcard.fit-2 .all-projects { margin-top: 14px; padding: 12px 12px 12px 16px; }
-.hcard.fit-3 .all-projects p { display: none; }
-@media (max-width: 899px) {
-  .all-projects { margin-top: 14px; padding: 12px; }
-  .all-projects p { font-size: 13.5px; }
-  .all-projects-btn { width: 100%; justify-content: space-between; min-height: 52px; }
-  .all-projects-btn .ap-ico { width: 38px; height: 38px; }
-}
 @media (prefers-reduced-motion: reduce) {
   .all-projects-btn .ap-ico { transition: none; }
   .all-projects-btn:hover .ap-ico { transform: none; }
+}
+
+/* Compact size: same height as the glass tab bar beside it */
+.ix-all { min-height: 50px; padding: 0 6px 0 20px; font-size: 14.5px; }
+.ix-all .ap-ico { width: 38px; height: 38px; }
+
+/* Tablet & phone: the tab bar is hidden, so the button shares a row with the progress status */
+@media (max-width: 899px) {
+  .hs-meta:has(.app-index-row) { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+  .ix-all { min-height: 42px; padding: 0 4px 0 16px; font-size: 13.5px; gap: 10px; }
+  .ix-all .ap-ico { width: 34px; height: 34px; }
+}
+
+/* Narrow phones (< 390px): keep both store buttons on one row so neither is clipped in the pinned card */
+@media (max-width: 389px) {
+  .hcard .store-links { gap: 8px; }
+  .hcard .store { padding: 0 10px 0 9px; gap: 7px; }
 }

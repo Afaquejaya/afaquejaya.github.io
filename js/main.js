@@ -677,9 +677,13 @@
     for (var k = 0; k < hsList.length; k++) {
       var o = hsList[k];
       if (!o.sec.contains(el)) continue;
-      var card = el.closest('.hcard');
-      if (!card) return null;
       var top = o.sec.getBoundingClientRect().top + window.scrollY;
+      var card = el.closest('.hcard');
+      // The section itself (e.g. #work from "Explore my work"): its sticky frame
+      // already clears the nav, so land with the section top at 0. The native
+      // anchor jump would stop scroll-padding-top short and push the bottom of
+      // the frame — store buttons included — below the fold.
+      if (!card) return o.on ? top : null;
       if (!o.on) { o.viewport.scrollTo({ left: card.offsetLeft - 16, behavior: reduced ? 'auto' : 'smooth' }); return top - nav.offsetHeight; }
       var pad = parseFloat(getComputedStyle(o.track).paddingLeft) || 0;
       var x = Math.min(o.dist, Math.max(0, card.offsetLeft - pad));
