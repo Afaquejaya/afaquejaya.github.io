@@ -36,6 +36,8 @@
   <link rel="stylesheet" href="css/concierge.css">
 
   <script>document.documentElement.classList.add('js');if(location.hash.length>1)document.documentElement.classList.add('no-smooth');</script>
+  <!-- Cookie-free analytics (Umami). Only sends from the live domain, so local previews stay out of the numbers. -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="15d1b246-5b8e-45c1-ac74-253c80b6fe77" data-domains="afaquejaya.github.io" data-exclude-hash="true"></script>
 
   <script type="application/ld+json">
   {
@@ -1388,6 +1390,7 @@
 
         <footer class="footer">
           <span>© <span id="year">2026</span> Afaque Jaya. Designed &amp; built by hand — no templates.</span>
+          <span class="footer-note">Cookie-free analytics, no personal data. Questions the guide can’t answer are kept anonymously to improve it.</span>
           <a class="to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
         </footer>
         <p class="wordmark" aria-hidden="true">Afaque Jaya</p>
@@ -1397,6 +1400,7 @@
 
   <div class="toast" role="status" aria-live="polite"></div>
 
+  <script src="js/analytics.js" defer></script>
   <script src="js/data.js" defer></script>
   <script src="js/testimonials.js" defer></script>
   <script src="js/main.js" defer></script>

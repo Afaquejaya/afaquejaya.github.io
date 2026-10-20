@@ -13,8 +13,14 @@
  * Safety: everything the visitor types is treated as text. It is never
  * turned into a URL, selector or code, messages are rendered with
  * textContent only, and actions can reach only the section ids and links
- * listed in the data file. Nothing typed is stored or sent anywhere unless
- * an AI endpoint has been configured.
+ * listed in the data file. Nothing typed is sent to an AI unless an endpoint
+ * has been configured.
+ *
+ * Analytics (js/analytics.js, cookie-free): the guide reports which intents
+ * were answered, navigation it performed, and — so the knowledge base can be
+ * improved — the text of questions it could NOT answer, trimmed and with
+ * email addresses and phone numbers removed first. Nothing identifies the
+ * visitor.
  *
  * Opened by js/mascot.js (window.Concierge.toggle). Never opens by itself.
  */
@@ -74,6 +80,16 @@
   var lastSend = 0, aiCalls = 0, lastAi = 0;
   var pending = 0;      // timer for the typing indicator
   var spotTimer = 0;
+
+  function track(name, data) { if (window.PortfolioTrack) window.PortfolioTrack(name, data); }
+  // Unanswered questions are recorded to improve the guide; strip anything
+  // that could identify the visitor before they leave the browser.
+  function anonymise(text) {
+    return String(text)
+      .replace(/[\w.+-]+@[\w-]+(\.[\w-]+)+/g, '[email]')
+      .replace(/\+?\d[\d\s().-]{6,}\d/g, '[number]')
+      .slice(0, 120);
+  }
 
   /* ------------------------------------------------------------------ */
   /* Small DOM helpers (text only — never innerHTML with visitor input)  */
@@ -317,7 +333,7 @@
     isOpen = true;
     minimized = false;
     showPanel('opener');
-    if (!logEl.childNodes.length) welcome();
+    if (!logEl.childNodes.length) { welcome(); track('chat-open'); }
     // Mouse/keyboard: straight to the input. Touch: focus the panel so the
     // on-screen keyboard doesn't cover the welcome message.
     if (fineMQ.matches) input.focus({ preventScroll: true }); else root.focus({ preventScroll: true });
@@ -509,6 +525,7 @@
     var it = INTENTS[btn.getAttribute('data-more')];
     btn.remove();
     if (!it || !it.detail) return;
+    track('chat-more', { intent: it.id });
     typing(500, function () {
       addBot({ answer: [], points: it.detail.map(function (d) { return [d]; }), actions: it.actions && it.actions.slice(0, 1) });
     });
@@ -659,7 +676,7 @@
     var it = INTENTS[id];
     if (!it || throttled()) return;
     addUser(it.q);
-    respond(it);
+    respond(it, 'chip');
   }
 
   function ask(raw) {
@@ -669,6 +686,7 @@
     addUser(text);
 
     if (isUnsafe(raw)) {
+      track('chat-blocked');
       typing(420, function () {
         addBot({ answer: ['I can only show sections of this portfolio and Afaque’s verified profiles — I can’t open other links or run commands.'] });
         setSuggestions(nextFor(lastIntent));
@@ -679,7 +697,7 @@
     var n = norm(text);
     if (NAV_VERB.test(n)) {
       var key = sectionFromText(n);
-      if (key === null && /\b(cv|resume|pdf)\b/.test(n)) { respond(INTENTS.cv); return; }
+      if (key === null && /\b(cv|resume|pdf)\b/.test(n)) { respond(INTENTS.cv, 'typed'); return; }
       if (key) {
         typing(380, function () {
           var s = D.sections[key];
@@ -698,13 +716,14 @@
     var ranked = rank(text);
     var best = ranked[0], second = ranked[1];
     var confident = best.s >= 2.4 || (best.s >= 1.25 && second.s < best.s * 0.6);
-    if (confident) { respond(best.it); return; }
+    if (confident) { respond(best.it, 'typed'); return; }
     fallback(text, ranked);
   }
 
-  function respond(it) {
+  function respond(it, via) {
     asked[it.id] = true;
     lastIntent = it;
+    track('chat-question', { intent: it.id, via: via || 'chip' });
     var words = (it.answer || []).join(' ').length;
     typing(Math.min(1100, 420 + words * 1.6), function () {
       addBot(it);
@@ -728,16 +747,17 @@
           setSuggestions(nextFor(lastIntent));
         }, function () {
           t.remove(); setBusy(false);
-          honestFallback(ranked);
+          honestFallback(ranked, text);
         });
       });
       return;
     }
-    typing(520, function () { honestFallback(ranked); });
+    typing(520, function () { honestFallback(ranked, text); });
   }
 
-  function honestFallback(ranked) {
+  function honestFallback(ranked, text) {
     var near = ranked.filter(function (r) { return r.s > 0 && !r.it.small; }).slice(0, 3).map(function (r) { return r.it.id; });
+    track('chat-unanswered', { question: anonymise(text), nearest: near[0] || 'none' });
     addBot({
       answer: ['The portfolio doesn’t establish an answer to that, so I won’t guess. You could try one of the questions below, ask an external AI with his résumé, or ask Afaque directly.'],
       actions: [{ nav: 'askai' }, { link: 'email', label: 'Ask Afaque directly' }]
@@ -785,6 +805,7 @@
     }
     spotlight(target);
     noteFor(s, key);
+    track('chat-nav', { section: key });
     // On phones the panel would cover the content: tuck it away behind a pill.
     if (smallMQ.matches) minimize();
   }

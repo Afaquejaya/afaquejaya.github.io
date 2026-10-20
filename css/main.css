@@ -1572,6 +1572,7 @@ dl, dd { margin: 0; }
 }
 .footer a:hover { color: var(--night-text); }
 .footer .to-top { display: inline-flex; align-items: center; gap: 6px; }
+.footer .footer-note { flex-basis: 100%; order: 3; font-size: 0.8em; opacity: 0.7; }
 
 .wordmark {
   position: relative;
