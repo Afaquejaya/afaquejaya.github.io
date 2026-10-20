@@ -75,6 +75,7 @@
         <span class="tab-ind" aria-hidden="true"></span>
         <a href="#work">Apps</a>
         <a href="#builds">SaaS &amp; AI</a>
+        <a href="#now">Now</a>
         <a href="#impact">Impact</a>
         <a href="#cases">Case studies</a>
         <a href="#experience">Experience</a>
@@ -96,6 +97,7 @@
     <ol>
       <li><a href="#work">Apps</a></li>
       <li><a href="#builds">SaaS &amp; AI</a></li>
+      <li><a href="#now">Now</a></li>
       <li><a href="#impact">Impact</a></li>
       <li><a href="#cases">Case studies</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -430,24 +432,11 @@
               <div class="hcard-media">
                 <div class="browser">
                   <div class="browser-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">rental-property.hatchable.site</span></div>
-                  <div class="browser-view concept-dash" role="img" aria-label="Design representation of the rental dashboard with sample figures">
-                    <div class="cd-side" aria-hidden="true"><b>Rentals</b><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
-                    <div class="cd-main" aria-hidden="true">
-                      <div class="cd-head"><b>October overview</b><span>Sample data</span></div>
-                      <div class="cd-kpis">
-                        <div><small>Collected</small><b>₹4.82L</b><em class="up">86% of billed</em></div>
-                        <div><small>Outstanding</small><b>₹78K</b><em class="down">6 invoices</em></div>
-                        <div><small>Occupancy</small><b>92%</b><em>23 / 25 units</em></div>
-                        <div><small>Expiring</small><b>3</b><em>next 60 days</em></div>
-                      </div>
-                      <div class="cd-row">
-                        <div class="cd-chart"><small>Collection · 6 months</small><div class="bars"><i style="--h:52%"></i><i style="--h:64%"></i><i style="--h:58%"></i><i style="--h:72%"></i><i style="--h:80%"></i><i style="--h:86%"></i></div></div>
-                        <div class="cd-list"><small>Overdue</small><p><span>A-204</span><b>12 d</b></p><p><span>B-110</span><b>8 d</b></p><p><span>C-03</span><b>3 d</b></p></div>
-                      </div>
-                    </div>
+                  <div class="browser-view is-dash">
+                    <img class="is-active" src="img/projects/rental/dashboard.webp" width="1280" height="632" loading="lazy" decoding="async" alt="Rental SaaS landlord dashboard: expected, collected, outstanding and overdue rent for October 2026, occupancy, vacant units, open maintenance and leases ending soon, above a pending-rent list of tenants with overdue invoices">
                   </div>
                 </div>
-                <p class="gallery-caption">Design representation with sample figures — the live app is behind sign-in.</p>
+                <p class="gallery-caption">Screenshot of the landlord dashboard with sample data (18 Oct 2026); the greeting line is cropped. The live app is behind sign-in.</p>
               </div>
               <div class="hcard-copy">
                 <div class="badges"><span class="badge live">Live SaaS</span><span class="badge hot">MCP integration</span></div>
@@ -580,10 +569,10 @@
   "category": "Transport",
   "amount": 15, "currency": "AED" }</pre>
                 </figure>
-                <p class="gallery-caption">Screenshot from the app; the overlays explain the flow.</p>
+                <p class="gallery-caption">Screenshot from the app; the overlays explain the flow. In this version the backend returns a simulated model response.</p>
               </div>
               <div class="hcard-copy">
-                <div class="badges"><span class="badge">Lab · June 2026</span><span class="badge hot">LangChain callbacks</span></div>
+                <div class="badges"><span class="badge">Lab · June 2026</span><span class="badge hot">LangChain-style callbacks</span></div>
                 <div class="build-title">
                   <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span>
                   <h3 id="exp-name">AI Smart Expense Tracker <span class="kind">Flutter app + FastAPI backend</span></h3>
@@ -591,10 +580,10 @@
                 <p class="lede">Type how you spent money in plain — even Hinglish — language and get back structured, categorised expenses.</p>
                 <ul class="feature-list one">
                   <li><b>Natural language in</b>, items, categories and amounts out</li>
-                  <li><b>“AI hook”</b> on the LangChain callback lifecycle drives loading, strict JSON and errors</li>
+                  <li><b>“AI hook”</b> modelled on LangChain’s callback lifecycle drives loading, strict JSON and errors</li>
                   <li><b>Graceful failure</b> with an offline fallback view</li>
                 </ul>
-                <div class="role-stack"><span class="chip">Flutter</span><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">LangChain</span></div>
+                <div class="role-stack"><span class="chip">Flutter</span><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Pydantic</span></div>
                 <div class="build-links">
                   <a class="btn" href="https://gist.github.com/Afaquejaya/a4d157d4255799bd6e3521320f6d9537" target="_blank" rel="noopener">View code &amp; notes <span class="arrow" aria-hidden="true">↗</span></a>
                 </div>
@@ -605,15 +594,31 @@
       </div>
     </section>
 
+    <!-- ===================================================== Now -->
+    <section class="now" id="now" aria-labelledby="now-title">
+      <div class="wrap">
+        <div class="section-head split">
+          <div>
+            <p class="eyebrow"><span class="num">03</span> Now</p>
+            <h2 class="section-title" id="now-title" style="margin-top:18px">What I’m building <span class="serif">and learning now.</span></h2>
+          </div>
+          <p class="section-lead">A monthly snapshot: what’s in progress, what I’m studying by building, and the next milestone. <span class="now-updated" id="now-updated"></span></p>
+        </div>
+        <div class="now-grid" id="now-root">
+          <!-- js/main.js renders this from js/now.js — edit that file to update the section -->
+        </div>
+      </div>
+    </section>
+
     <!-- ===================================================== Impact -->
     <section class="impact" id="impact" aria-labelledby="impact-title">
       <div class="wrap">
         <div class="section-head split">
           <div>
-            <p class="eyebrow"><span class="num">03</span> Impact</p>
+            <p class="eyebrow"><span class="num">04</span> Impact</p>
             <h2 class="section-title" id="impact-title" style="margin-top:18px">Outcomes, <span class="serif">not just output.</span></h2>
           </div>
-          <p class="section-lead">The numbers I’m proudest of — each one tied to the product and team where it happened.</p>
+          <p class="section-lead">The numbers I’m proudest of — each one tied to the product and team where it happened, with a line on how it was measured.</p>
         </div>
 
         <ul class="impact-grid">
@@ -621,33 +626,41 @@
             <div class="metric-value"><span data-count="95">95</span><span class="unit">%</span></div>
             <p class="metric-label">Faster homepage load time</p>
             <p class="metric-ctx"><b>Jeeb, Doha</b> — server-driven, personalised homepage with Algolia instant search.</p>
+            <p class="metric-how"><b>Measured</b> Homepage load time before and after the server-driven homepage and Algolia search shipped. Self-reported from project work at Jeeb (2022–24); the measurement set-up isn’t published here.</p>
           </li>
           <li class="metric" data-reveal style="--d:.06s">
             <div class="metric-value"><span class="unit">+</span><span data-count="60">60</span><span class="unit">%</span></div>
             <p class="metric-label">Delivery speed</p>
             <p class="metric-ctx"><b>Jeeb, Doha</b> — Driver, Collector and Storekeeper apps built with a remote team.</p>
+            <p class="metric-how"><b>Measured</b> Delivery speed after the Driver, Collector and Storekeeper apps launched, against the previous operation. Self-reported from project work at Jeeb (2022–24).</p>
           </li>
           <li class="metric" data-reveal style="--d:.12s">
             <div class="metric-value"><span data-count="500">500</span><span class="unit">K+</span></div>
             <p class="metric-label">Downloads of state-government ed-tech apps</p>
             <p class="metric-ctx"><b>CSM Technologies</b> — school management, biometric attendance and e-learning during COVID-19.</p>
+            <p class="metric-how"><b>Measured</b> The install bracket shown on the <a href="https://play.google.com/store/apps/details?id=com.evidyavahini.app" target="_blank" rel="noopener">Google Play listing for eVV 2.0</a> (500K+, checked Oct 2026). DigiSchool’s listing is no longer public, so it isn’t counted.</p>
           </li>
           <li class="metric" data-reveal>
             <div class="metric-value"><span class="unit">+</span><span data-count="50">50</span><span class="unit">%</span></div>
             <p class="metric-label">User engagement</p>
             <p class="metric-ctx"><b>Jeeb, Doha</b> — from the personalised homepage and instant search.</p>
+            <p class="metric-how"><b>Measured</b> User engagement after the personalised homepage and instant search shipped, against the previous homepage. Self-reported from project work at Jeeb (2022–24).</p>
           </li>
           <li class="metric" data-reveal style="--d:.06s">
             <div class="metric-value"><span data-count="70">70</span><span class="unit">%</span></div>
             <p class="metric-label">Less manual data entry</p>
             <p class="metric-ctx"><b>JUSCO (Tata Steel)</b> — native app replacing paper vendor registers, plus 50% better data accuracy.</p>
+            <p class="metric-how"><b>Measured</b> Time spent on vendor-register data entry, paper process versus the app; the accuracy figure comes from the same comparison. Self-reported from project work at JUSCO (2019–20).</p>
           </li>
           <li class="metric" data-reveal style="--d:.12s">
             <div class="metric-value"><span class="unit">+</span><span data-count="20">20</span><span class="unit">%</span></div>
             <p class="metric-label">Delivery efficiency &amp; checkout performance</p>
             <p class="metric-ctx"><b>Jeeb, Doha</b> — real-time GPS tracking, route optimisation and secure payments.</p>
+            <p class="metric-how"><b>Measured</b> Delivery efficiency and checkout performance after GPS tracking, route optimisation and payments shipped. Self-reported from project work at Jeeb (2022–24).</p>
           </li>
         </ul>
+
+        <p class="impact-note" data-reveal>How to read these: the Google Play figure comes from the public store listing. The percentages are my own project reporting from each role — comparisons made at the time, not independent audits — and the underlying measurements aren’t published here. Ask me and I’ll walk you through any of them.</p>
 
         <div class="markets" data-reveal>
           <span>Shipped for markets in</span>
@@ -663,7 +676,7 @@
       <div class="wrap">
         <div class="section-head split">
           <div>
-            <p class="eyebrow"><span class="num">04</span> Case studies</p>
+            <p class="eyebrow"><span class="num">05</span> Case studies</p>
             <h2 class="section-title" id="cases-title" style="margin-top:18px">How the work <span class="serif">actually got done.</span></h2>
           </div>
           <p class="section-lead">Three engagements, opened like case files: the challenge, what I built, and what changed.</p>
@@ -848,7 +861,7 @@
       <div class="wrap">
         <div class="section-head split">
           <div>
-            <p class="eyebrow"><span class="num">05</span> Experience</p>
+            <p class="eyebrow"><span class="num">06</span> Experience</p>
             <h2 class="section-title" id="exp-title" style="margin-top:18px">Seven years, <span class="serif">one path.</span></h2>
           </div>
           <p class="section-lead">From an internship in Jamshedpur to leading a FinTech team in Dubai — the map runs forward in time, the timeline below starts with today.</p>
@@ -1053,7 +1066,7 @@
       <div class="wrap">
         <div class="section-head split">
           <div>
-            <p class="eyebrow"><span class="num">06</span> Skills</p>
+            <p class="eyebrow"><span class="num">07</span> Skills</p>
             <h2 class="section-title" id="skills-title" style="margin-top:18px">Depth where <span class="serif">it counts.</span></h2>
           </div>
           <div>
@@ -1145,7 +1158,7 @@
               <span class="g-num">07</span>
             </div>
             <h3>AI &amp; GenAI</h3>
-            <p>Bringing LLMs into real apps — with the plumbing for monitoring, structured output and failure handling.</p>
+            <p>Bringing LLMs — the models — into real apps, with the plumbing around them: callback hooks for monitoring, structured output and failure handling, the pattern frameworks like LangChain formalise.</p>
             <ul class="skill-list" aria-label="AI skills">
               <li>LLM integration</li><li>LangChain</li><li>AI agents</li><li>Prompt engineering</li><li>Claude</li><li>Cursor</li><li class="exploring">MCP</li><li class="exploring">AR / VR</li>
             </ul>
@@ -1182,7 +1195,7 @@
     <section class="about" id="about" aria-labelledby="about-title">
       <div class="wrap">
         <div class="section-head about-head">
-          <p class="eyebrow"><span class="num">07</span> About</p>
+          <p class="eyebrow"><span class="num">08</span> About</p>
           <div class="mascot-dock"></div>
         </div>
 
@@ -1249,7 +1262,7 @@
       <div class="wrap">
         <div class="section-head split">
           <div>
-            <p class="eyebrow"><span class="num">08</span> Feedback</p>
+            <p class="eyebrow"><span class="num">09</span> Feedback</p>
             <h2 class="section-title" id="feedback-title" style="margin-top:18px">What it’s like <span class="serif">working with me.</span></h2>
           </div>
           <p class="section-lead">Short notes from the kinds of people I ship with — engineering managers, product owners, teammates and clients — each tied to the work it came from.</p>
@@ -1273,7 +1286,7 @@
       <div class="wrap">
         <div class="contact-top">
         <div class="contact-intro">
-        <p class="eyebrow"><span class="num">09</span> Contact</p>
+        <p class="eyebrow"><span class="num">10</span> Contact</p>
         <h2 class="contact-title" id="contact-title" style="margin-top:22px" data-reveal>Have an interesting product to build? <span class="serif">Let’s talk.</span></h2>
         <p class="contact-lead" data-reveal style="--d:.08s">I’m happy to talk about senior mobile and full-stack roles, 0→1 product builds, or a team that needs someone who can ship across Android, iOS and the web.</p>
 
@@ -1389,7 +1402,7 @@
         </div>
 
         <footer class="footer">
-          <span>© <span id="year">2026</span> Afaque Jaya. Designed &amp; built by hand — no templates.</span>
+          <span>© <span id="year">2026</span> Afaque Jaya. Designed &amp; built by hand — no templates. Code released under the <a class="footer-license" href="https://github.com/Afaquejaya/afaquejaya.github.io/blob/master/LICENSE" target="_blank" rel="license noopener">MIT License</a>.</span>
           <span class="footer-note">Cookie-free analytics, no personal data. Questions the guide can’t answer are kept anonymously to improve it.</span>
           <a class="to-top" href="#top">Back to top <span aria-hidden="true">↑</span></a>
         </footer>
@@ -1402,6 +1415,7 @@
 
   <script src="js/analytics.js" defer></script>
   <script src="js/data.js" defer></script>
+  <script src="js/now.js" defer></script>
   <script src="js/testimonials.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/concierge-data.js" defer></script>

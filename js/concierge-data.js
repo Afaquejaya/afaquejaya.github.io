@@ -57,8 +57,9 @@ window.CONCIERGE_DATA = {
     mcp:        { id: 'build-mcp',       label: 'View SaaS & MCP Architecture', note: 'The MCP flow: AI client → owner-scoped auth → MCP tools → the SaaS APIs → the owner’s records only.', next: 'mcpauth' },
     glowfit:    { id: 'build-glowfit',   label: 'Explore GlowFit AI',         note: 'GlowFit AI — real screenshots of skin analysis and virtual try-on, with live demo, video and GitHub links.' },
     pregnancy:  { id: 'build-pregnancy', label: 'See the Pregnancy Tracker',  note: 'The Pregnancy Tracker’s home screen, next to a representation of its 4×2 home-screen widget.', thumb: 'img/projects/pregnancy/icon.webp' },
-    expense:    { id: 'build-expense',   label: 'See the AI Expense Tracker', note: 'Plain-language expenses in, structured JSON out — Flutter app with a FastAPI and LangChain backend.' },
-    impact:     { id: 'impact',          label: 'See measured impact',        note: 'Each number here is tied to the product and team where it happened.' },
+    expense:    { id: 'build-expense',   label: 'See the AI Expense Tracker', note: 'Plain-language expenses in, structured JSON out — a Flutter app with a FastAPI backend; the “AI hook” is modelled on LangChain’s callback lifecycle, and the model response is simulated in this version.' },
+    now:        { id: 'now',             label: 'See what he’s building now', note: 'A monthly snapshot: projects in progress, the five learning projects with their status, and the next milestone.' },
+    impact:     { id: 'impact',          label: 'See measured impact',        note: 'Each number here is tied to the product and team where it happened, with a line on how it was measured.' },
     cases:      { id: 'cases',           label: 'Read the case studies',      note: 'Three engagements as case files: challenge, what he built, result.' },
     caseJeeb:   { id: 'case-jeeb',       label: 'Jeeb case study',            note: 'Jeeb: a grocery platform built from zero to one in Doha.', thumb: 'img/logos/jeeb-icon.webp' },
     caseKobet:  { id: 'case-kobet',      label: 'Kobet case study',           note: 'Kobet: a FinTech app family built by one team across Dubai, China and Sri Lanka.', thumb: 'img/logos/kobet.webp' },
@@ -127,11 +128,21 @@ window.CONCIERGE_DATA = {
       next: ['role', 'senior', 'distributed']
     },
     {
+      id: 'now', q: 'What is he working on right now?',
+      keys: ['right now', 'currently', 'current project', 'current work', 'working on', 'building now', 'these days', 'this month', 'learning now', 'what is he learning', 'next milestone', '^now'],
+      answer: [
+        'This month: the AI Job Agent (phases 1–3 of 12 built; phase 4 is the AI provider layer and chat shell), the Rental SaaS and its MCP tools (next: isolation testing and verifying the tools with a real MCP client), and the Pregnancy Tracker (next: a Play Store release).',
+        'He is also learning by building a framework-free local AI agent in TypeScript — phase 2 of 9 — and the “Now” section lists all five learning projects with their status.'
+      ],
+      actions: [{ nav: 'now' }, { nav: 'builds' }],
+      next: ['aimcp', 'different']
+    },
+    {
       id: 'different', q: 'What makes him different from other developers?',
       keys: ['different', 'unique', 'apart', 'sets him apart', 'stand out', 'stands out', 'special', 'differentiat', 'edge'],
       answer: [
         'His breadth across native Android, iOS, cross-platform apps, backend integration and AI-enabled products lets him work across several layers of one product.',
-        'The portfolio pairs published, high-download apps with his own builds — a rental SaaS with an MCP integration, GlowFit AI and an LLM-backed expense tracker — so you can see both delivered products and current exploration.'
+        'The portfolio pairs published, high-download apps with his own builds — a rental SaaS with an MCP integration, GlowFit AI and an AI expense-tracker lab — so you can see both delivered products and current exploration.'
       ],
       actions: [{ nav: 'builds', label: 'Explore His Work' }],
       next: ['impressive', 'strengths']
@@ -151,7 +162,7 @@ window.CONCIERGE_DATA = {
       keys: ['strongest', 'strength', 'best at', 'good at', 'skills', 'expertise', 'core skill'],
       answer: [
         'His daily drivers are Flutter, React Native and Android, in Dart, Kotlin and TypeScript, with Clean Architecture and MVVM.',
-        'Around that: REST and GraphQL APIs, Firebase, real-time data, store publishing and CI/CD — plus LLM integration with LangChain in recent work.'
+        'Around that: REST and GraphQL APIs, Firebase, real-time data, store publishing and CI/CD — plus LLM integration in recent work (the Anthropic API and local Ollama models, with LangChain-style callback hooks).'
       ],
       points: [['Mobile: Flutter, React Native, Android, iOS (Swift), Jetpack Compose', 'skills'], ['Backend & data: REST, GraphQL, OAuth, WebSocket, FastAPI, Firebase', 'skills'], ['AI: LLM integration, LangChain, prompt engineering; MCP (actively exploring)', 'skills']],
       actions: [{ nav: 'skills' }],
@@ -309,7 +320,7 @@ window.CONCIERGE_DATA = {
       keys: ['^mcp', 'model context protocol', '^ai', 'artificial intelligence', 'llm', 'langchain', 'genai', 'machine learning', 'ai work', 'ai projects'],
       answer: [
         'His Rental Property Management SaaS combines rental operations with an MCP integration that lets compatible, authenticated AI clients access authorised rental data through defined tools.',
-        'Alongside it: GlowFit AI (skin analysis and virtual try-on using YouCam’s AI APIs) and an AI expense tracker that turns plain language into structured JSON with LangChain.'
+        'Alongside it: GlowFit AI (skin analysis and virtual try-on using YouCam’s AI APIs) and an AI expense-tracker lab that turns plain language into structured JSON through a callback hook modelled on LangChain’s lifecycle (the model response is simulated in the current version).'
       ],
       actions: [{ nav: 'mcp', label: 'Explore AI & MCP Project' }, { nav: 'glowfit' }, { nav: 'expense' }],
       next: ['mcpauth', 'mcptools', 'glowfit']
@@ -339,7 +350,7 @@ window.CONCIERGE_DATA = {
       keys: ['expense', 'expenses', 'hinglish', 'fastapi', 'natural language', 'callback', 'ai hook'],
       answer: [
         'A Flutter app with a FastAPI backend: you type how you spent money in plain language — even Hinglish — and get back categorised, structured expenses.',
-        'An “AI hook” on the LangChain callback lifecycle drives the loading state, enforces strict JSON output and handles errors, with an offline fallback view.'
+        'An “AI hook” modelled on LangChain’s callback lifecycle drives the loading state, enforces strict JSON output and handles errors, with an offline fallback view. In this version the backend simulates the model response.'
       ],
       actions: [{ nav: 'expense' }, { link: 'expenseCode' }],
       next: ['apierrors', 'aimcp']
@@ -440,7 +451,7 @@ window.CONCIERGE_DATA = {
       id: 'apierrors', kind: 'approach', q: 'How does he approach API integration and error handling?',
       keys: ['error handling', 'errors', 'error', 'failure', 'fallback', 'retry', 'api approach', 'resilien'],
       answer: [
-        'Documented example: in his AI expense tracker, an “AI hook” on the LangChain callbacks drives loading state, enforces strict JSON output and handles errors gracefully, with an offline fallback view.',
+        'Documented example: in his AI expense tracker, an “AI hook” modelled on LangChain’s callback lifecycle drives loading state, enforces strict JSON output and handles errors gracefully, with an offline fallback view.',
         'More broadly he lists REST, GraphQL, OAuth, WebSocket and Dio/Retrofit, plus OWASP; a typical approach is typed clients, clear loading/error/empty states and safe retries. Ask him how he’d apply it to your system.'
       ],
       actions: [{ nav: 'expense' }, { nav: 'skills' }],

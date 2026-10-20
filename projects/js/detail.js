@@ -129,12 +129,18 @@ function renderProject(/** @type {Project} */ p) {
   }
 
   if (p.decisions && p.decisions.length) {
-    add('decisions', 'Decisions & trade-offs', `<div class="feat-grid">${p.decisions.map((d) =>
-      `<div class="tradeoff"><b>${esc(d.title)}</b><p>${esc(d.detail)}</p>${d.tradeoff ? `<p class="cost">${esc(d.tradeoff)}</p>` : ''}</div>`).join('')}</div>`);
+    const line = (/** @type {string} */ cls, /** @type {string} */ label, /** @type {string | undefined} */ text) =>
+      text ? `<p class="${cls}"><strong>${label}:</strong> ${esc(text)}</p>` : '';
+    add('decisions', 'Decisions — what, why and the trade-off',
+      `<p class="impact-src" style="margin-bottom:14px">Each decision names the requirement that drove it and what it bought in practice. None of them guarantees security or unlimited scale; the trade-offs say where the limits are.</p>
+       <div class="feat-grid">${p.decisions.map((d) =>
+      `<div class="tradeoff"><b>${esc(d.title)}</b><p>${esc(d.detail)}</p>${line('why', 'Why', d.why)}${line('benefit', 'Benefit', d.benefit)}${d.tradeoff ? `<p class="cost">${esc(d.tradeoff)}</p>` : ''}</div>`).join('')}</div>`);
   }
 
   if (p.impact && p.impact.length) {
-    const sources = [...new Set(p.impact.map((m) => m.source).filter(Boolean))];
+    // "CV" figures are my own project reporting, not an audit — say so.
+    const sources = [...new Set(p.impact.map((m) => m.source).filter(Boolean))]
+      .map((s) => (s === 'CV' ? 'my CV — self-reported from project work at the time, not independently audited' : s));
     add('impact', 'Results & impact',
       `<ul class="impact-list">${p.impact.map((m) => `<li class="outcome"><b>${esc(m.value)}</b><span>${esc(m.label)}</span></li>`).join('')}</ul>
        ${sources.length ? `<p class="impact-src">Source: ${esc(sources.join('; '))}.</p>` : ''}${p.impactNote ? `<p class="impact-src">${esc(p.impactNote)}</p>` : ''}`);

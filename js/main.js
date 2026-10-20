@@ -125,6 +125,57 @@
     }).join('');
   }
 
+  /* "Now" section (js/now.js): what is being built and learned this month.
+     Rendered from data so a monthly update touches one file. */
+  function renderNow() {
+    var now = window.NOW;
+    var root = $('#now-root');
+    if (!now || !root) return;
+    var stamp = $('#now-updated');
+    if (stamp && now.updated) stamp.textContent = 'Updated ' + now.updated + '.';
+    function link(l) {
+      return '<a href="' + esc(l.url) + '"' + (l.external ? ' target="_blank" rel="noopener"' : '') + '>' + esc(l.label) +
+        (l.external ? ' <span class="arrow" aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>' : '') + '</a>';
+    }
+    function links(list) { return list && list.length ? '<p class="now-links">' + list.map(link).join('') + '</p>' : ''; }
+    function chips(list) {
+      return list && list.length ? '<ul class="now-tags" aria-label="Technologies">' + list.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '';
+    }
+    function line(label, text) { return text ? '<p class="now-line"><b>' + label + ':</b> ' + esc(text) + '</p>' : ''; }
+
+    var building = (now.building || []).map(function (b, i) {
+      return '<article class="now-card" data-reveal style="--d:' + (i * 0.06) + 's">' +
+        '<div class="now-top"><h4>' + esc(b.name) + '</h4><span class="now-status">' + esc(b.status) + '</span></div>' +
+        '<p class="now-what">' + esc(b.what) + '</p>' +
+        line('Where it is', b.progress) + line('Next milestone', b.next) +
+        chips(b.tags) + links(b.links) +
+      '</article>';
+    }).join('');
+    var learning = (now.learning || []).map(function (l) {
+      return '<li class="now-learn">' +
+        '<div class="now-top"><h4>' + esc(l.name) + '</h4><span class="now-when' + (l.current ? ' is-current' : '') + '">' + esc((l.current ? 'Current · ' : '') + l.when) + '</span></div>' +
+        line('Learning', l.learning) + line('Status', l.status) +
+        chips(l.tech) + links(l.links) +
+      '</li>';
+    }).join('');
+    var f = now.focus || {};
+    var m = f.milestone;
+    root.innerHTML =
+      '<div class="now-col">' +
+        '<h3 class="now-h"><span class="now-k">A</span> Building this month</h3>' + building +
+      '</div>' +
+      '<div class="now-col">' +
+        '<h3 class="now-h"><span class="now-k">B</span> Learning by building</h3>' +
+        '<ol class="now-learning">' + learning + '</ol>' +
+        '<h3 class="now-h"><span class="now-k">C</span> Focus &amp; next milestone</h3>' +
+        '<div class="now-focus" data-reveal>' +
+          (f.statement ? '<p class="now-statement">' + esc(f.statement) + '</p>' : '') +
+          (m ? '<p class="now-line"><b>Next milestone · ' + esc(m.project) + ':</b> ' + esc(m.text) +
+               (m.url ? ' ' + link({ label: 'Follow along', url: m.url, external: true }) : '') + '</p>' : '') +
+        '</div>' +
+      '</div>';
+  }
+
   /* Feedback row (js/testimonials.js). Cards are rendered twice for a
      seamless marquee (the copy is aria-hidden and unfocusable). */
   var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 6.2 6.8.8-5 4.7 1.3 6.8L12 17.8l-6 3.3 1.3-6.8-5-4.7 6.8-.8z"/></svg>';
@@ -288,6 +339,7 @@
 
   renderApps();
   renderMore();
+  renderNow();
   // "Explore All Projects" → the showcase site (configurable in js/data.js).
   if (data.showcaseUrl) $$('[data-showcase-link]').forEach(function (a) { a.setAttribute('href', data.showcaseUrl); });
   renderRoleApps();

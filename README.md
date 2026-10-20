@@ -15,6 +15,7 @@ no build step and no runtime dependencies.
 | `css/main.css` | Design system and all styles (tokens at the top) |
 | `js/data.js` | **Published apps** and the **logo strip** — names, copy, metrics, store links, screenshots. Edit them here |
 | `js/testimonials.js` | **Feedback cards** for “What it’s like working with me”. Ships with clearly marked *sample* drafts — replace them with verified testimonials (see below) |
+| `js/now.js` | The **“Now” section** — what is being built and learned this month, the five learning projects and the next milestone. Update it monthly; `js/main.js` renders it |
 | `js/main.js` | Renders the apps, adds tech logos to skill chips (`TECH` map), sliding section tabs, pinned horizontal-scroll sections (`data-hscroll`), scroll reveals, parallax, mobile menu, counters |
 | `js/mascot.js` | The bottom-right 3D avatar: head and eyes follow the cursor; clicking it opens the AI Portfolio Guide (behaviour adapted from [page-mascot](https://github.com/nilbuild/page-mascot), MIT) |
 | `js/concierge.js` + `css/concierge.css` | **AI Portfolio Guide** — the chat panel behind the avatar: answers, allowlisted navigation, highlights, follow-ups |
@@ -221,3 +222,11 @@ stored or sent anywhere unless an AI endpoint is configured.
 `js/concierge-data.js` with `id`, `q`, `keys`, `answer` and, optionally,
 `actions` and `next`. For a new destination, add it to `sections` (with a
 real element id from `index.html`) or `links` first.
+
+## License
+
+The code in this repository is released under the [MIT License](LICENSE)
+(© 2026 Afaque Jaya). The licence covers the HTML, CSS and JavaScript. It does
+not cover the CV, the profile photo, the app icons and store screenshots
+(which belong to their publishers) or the third-party logos in `img/tech/`
+and `img/logos/`.

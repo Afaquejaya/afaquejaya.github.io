@@ -76,10 +76,12 @@
  * @property {string} detail
  * @property {string} [resolution]
  *
- * @typedef {Object} Decision
- * @property {string} title
- * @property {string} detail
- * @property {string} [tradeoff]
+ * @typedef {Object} Decision        Decision → why → benefit → trade-off
+ * @property {string} title          The technology or approach chosen
+ * @property {string} detail         What it is, in one line
+ * @property {string} [why]          The requirement, problem or constraint that motivated it
+ * @property {string} [benefit]      The practical effect (performance, maintainability, security, cost, speed)
+ * @property {string} [tradeoff]     What it cost or where its limits are
  *
  * @typedef {Object} Project
  * @property {string} id                       required — also the URL slug
@@ -136,12 +138,13 @@ export const PROJECTS = [
     description:
       'A multi-role SaaS for landlords in the UAE and the Gulf, with three portals: landlord, tenant and admin. It models the full rent cycle — property and unit, lease, bill (including meter readings), payment, receipt — and the costs around it.\n\n' +
       'An owner can ask an AI assistant about their own portfolio, either inside the app or from an MCP-compatible AI client. Both paths are read-only and scoped to that owner’s data.',
-    thumbnail: { src: 'img/projects/rental/invoices.webp', w: 1280, h: 720, frame: 'web', alt: 'Invoices screen of the Rental SaaS: invoiced, collected, outstanding and overdue totals above a list of rent invoices with statuses', caption: 'Invoices — sample data' },
+    thumbnail: { src: 'img/projects/rental/dashboard.webp', w: 1280, h: 632, frame: 'web', alt: 'Landlord dashboard of the Rental SaaS: expected, collected, outstanding and overdue rent for October 2026, occupancy, vacant units, open maintenance and leases ending soon, above a pending-rent list of tenants with overdue invoices', caption: 'Dashboard — sample data, 18 Oct 2026' },
     screenshots: [
+      { src: 'img/projects/rental/dashboard.webp', w: 1280, h: 632, frame: 'web', alt: 'Landlord dashboard with rent, occupancy and maintenance figures and a pending-rent list', caption: 'Dashboard — the month at a glance' },
       { src: 'img/projects/rental/invoices.webp', w: 1280, h: 720, frame: 'web', alt: 'Invoices screen with totals and a filterable list of rent invoices', caption: 'Invoices and balances' },
       { src: 'img/projects/rental/property-ai.webp', w: 398, h: 462, frame: 'panel', alt: 'Property AI panel answering “Which tenants have overdue rent?” with two tenants, amounts and days overdue, and a source line', caption: 'Property AI — read-only, cites its source' }
     ],
-    screenshotsNote: 'Screens from the running app with sample data. The live app is behind sign-in.',
+    screenshotsNote: 'Screens from the running app with sample data (18 Oct 2026); the dashboard greeting line is cropped. The live app is behind sign-in.',
     problem: 'Small landlords track rent in spreadsheets and chat threads. Overdue rent, expiring leases and utility readings slip, and there is no single view of what each property actually earns.',
     solution: 'A workspace per owner that ties every invoice to a lease and every payment to an invoice, so the dashboard, reminders and reports all come from the same records — and an assistant can answer questions from them.',
     features: [
@@ -186,8 +189,27 @@ export const PROJECTS = [
       { title: 'One owner must never see another’s data', detail: 'Every endpoint touches properties, tenants or money.', resolution: 'All queries go through ownership helpers (ownedProperty, ownedLease, ownedInvoice) keyed on the authenticated owner.' }
     ],
     decisions: [
-      { title: 'Application-level isolation instead of database RLS', detail: 'Ownership checks live in shared helpers used by every function.', tradeoff: 'Simpler to build on the platform, but a missed helper is a leak — so cross-account (IDOR) tests are next on the release checklist.' },
-      { title: 'One payment interface, two providers', detail: 'A single provider module with Razorpay and Stripe adapters, picked by a setting.', tradeoff: 'Ships disabled (NOT_CONFIGURED) until a provider account is connected and tested end to end.' }
+      { title: 'Serverless API functions over managed PostgreSQL', detail: 'Every portal calls /api/v1 functions on the Hatchable platform; the data lives in one PostgreSQL database with 156 SQL migrations.',
+        why: 'One person building a product with many related entities — properties, units, leases, invoices, receipts, expenses — and money that has to reconcile. A relational database with constraints and a migration history was the safe choice, and the platform removes server operations entirely.',
+        benefit: 'The full rent cycle shipped in about two months; the schema history is reviewable; nothing to patch, back up or scale by hand.',
+        tradeoff: 'Tied to one platform, and cold starts on rarely used functions.' },
+      { title: 'Application-level owner isolation instead of database RLS', detail: 'Ownership checks live in shared helpers (ownedProperty, ownedLease, ownedInvoice) used by every function; the owner comes from the session, never from the request body.',
+        why: 'Every endpoint touches money or tenants, so isolation had to be enforced the same way everywhere. On the platform’s function model, one audited helper per entity was easier to reason about than per-table policies.',
+        benefit: 'One place to check access, and simpler queries.',
+        tradeoff: 'A missed helper is a leak — so cross-account (IDOR) tests are next on the release checklist.' },
+      { title: 'Email OTP and passkeys, no passwords', detail: 'Sign-in is a one-time code or a passkey; the user’s role is resolved on every request.',
+        why: 'Landlords and tenants share one app with very different rights, and passwords add reset flows and reuse risk.',
+        benefit: 'No password storage, and a role check that a client cannot skip.' },
+      { title: 'Money as NUMERIC and integers, never floats', detail: 'Amounts are NUMERIC in PostgreSQL and handled as integers in code; reports read the same ledger the invoices write.',
+        why: 'Rent, proration and partial payments must reconcile to the cent across invoices, receipts and reports.',
+        benefit: 'Totals match everywhere; no rounding drift between the dashboard and the invoice PDF.' },
+      { title: 'AI access through MCP, read-only', detail: 'Ten tools expose the same business rules as the dashboard to an authorised AI client; no write tools yet.',
+        why: 'Owners want to ask “who hasn’t paid?” in the assistant they already use, without handing an AI a database login.',
+        benefit: 'Nothing an AI client does can change financial records, and the tools work with any MCP-compatible client.',
+        tradeoff: 'Less useful than an assistant that can act; write tools are planned behind approvals.' },
+      { title: 'One payment interface, two providers', detail: 'A single provider module with Razorpay and Stripe adapters, picked by a setting.',
+        why: 'Which provider is available depends on the market; that choice should not ripple through the billing code.',
+        tradeoff: 'Ships disabled (NOT_CONFIGURED) until a provider account is connected and tested end to end.' }
     ],
     links: [
       { type: 'live', url: 'https://rental-property.hatchable.site/', label: 'Open the live app', note: 'sign-in required' }
@@ -247,7 +269,16 @@ export const PROJECTS = [
     },
     stack: { 'Protocol': ['Model Context Protocol', 'OAuth (platform-provided)'], 'Server': ['JavaScript', 'Hatchable functions'], 'Data': ['PostgreSQL'] },
     decisions: [
-      { title: 'Read-only first', detail: 'The first version only answers questions.', tradeoff: 'Less useful than an assistant that can act, but nothing an AI client does can change financial records.' }
+      { title: 'MCP instead of a bespoke chat backend', detail: 'The SaaS exposes an MCP endpoint rather than hosting its own chatbot.',
+        why: 'Owners already use an AI assistant. A standard protocol lets any compatible client connect, without the SaaS hosting a model or holding model keys.',
+        benefit: 'Model-agnostic, no model keys in the SaaS, and the tool list is the entire surface an AI can reach.' },
+      { title: 'Read-only first', detail: 'The first version only answers questions.',
+        why: 'The tools touch rent, leases and expenses; an AI client calling a write tool by mistake would change financial records.',
+        benefit: 'Nothing an AI client does can alter data, so the integration could ship before approval flows exist.',
+        tradeoff: 'Less useful than an assistant that can act; write tools are planned behind approvals.' },
+      { title: 'Resolve one owner per call, or fail', detail: 'The authenticated identity must map to exactly one owner; ambiguity is an error, not a guess.',
+        why: 'A tool that guessed the owner could return another landlord’s data.',
+        benefit: 'Fails closed, and every answer is scoped the same way the dashboard is.' }
     ],
     links: [{ type: 'case', url: 'project.html?id=rental-saas', label: 'Rental SaaS case study' }],
     notes: ['The tools have not yet been fully verified end to end with a real MCP client — treat this as working but unproven.'],
@@ -323,8 +354,20 @@ export const PROJECTS = [
       { title: 'Long-running work on a laptop', detail: 'A local analysis takes minutes and the tab may close.', resolution: 'Analyses run as durable background tasks with leases, recovery and a visible timeline.' }
     ],
     decisions: [
-      { title: 'No agent framework', detail: 'The loop, tool registry and policy are hand-written TypeScript.', tradeoff: 'More code to own, but every limit and approval point is explicit and testable.' },
-      { title: 'Local model by default', detail: 'Privacy and zero cost over speed.', tradeoff: 'Slower and less capable than a cloud model; the paid provider is one setting away.' }
+      { title: 'No agent framework', detail: 'The loop, tool registry and side-effect policy are hand-written TypeScript over native tool calling.',
+        why: 'The product’s value is its limits — what the agent may read, write or send. Those limits had to be explicit and testable, not buried in a framework’s abstractions.',
+        benefit: 'Every step limit, budget cap and approval point is visible in code and covered by tests.',
+        tradeoff: 'More code to own, and no ecosystem of ready-made integrations.' },
+      { title: 'Local model by default, cloud opt-in', detail: 'Ollama with qwen3:4b-instruct on the user’s machine; Anthropic behind a key and a monthly budget cap.',
+        why: 'The agent reads a CV and personal answers — data that should not leave the machine without consent — and it should cost nothing to try.',
+        benefit: 'Private and free by default; the paid provider is one setting away when quality matters more.',
+        tradeoff: 'Slower and less capable, which is why quotes are verified and scores are computed in code.' },
+      { title: 'PostgreSQL and Redis for durable tasks', detail: 'Background work is leased, reconciled, retried and cancellable, with every step recorded.',
+        why: 'A local analysis takes minutes and the browser tab may close; work has to survive that and be inspectable afterwards.',
+        benefit: 'The Activity page shows exactly what ran, and nothing is lost when a tab or the worker restarts.' },
+      { title: 'Docker Compose, Playwright and GitHub Actions', detail: 'One compose file brings up the services; end-to-end tests run in CI on every push.',
+        why: 'Self-hosted software fails on setup more often than on features, and agent behaviour is the easiest thing to break silently.',
+        benefit: 'A reproducible install, and a CI run that exercises real flows rather than only unit tests.' }
     ],
     links: [{ type: 'github', url: 'https://github.com/Afaquejaya/ai-job-agent', label: 'Source on GitHub' }],
     related: ['local-agent-lab', 'careersync-ai', 'careeros']
@@ -370,6 +413,17 @@ export const PROJECTS = [
       caption: 'Simplified pipeline.'
     },
     stack: { 'App': ['Next.js 16', 'React 19', 'TypeScript', 'Zod'], 'Data': ['Drizzle ORM', 'PostgreSQL / PGlite'], 'AI': ['Anthropic API'], 'Other': ['Chrome extension', 'unpdf', 'mammoth', 'Vitest'] },
+    decisions: [
+      { title: 'A review step instead of an autonomous agent', detail: 'Every extracted value is shown as a change to approve; nothing publishes on its own.',
+        why: 'An AI that rewrites career profiles unsupervised can invent experience — the one failure this tool must never have.',
+        benefit: 'The model does the tedious part (extraction); the person keeps authority over what is claimed.' },
+      { title: 'Portfolio sync as a GitHub pull request', detail: 'Changes to the portfolio repository are proposed as a PR, not pushed.',
+        why: 'The portfolio is public; a bad extraction pushed directly would be live immediately.',
+        benefit: 'A diff to read, and the usual review before anything goes live.' },
+      { title: 'Treat the CV as untrusted input', detail: 'CV text goes through prompt-injection checks before it reaches the model, and extracted values must trace back to the source text.',
+        why: 'A CV is a document from anywhere; text inside it could try to steer the model.',
+        benefit: 'Extraction stays bounded to the fields the pipeline asks for.' }
+    ],
     links: [],
     notes: ['Runs locally; there is no public demo or repository.'],
     related: ['ai-job-agent', 'careeros', 'rental-saas']
@@ -414,6 +468,17 @@ export const PROJECTS = [
       caption: 'Simplified.'
     },
     stack: { 'UI': ['React', 'Vite', 'TypeScript'], 'Server': ['Node.js', 'Zod', 'Server-Sent Events'], 'AI': ['Claude Code CLI'] },
+    decisions: [
+      { title: 'Allowlisted actions by id, never a shell', detail: 'The browser sends an action id; the server runs a known script as a child process with the shell disabled.',
+        why: 'The engine runs an AI coding CLI on the user’s machine — one wrong flag and it can edit or delete files.',
+        benefit: 'No command string ever comes from the browser, so there is nothing to inject.' },
+      { title: 'Loopback only', detail: 'The server binds to 127.0.0.1.',
+        why: 'A tool that launches local processes must not be reachable from the network.',
+        benefit: 'Only the person at the machine can trigger anything.' },
+      { title: 'AI write and shell tools denied', detail: 'When an AI mode runs, its Write, Edit and Bash tools are turned off.',
+        why: 'The job-search workflows only need to read and draft.',
+        benefit: 'The worst case is a bad draft, not a changed file.' }
+    ],
     links: [{ type: 'github', url: 'https://github.com/career-ops-hq/career-ops', label: 'career-ops engine (not mine)' }],
     notes: ['The career-ops engine is third-party open source (MIT). Only the CareerOS UI and server described here are my work, and they are not published.'],
     related: ['ai-job-agent', 'local-agent-lab', 'careersync-ai']
@@ -431,15 +496,17 @@ export const PROJECTS = [
     context: 'Learning project',
     technologies: ['TypeScript', 'Node.js', 'SQLite', 'Zod', 'React', 'Vite', 'Vitest', 'Ollama'],
     thumbnail: { src: 'img/projects/local-agent-lab/concept.webp', w: 1280, h: 800, frame: 'art', illustrative: true, alt: 'Illustrative concept: the planned agent loop — context, model decision, argument validation, policy check, execution — next to a human approval prompt' },
-    summary: 'A from-scratch agent in TypeScript, planned in nine phases. Phase 1 (configuration, environment doctor, tests) is done; the agent loop is designed but not built.',
+    summary: 'A from-scratch agent in TypeScript, planned in nine phases. Phases 1–2 are done — configuration, environment doctor, tests, an Ollama adapter and a local chat API; tools and the agent loop come next.',
     description:
       'A deliberately framework-free project for understanding agents: context building, decisions, tool validation, policy and approvals, written out explicitly.\n\n' +
-      'Status: phase 1 of 9. There is no working agent yet — the architecture below is the plan, and the interfaces exist in code.',
+      'Status: phase 2 of 9 (19 Oct 2026). You can chat with the local model from the terminal or the local API. There is no tool use or agent loop yet — the architecture below is the plan, and the interfaces exist in code.',
     features: [
       { title: 'Config validation & `npm run doctor`', detail: 'Checks Node, Ollama and the model before anything runs.' },
       { title: 'Local-only guard', detail: 'Rejects cloud models and non-loopback addresses.' },
-      { title: '15 tests', detail: 'Vitest.' },
-      { title: 'Ollama adapter & tools', detail: 'Calculator, workspace read/search, notes — sandboxed to workspace/.', planned: true },
+      { title: 'Ollama adapter, health check & chat API', detail: 'Raw HTTP adapter with per-call timeouts; /api/health and /api/chat; a terminal chat.' },
+      { title: 'Request limits', detail: 'Body size, message count and length limits; only user and assistant roles accepted.' },
+      { title: 'Tests', detail: 'Vitest, run with npm test.' },
+      { title: 'Tools', detail: 'Calculator, workspace read/search, notes — sandboxed to workspace/.', planned: true },
       { title: 'Agent loop, approvals, SQLite memory, dashboard', planned: true }
     ],
     agent: {
@@ -460,9 +527,18 @@ export const PROJECTS = [
         { title: 'Execute & verify', detail: 'Sandboxed tools' }
       ],
       guards: ['Human approval step', 'Workspace sandbox', 'Local models only'],
-      caption: 'Planned architecture — phase 1 of 9 is implemented.'
+      caption: 'Planned architecture — phases 1–2 of 9 are implemented.'
     },
     stack: { 'Runtime': ['Node.js 24', 'node:sqlite', 'TypeScript'], 'Validation & tests': ['Zod 4', 'Vitest'], 'UI (planned)': ['React 19', 'Vite'], 'Model': ['Ollama'] },
+    decisions: [
+      { title: 'No framework, on purpose', detail: 'Every part of the loop is written out: context, decision parsing, validation, policy, execution.',
+        why: 'The goal is understanding, and frameworks hide exactly the parts worth understanding.',
+        benefit: 'Each phase adds one concept with its own tests and notes in the learning guide.',
+        tradeoff: 'Slower to reach a working agent than installing one.' },
+      { title: 'Local models only', detail: 'Configuration rejects cloud models and non-loopback Ollama addresses.',
+        why: 'A learning project should be free to run and impossible to leak data from.',
+        benefit: 'No keys, no cost, and an experiment cannot accidentally send a workspace to a cloud API.' }
+    ],
     links: [{ type: 'github', url: 'https://github.com/Afaquejaya/learn-basic-ai-agent', label: 'Source on GitHub' }],
     related: ['ai-job-agent', 'careeros', 'expense-tracker']
   },
@@ -514,7 +590,16 @@ export const PROJECTS = [
     },
     stack: { 'App': ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind CSS', 'Zustand'], 'AI services': ['YouCam Skin Analysis', 'AI Face Analyzer', 'Makeup VTO', 'AI Hairstyle', 'MediaPipe'], 'Hosting': ['Vercel'] },
     decisions: [
-      { title: 'Proxy every AI call through API routes', detail: 'The browser never sees provider keys.', tradeoff: 'Adds a hop, but it’s the only safe option on a public demo.' }
+      { title: 'Proxy every AI call through Next.js API routes', detail: 'The browser never sees provider keys.',
+        why: 'YouCam’s APIs are paid and keyed; a public demo cannot ship the key to the client.',
+        benefit: 'Keys stay server-side and usage can be limited in one place.',
+        tradeoff: 'Adds a hop, but it’s the only safe option on a public demo.' },
+      { title: 'No database, no accounts', detail: 'Results are cached in the browser (Zustand + IndexedDB).',
+        why: 'The app processes selfies. Storing them server-side would add privacy obligations for no product gain in a hackathon build.',
+        benefit: 'Nothing personal is stored on a server; the app is a static deploy plus API routes.' },
+      { title: 'Next.js on Vercel', detail: 'One repository deploys the UI and the API routes together.',
+        why: 'A one-person hackathon build needs zero deployment work and a preview URL for every change.',
+        benefit: 'A live demo from day one; the same code runs locally and in production.' }
     ],
     links: [
       { type: 'live', url: 'https://glowfit-ai.vercel.app', label: 'Live demo' },
@@ -551,7 +636,18 @@ export const PROJECTS = [
       { title: 'Graceful failure', detail: 'An error state with an offline fallback view.' },
       { title: 'Real LLM parsing', detail: 'The backend returns a simulated response today.', planned: true }
     ],
-    stack: { 'App': ['Flutter', 'Dart'], 'Backend': ['Python', 'FastAPI', 'Uvicorn'] },
+    stack: { 'App': ['Flutter', 'Dart'], 'Backend': ['Python', 'FastAPI', 'Pydantic', 'Uvicorn'] },
+    decisions: [
+      { title: 'A callback “hook” modelled on LangChain’s lifecycle', detail: 'Start, end and error callbacks around the model call drive the UI. The app does not use LangChain itself; it borrows the shape of its callback lifecycle.',
+        why: 'The point of the exercise was the behaviour around an LLM call — progress, structured output, failure — not a particular library.',
+        benefit: 'The Flutter UI states hang off one contract, so a real model can be dropped in later without touching the screens.' },
+      { title: 'Strict JSON contract, validated in the backend', detail: 'FastAPI with Pydantic models: item, category, amount, currency.',
+        why: 'An expense card needs typed fields; free text from a model cannot be trusted straight into a ledger.',
+        benefit: 'Malformed output is rejected before it reaches the app.' },
+      { title: 'Simulate the model first', detail: 'The backend returns a canned structured response today.',
+        why: 'It let the hook lifecycle and every UI state be built and tested without API keys or cost.',
+        tradeoff: 'The project demonstrates the pattern, not LLM accuracy — connecting a real model is the next step.' }
+    ],
     links: [
       { type: 'github', url: 'https://github.com/Afaquejaya/ai-expense-tracker', label: 'Source on GitHub' },
       { type: 'code', url: 'https://gist.github.com/Afaquejaya/a4d157d4255799bd6e3521320f6d9537', label: 'Notes (gist)' }
@@ -595,6 +691,15 @@ export const PROJECTS = [
       caption: 'How a message is handled.'
     },
     stack: { 'Frontend': ['Vanilla JavaScript', 'HTML', 'CSS'], 'Hosting': ['GitHub Pages'] },
+    decisions: [
+      { title: 'Deterministic answers, no live LLM', detail: 'Questions are scored against a knowledge base written from the CV; nothing is generated.',
+        why: 'A chatbot on a portfolio must never invent experience, and a static GitHub Pages site cannot hold a model key.',
+        benefit: 'Every answer is one I wrote and can stand behind; no cost, no latency, nothing to leak.',
+        tradeoff: 'It cannot answer what is not in the knowledge base — so it says so and offers the closest questions.' },
+      { title: 'Allowlisted actions only', detail: 'Buttons can scroll to listed section ids or open listed links; visitor text never becomes a URL, a selector or HTML.',
+        why: 'Anything built from visitor input is an injection surface.',
+        benefit: 'The worst a visitor can get is an honest “the portfolio doesn’t say”.' }
+    ],
     links: [
       { type: 'live', url: 'https://afaquejaya.github.io/', label: 'Try it on the portfolio' },
       { type: 'github', url: 'https://github.com/Afaquejaya/afaquejaya.github.io', label: 'Source on GitHub' }
@@ -682,8 +787,17 @@ export const PROJECTS = [
       { value: '+20%', label: 'delivery & checkout efficiency', source: 'CV' }
     ],
     decisions: [
-      { title: 'Server-driven homepage', detail: 'Layout comes from the server and maps to native components.', tradeoff: 'More upfront contract design between server and app, in exchange for shipping merchandising changes instantly.' },
-      { title: 'Buy search, don’t build it', detail: 'Algolia for instant, typo-tolerant search.', tradeoff: 'A paid dependency, but far faster to a good search experience than an in-house engine.' }
+      { title: 'Server-driven homepage', detail: 'Layout and personalised content come from the server and map to native components in the app.',
+        why: 'Merchandisers needed to change the homepage often, and an app release for every change was far too slow for a start-up launching fast.',
+        benefit: 'Merchandising changes shipped without app releases; the homepage loaded 95% faster and engagement rose 50% (self-reported, see Results).',
+        tradeoff: 'More upfront contract design between server and app.' },
+      { title: 'Buy search, don’t build it', detail: 'Algolia for instant, typo-tolerant search.',
+        why: 'Good grocery search — typo-tolerant, fast, in Arabic — is a product in itself, and the team was small.',
+        benefit: 'Instant search from launch, with relevance tuned in a dashboard instead of code.',
+        tradeoff: 'A paid dependency.' },
+      { title: 'Cross-platform for customers, one app per operations role', detail: 'Flutter and React Native for the customer app; Driver, Collector and Storekeeper got their own apps.',
+        why: 'Customers needed Android and iOS at once; each operations role has a different workflow, device and permission set.',
+        benefit: 'One customer codebase for two stores, and operations apps that stayed simple enough for a remote team to build in parallel — delivery speed rose 60% (self-reported).' }
     ],
     links: [],
     notes: ['Employer product. The store listings are no longer public, so there are no app links or screenshots here.'],
@@ -723,6 +837,11 @@ export const PROJECTS = [
       { value: '3', label: 'operations apps' }
     ],
     stack: { 'Mobile': ['Flutter', 'Kotlin', 'Java'], 'Backend': ['Python', 'IoT'] },
+    decisions: [
+      { title: 'One app per operations role', detail: 'Driver, Collector and Storekeeper each have their own app.',
+        why: 'The roles share almost no screens, run on different devices and need different permissions.',
+        benefit: 'Simpler apps that a remote team could build and release in parallel.' }
+    ],
     notes: ['The Play Store listing is no longer public.'],
     related: ['jeeb', 'tbay', 'evv']
   },
@@ -919,6 +1038,14 @@ export const PROJECTS = [
       'Led client demos and user training for state-wide adoption.'
     ],
     stack: { 'Mobile': ['Flutter', 'React Native', 'Kotlin', 'Java'], 'Backend': ['.NET', 'PHP'] },
+    decisions: [
+      { title: 'Role-based logins in one app', detail: 'Officers, schools and teachers sign in to the same app and see their own modules.',
+        why: 'A state-wide rollout to thousands of schools has to be one install to explain, train and support.',
+        benefit: 'One release to maintain and one training programme — which is what made state-wide adoption workable.' },
+      { title: 'Biometric attendance configured for real schools', detail: 'Attendance capture was set up and tested against the devices schools actually had, not a lab set-up.',
+        why: 'Attendance underpins the department’s reporting, so it has to be hard to fake and easy to capture.',
+        benefit: 'Attendance records the department could rely on.' }
+    ],
     impact: [
       { value: '500K+', label: 'downloads on Google Play', source: 'Google Play listing, Oct 2026' },
       { value: 'State-wide', label: 'rollout and adoption', source: 'CV' },
@@ -968,6 +1095,11 @@ export const PROJECTS = [
     ],
     role: ['Built the native app and its .NET backend APIs; optimised API and database performance.'],
     stack: { 'Mobile': ['Kotlin', 'Java'], 'Backend': ['.NET', 'C#', 'SQL'] },
+    decisions: [
+      { title: 'Native Android app with .NET backend APIs', detail: 'A Kotlin/Java app replaced the paper vendor registers, backed by APIs on .NET and SQL.',
+        why: 'The job was fast, reliable data entry on site by staff used to paper — a native app gave the most direct input experience on the devices in use.',
+        benefit: '70% less data-entry time and 50% better data accuracy (self-reported, see Results).' }
+    ],
     impact: [
       { value: '70%', label: 'less data-entry time', source: 'CV' },
       { value: '+50%', label: 'data accuracy', source: 'CV' }
@@ -1030,6 +1162,18 @@ export const PROJECTS = [
       { title: 'Play Store release', planned: true }
     ],
     stack: { 'App': ['Kotlin', 'Jetpack Compose', 'Material 3'], 'Data': ['Room'], 'Testing': ['JUnit', 'Robolectric', 'Roborazzi'] },
+    decisions: [
+      { title: 'Fully offline, no account', detail: 'Room on the device; nothing is sent anywhere.',
+        why: 'Pregnancy data is as personal as it gets, and no feature of the app needs a server.',
+        benefit: 'Nothing to secure server-side, and the app works without a connection.' },
+      { title: 'Native Android with Jetpack Compose and Material 3', detail: 'The widgets use AppWidget; reminders use AlarmManager with a boot receiver.',
+        why: 'Home-screen widgets and reboot-surviving reminders are platform features; a native build reaches them directly.',
+        benefit: 'Two widgets and reliable reminders without plugin layers.',
+        tradeoff: 'Android only.' },
+      { title: 'Screenshot tests over manual checks', detail: 'Robolectric and Roborazzi render the screens from demo data.',
+        why: 'A content-heavy app with 40 weeks of screens regresses visually more often than logically.',
+        benefit: 'Every screen is checked in both themes on each change.' }
+    ],
     notes: ['Not published on Google Play; distributed as a test APK. The source repository is private.'],
     related: ['expense-tracker', 'social-app', 'face-detection']
   },
@@ -1056,6 +1200,18 @@ export const PROJECTS = [
       { title: 'This showcase', detail: 'A data-driven companion site for the full catalog.' }
     ],
     stack: { 'Frontend': ['HTML', 'CSS', 'Vanilla JavaScript'], 'Hosting': ['GitHub Pages'] },
+    decisions: [
+      { title: 'No framework, no build step', detail: 'Plain HTML, CSS and JavaScript served by GitHub Pages.',
+        why: 'A portfolio should stay editable for years without a toolchain to resurrect, and the page itself is a work sample.',
+        benefit: 'Nothing to install, a deploy on every commit, and every byte on the page is intentional.',
+        tradeoff: 'No components or bundling — shared pieces are rendered from data files by small scripts instead.' },
+      { title: 'Content in data files', detail: 'Apps, logos, feedback and the “Now” section are rendered from js/*.js data files; the showcase from one catalog file.',
+        why: 'Monthly updates should not mean editing markup.',
+        benefit: 'One file to change per section, with the ground rules for claims written at the top of it.' },
+      { title: 'Follow native scroll, never hijack it', detail: 'The pinned horizontal sections ride on normal page scroll and switch off on short screens and with reduced motion.',
+        why: 'Scroll-jacking breaks accessibility and trust on a page meant to be read.',
+        benefit: 'Keyboard, screen-reader and reduced-motion users get a plain page; everyone else gets the effect.' }
+    ],
     links: [
       { type: 'live', url: 'https://afaquejaya.github.io/', label: 'Open the portfolio' },
       { type: 'github', url: 'https://github.com/Afaquejaya/afaquejaya.github.io', label: 'Source on GitHub' }

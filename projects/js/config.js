@@ -24,6 +24,7 @@ export const SITE = {
     cvPdf: '../files/Afaque-Jaya-Senior-Mobile-Full-Stack-Engineer-CV.pdf',
     linkedin: 'https://www.linkedin.com/in/afaque-jaya',
     github: 'https://github.com/Afaquejaya',
+    license: 'https://github.com/Afaquejaya/afaquejaya.github.io/blob/master/LICENSE',
     whatsapp: 'https://wa.me/918797801820?text=Hi%20Afaque%2C%20I%20saw%20your%20project%20showcase%20and%20I%E2%80%99d%20like%20to%20talk.'
   },
 

@@ -1347,3 +1347,15 @@ a.orbit-node:hover { border-color: var(--c); background: var(--surface-2); trans
 .concept-pill { left: auto; right: 12px; }
 .feature-media .art-frame .concept-pill { left: auto; right: 14px; }
 .d-media .art-frame .concept-pill { display: none; } /* large frame: baked label + caption are readable */
+
+/* Decisions: the why and the benefit under each one */
+.tradeoff .why, .tradeoff .benefit { color: var(--text-2); font-size: 14px; }
+.tradeoff .why strong, .tradeoff .benefit strong {
+  margin-right: 4px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

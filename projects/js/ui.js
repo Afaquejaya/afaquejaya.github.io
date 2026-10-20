@@ -296,6 +296,7 @@ export function footer() {
       <a href="${attr(SITE.links.cv)}" target="_blank" rel="noopener">CV</a>
       <a href="${attr(SITE.links.github)}" target="_blank" rel="noopener">GitHub</a>
       <a href="${attr(SITE.links.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="${attr(SITE.links.license)}" target="_blank" rel="license noopener">MIT License</a>
       <a href="#top">Back to top ↑</a>
     </nav>
   </div></div>`;
