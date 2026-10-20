@@ -120,7 +120,7 @@
         : '<span class="mono" aria-hidden="true">' + esc(m.monogram || m.name[0]) + '</span>';
       var inner = icon + '<span class="t"><b>' + esc(m.name) + '</b><span>' + esc(m.line) + '</span><span class="where">' + esc(m.where) + '</span></span>';
       return m.url
-        ? '<a class="more-item" href="' + esc(m.url) + '" target="_blank" rel="noopener">' + inner + '<span class="go">' + ICONS.arrow + '</span></a>'
+        ? '<a class="more-item" href="' + esc(m.url) + '" target="_blank" rel="noopener" data-app="' + esc(m.id || m.name) + '">' + inner + '<span class="go">' + ICONS.arrow + '</span></a>'
         : '<div class="more-item">' + inner + '</div>';
     }).join('');
   }
