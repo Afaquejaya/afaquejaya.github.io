@@ -142,31 +142,93 @@
       return list && list.length ? '<ul class="now-tags" aria-label="Technologies">' + list.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '';
     }
     function line(label, text) { return text ? '<p class="now-line"><b>' + label + ':</b> ' + esc(text) + '</p>' : ''; }
+    function caseUrl(b) {
+      var c = (b.links || []).filter(function (l) { return /project\.html/.test(l.url); })[0];
+      return c ? c.url : '';
+    }
 
-    var building = (now.building || []).map(function (b, i) {
-      return '<article class="now-card" data-reveal style="--d:' + (i * 0.06) + 's">' +
-        '<div class="now-top"><h4>' + esc(b.name) + '</h4><span class="now-status">' + esc(b.status) + '</span></div>' +
-        '<p class="now-what">' + esc(b.what) + '</p>' +
-        line('Where it is', b.progress) + line('Next milestone', b.next) +
-        chips(b.tags) + links(b.links) +
+    // Screenshots in a device frame. Shots far from the 16:10 stage are shown
+    // whole (contain) rather than cropped.
+    function shot(s, i, lazy) {
+      var r = s.w / s.h;
+      return '<img class="nm-shot' + (r < 1.45 || r > 1.75 ? ' is-whole' : '') + (i === 0 ? ' is-on' : '') + '" src="' + esc(s.src) + '" width="' + s.w + '" height="' + s.h +
+        '" alt="' + esc(s.alt) + '" decoding="async"' + (lazy || i ? ' loading="lazy"' : '') + (i ? ' aria-hidden="true"' : '') + '>';
+    }
+    function media(b) {
+      var shots = b.shots || [];
+      if (!shots.length) return '';
+      var href = caseUrl(b);
+      var open = href ? '<a class="nm-stage" href="' + esc(href) + '" aria-label="' + esc(b.name) + ' case study">' : '<div class="nm-stage">';
+      var close = href ? '</a>' : '</div>';
+      var note = b.shotsNote ? '<span class="nm-note">' + esc(b.shotsNote) + '</span>' : '';
+      if (b.frame === 'phone') {
+        return '<div class="now-media is-phones">' + open +
+          shots.map(function (s, i) {
+            return '<figure class="nm-phone"><img src="' + esc(s.src) + '" width="' + s.w + '" height="' + s.h + '" alt="' + esc(s.alt) +
+              '" loading="lazy" decoding="async"><figcaption>' + esc(s.caption) + '</figcaption></figure>';
+          }).join('') + close + note + '</div>';
+      }
+      var many = shots.length > 1;
+      return '<div class="now-media is-web"' + (many ? ' data-slides' : '') + '>' +
+        '<div class="nm-chrome" aria-hidden="true"><i></i><i></i><i></i><span class="nm-url">' + esc(b.address || '') + '</span>' +
+          (many ? '<span class="nm-count">1 / ' + shots.length + '</span>' : '') + '</div>' +
+        open + shots.map(function (s, i) { return shot(s, i, !b.spotlight); }).join('') + note + close +
+        '<div class="nm-foot"><p class="nm-cap">' + esc(shots[0].caption || '') + '</p>' +
+          (many ? '<div class="nm-pips" role="group" aria-label="' + esc(b.name) + ' screenshots">' + shots.map(function (s, i) {
+            return '<button type="button" class="nm-pip' + (i === 0 ? ' is-on' : '') + '" aria-label="Screenshot ' + (i + 1) + ' of ' + shots.length + ': ' + esc(s.caption) + '"' +
+              (i === 0 ? ' aria-current="true"' : '') + ' data-track="now-shot" data-to="' + i + '"><span></span></button>';
+          }).join('') + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    }
+    function stats(list) {
+      return list && list.length ? '<dl class="now-stats">' + list.map(function (s) {
+        return '<div><dt>' + esc(s.label) + '</dt><dd>' + esc(s.value) + '</dd></div>';
+      }).join('') + '</dl>' : '';
+    }
+
+    var all = now.building || [];
+    function card(b, i) {
+      var id = (caseUrl(b).match(/id=([\w-]+)/) || [])[1] || '';
+      var live = /^live/i.test(b.status);
+      return '<article class="now-card' + (b.spotlight ? ' is-spotlight' : '') + '" data-reveal style="--d:' + (i * 0.06) + 's"' + (id ? ' data-app="' + esc(id) + '"' : '') + '>' +
+        media(b) +
+        '<div class="now-body">' +
+          '<div class="now-top"><h4>' + esc(b.name) + '</h4><span class="now-status' + (live ? ' is-live' : '') + '">' + esc(b.status) + '</span></div>' +
+          '<p class="now-what">' + esc(b.what) + '</p>' +
+          stats(b.stats) +
+          line('Where it is', b.progress) + line('Next milestone', b.next) +
+          chips(b.tags) + links(b.links) +
+        '</div>' +
       '</article>';
-    }).join('');
+    }
+    var spotlight = all.filter(function (b) { return b.spotlight; }).map(card).join('');
+    var building = all.filter(function (b) { return !b.spotlight; }).map(function (b, i) { return card(b, i + 1); }).join('');
     var learning = (now.learning || []).map(function (l) {
-      return '<li class="now-learn">' +
-        '<div class="now-top"><h4>' + esc(l.name) + '</h4><span class="now-when' + (l.current ? ' is-current' : '') + '">' + esc((l.current ? 'Current · ' : '') + l.when) + '</span></div>' +
-        line('Learning', l.learning) + line('Status', l.status) +
-        chips(l.tech) + links(l.links) +
+      var t = l.thumb;
+      return '<li class="now-learn' + (t ? ' has-thumb' : '') + '">' +
+        (t ? '<span class="now-thumb' + (t.concept ? ' is-concept' : '') + '"><img src="' + esc(t.src) + '" alt="' + esc(t.alt) + '" loading="lazy" decoding="async">' +
+          (t.concept ? '<span class="now-thumb-tag">Concept</span>' : '') + '</span>' : '') +
+        '<div class="now-learn-body">' +
+          '<div class="now-top"><h4>' + esc(l.name) + '</h4><span class="now-when' + (l.current ? ' is-current' : '') + '">' + esc((l.current ? 'Current · ' : '') + l.when) + '</span></div>' +
+          line('Learning', l.learning) + line('Status', l.status) +
+          chips(l.tech) + links(l.links) +
+        '</div>' +
       '</li>';
     }).join('');
     var f = now.focus || {};
     var m = f.milestone;
     root.innerHTML =
-      '<div class="now-col">' +
-        '<h3 class="now-h"><span class="now-k">A</span> Building this month</h3>' + building +
+      '<div class="now-build">' +
+        '<h3 class="now-h"><span class="now-k">A</span> Building this month <span class="now-count">' + all.length + ' projects</span></h3>' +
+        spotlight +
+        '<div class="now-cards">' + building + '</div>' +
       '</div>' +
       '<div class="now-col">' +
         '<h3 class="now-h"><span class="now-k">B</span> Learning by building</h3>' +
         '<ol class="now-learning">' + learning + '</ol>' +
+      '</div>' +
+      '<div class="now-col now-side">' +
         '<h3 class="now-h"><span class="now-k">C</span> Focus &amp; next milestone</h3>' +
         '<div class="now-focus" data-reveal>' +
           (f.statement ? '<p class="now-statement">' + esc(f.statement) + '</p>' : '') +
@@ -174,6 +236,47 @@
                (m.url ? ' ' + link({ label: 'Follow along', url: m.url, external: true }) : '') + '</p>' : '') +
         '</div>' +
       '</div>';
+    $$('[data-slides]', root).forEach(nowSlides);
+  }
+
+  /* Screenshot slideshow in a Now card: crossfades every few seconds while on
+     screen, pauses on hover or focus, and never auto-advances with reduced
+     motion. The pips always work. */
+  function nowSlides(box) {
+    var shots = $$('.nm-shot', box);
+    var pips = $$('.nm-pip', box);
+    var cap = $('.nm-cap', box);
+    var count = $('.nm-count', box);
+    var caps = pips.map(function (p) { return p.getAttribute('aria-label').replace(/^Screenshot \d+ of \d+: /, ''); });
+    var at = 0, timer = 0, visible = false, held = false;
+    function show(n) {
+      at = (n + shots.length) % shots.length;
+      shots.forEach(function (s, i) {
+        s.classList.toggle('is-on', i === at);
+        if (i === at) { s.removeAttribute('aria-hidden'); s.removeAttribute('loading'); } else s.setAttribute('aria-hidden', 'true');
+      });
+      pips.forEach(function (p, i) {
+        p.classList.toggle('is-on', i === at);
+        if (i === at) p.setAttribute('aria-current', 'true'); else p.removeAttribute('aria-current');
+      });
+      if (cap) cap.textContent = caps[at];
+      if (count) count.textContent = (at + 1) + ' / ' + shots.length;
+    }
+    function stop() { clearInterval(timer); timer = 0; box.classList.remove('is-playing'); }
+    function play() {
+      stop();
+      if (reduced || !visible || held) return;
+      box.classList.add('is-playing');
+      timer = setInterval(function () { show(at + 1); }, 4200);
+    }
+    pips.forEach(function (p, i) { p.addEventListener('click', function () { show(i); play(); }); });
+    box.addEventListener('mouseenter', function () { held = true; stop(); });
+    box.addEventListener('mouseleave', function () { held = false; play(); });
+    box.addEventListener('focusin', function () { held = true; stop(); });
+    box.addEventListener('focusout', function () { held = false; play(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; play(); }, { threshold: 0.35 }).observe(box);
+    }
   }
 
   /* Feedback row (js/testimonials.js). Cards are rendered twice for a
