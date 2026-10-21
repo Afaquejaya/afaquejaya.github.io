@@ -224,6 +224,104 @@ export const PROJECTS = [
 
   /* ==================================================================== Agents */
   {
+    id: 'prospectpilot',
+    title: 'ProspectPilot AI',
+    tagline: 'An evidence-first sales agent that finds companies who need what you sell — and shows you the proof.',
+    categories: ['agents', 'ai', 'web', 'backend'],
+    status: 'in-development',
+    visibility: 'private',
+    accent: '#14806b',
+    period: 'Oct 2026 —',
+    context: 'Entry for the Dubai Chamber of Digital Economy AI Agents Championship (Best Business AI Agent)',
+    platforms: ['Web'],
+    technologies: ['TypeScript', 'Next.js', 'PostgreSQL', 'Drizzle ORM', 'Anthropic API', 'Auth.js', 'Cheerio', 'Vitest'],
+    summary: 'Small agencies waste days hunting for clients. Describe your business; the agent finds matching UAE/GCC companies, reads their websites, detects problems your services fix and drafts cited outreach in English and Arabic — a human approves everything, nothing is sent.',
+    description:
+      'An AI go-to-market agent for small B2B service businesses — agencies, consultants, software studios — selling to UAE and GCC SMEs. You describe what you sell; the agent proposes an ideal customer profile (ICP) for you to approve, then plans its own searches, discovers matching companies, researches each public website and keeps only the companies where it found a real, evidenced problem one of your services can fix.\n\n' +
+      'Every score is explained component by component, every fact carries its source URL and observation date, and every sentence in a draft cites its evidence. A human approves every external action; this version has no sending integration at all.',
+    thumbnail: { src: 'img/projects/prospectpilot/leads.webp', w: 1280, h: 800, frame: 'web', alt: 'ProspectPilot Leads page in demo mode: a ranked list of synthetic companies with scores out of 100, location and industry, detected needs such as slow mobile homepage, no HTTPS and no Arabic version, evidence score, source and recommended pitch', caption: 'Leads — synthetic demo data' },
+    screenshots: [
+      { src: 'img/projects/prospectpilot/leads.webp', w: 1280, h: 800, frame: 'web', alt: 'Leads page ranking synthetic companies by score with detected needs, evidence and recommended pitch', caption: 'Ranked leads — each with the need it found and where' },
+      { src: 'img/projects/prospectpilot/run.webp', w: 1280, h: 800, frame: 'web', alt: 'Discovery run page: Plan, Find, Research, Score, Draft and Your review steps, with companies found, researched, qualified, tool steps used and AI budget used', caption: 'Live run — steps, tool budget and AI cost cap' },
+      { src: 'img/projects/prospectpilot/dossier.webp', w: 1280, h: 800, frame: 'web', alt: 'Lead dossier for a synthetic dental clinic: score 94, why-this-lead summary, need signals with observed facts and sources, and a score breakdown by ICP fit, need evidence and evidence quality', caption: 'Lead dossier — “Why this lead?” and the score, explained' },
+      { src: 'img/projects/prospectpilot/drafts.webp', w: 1280, h: 800, frame: 'web', alt: 'Outreach drafts: a WhatsApp-style English message and an Arabic email, each with numbered citations to dated evidence and Approve, Edit and Reject buttons', caption: 'English + Arabic drafts with citations — approve, edit or reject' }
+    ],
+    screenshotsNote: 'Captured in the built-in Demo data mode (21 Oct 2026): a fictional agency, synthetic companies on .example domains and the mock model. Live research works the same way against real public sources.',
+    problem: 'Most AI sales tools buy a firmographic list and blast templated “personalised” emails. There is no proof the company needs anything, no sources behind the claims, black-box scores, English-only copy and automatic sending.',
+    solution: 'Flip it to evidence first: only a company with a concrete, checkable problem your service fixes becomes a lead, every claim links to where and when it was observed, and a person approves every message before anything leaves the app.',
+    features: [
+      { title: 'AI-assisted ICP builder', detail: 'Proposes an ideal customer profile from your website and services; you edit and approve it.' },
+      { title: 'Step-by-step search planner', detail: 'Chooses one source + query at a time, validated in code (enabled tools only, no repeats, budget limits).' },
+      { title: 'Five discovery sources', detail: 'Google Places, Brave Search, public exhibitor lists, CSV upload and domain lists; non-company sites filtered out.' },
+      { title: 'Safe website research', detail: 'robots.txt respected, private networks blocked, size and time limits; page text treated as data, never instructions.' },
+      { title: 'Rule-based need detection', detail: 'Slow mobile site (PageSpeed), no HTTPS, no Arabic version, not mobile-friendly, broken contact form, outdated tech and more.' },
+      { title: 'Explainable scoring', detail: 'ICP fit 40 · need evidence 25 · evidence quality 20 · reachability 10 · freshness 5 — qualified only at 55+ with an evidenced need.' },
+      { title: 'Cited EN/AR drafts', detail: 'English email, Arabic email (RTL) and a WhatsApp-style message; every claim sentence cites its source.' },
+      { title: 'Approvals, pipeline, analytics, learning journal', detail: 'Reject reasons feed reversible scoring adjustments; analytics show their denominators.' },
+      { title: 'Sending integration', detail: 'Deliberately not built — nothing leaves the app.', planned: true }
+    ],
+    role: ['Sole developer: product design, agent runtime, research and scoring pipeline, UI, tests, CI and the competition documentation.'],
+    agent: {
+      objective: 'Find companies that match your ideal customer profile and have an evidenced problem your services fix, then draft outreach that cites that evidence.',
+      input: 'A business setup (website, services, geography) turned into an ICP you approve; a run is then queued as a background job.',
+      reasoning: 'A planner proposes one step at a time (a source plus a query), sees how many new companies it produced and proposes the next — stopping at the company limit, when every industry/city pair is tried, or after 10 planning steps. The code validates every proposal.',
+      tools: ['places_search', 'search_companies', 'exhibitor list fetcher', 'CSV / domain import', 'safe page fetcher', 'PageSpeed Insights', 'tech detection', 'fact extraction', 'need detection', 'scoring', 'drafting'],
+      execution: 'A Postgres-backed job queue and a separate worker run a persistent state machine (plan → find → research → score → draft). Every planning decision and tool call is logged and streamed to the run page; runs can be cancelled and retried.',
+      safety: 'Human approval for every external action and no sending integration. SSRF guard (private ranges, encoded IPs, redirects, DNS rebinding), prompt-injection handling, public business data only — no LinkedIn scraping, no guessed or personal emails, suppression lists and data deletion. Per-run and per-workspace-month cost caps enforced in code.',
+      models: 'Provider chosen server-side. With Anthropic: claude-opus-5-5 for planning, synthesis and drafting (EN/AR), claude-haiku-5-5 for extraction and classification. A deterministic mock provider powers tests and the offline demo; Ollama is available for local development.'
+    },
+    architecture: {
+      flow: [
+        { title: 'Next.js app', detail: 'Setup, ICP, runs, leads, approvals' },
+        { title: 'Postgres job queue', detail: 'Heartbeat, stale-lock recovery' },
+        { title: 'Worker: agent runtime', detail: 'State machine, planner, tool registry', hot: true },
+        { title: 'Research & scoring', detail: 'Safe fetcher, need rules, weights' },
+        { title: 'Drafting', detail: 'EN / AR / WhatsApp with citations' }
+      ],
+      guards: ['Human approval for every external action', 'SSRF-safe fetcher', 'Step and cost budgets', 'Tenant isolation on every query'],
+      caption: 'Simplified. The learning journal feeds approved/rejected outcomes back into scoring.'
+    },
+    stack: {
+      'App': ['Next.js (App Router)', 'React', 'TypeScript', 'Tailwind CSS', 'Auth.js'],
+      'Data & jobs': ['PostgreSQL', 'Drizzle ORM', 'Postgres-backed queue + worker'],
+      'AI': ['Anthropic API (Claude)', 'Mock provider', 'Ollama (dev)'],
+      'Research': ['Cheerio', 'robots-parser', 'ipaddr.js', 'PageSpeed Insights', 'Google Places', 'Brave Search'],
+      'Quality': ['Vitest + PGlite', 'ESLint', 'Prettier', 'GitHub Actions CI']
+    },
+    challenges: [
+      { title: 'Models invent plausible sales claims', detail: 'A drafting model will happily say a site is “slow” or “outdated” without checking.', resolution: 'Needs are detected by deterministic rules, facts are separated from inferences, and drafts are validated so every claim sentence cites stored evidence.' },
+      { title: 'Fetching arbitrary websites from a server', detail: 'Company URLs come from search results and user uploads — an open door to SSRF and prompt injection.', resolution: 'A safe fetcher blocks private ranges, encoded IPs, redirects and DNS rebinding, enforces size and time limits, and page text is framed as untrusted data.' }
+    ],
+    decisions: [
+      { title: 'Evidence before fit', detail: 'A company qualifies only with a score of 55+ and at least one evidenced need.',
+        why: 'A perfect-fit company with nothing to fix is not a sales opportunity, and outreach without proof is spam.',
+        benefit: 'Every lead arrives with a reason to talk and a source to show.',
+        tradeoff: 'Fewer leads per run, and weights are starting defaults not yet validated on real outcomes.' },
+      { title: 'Postgres queue and a separate worker', detail: 'Runs are background jobs with a persistent state machine, not a long HTTP request.',
+        why: 'Researching ten companies takes minutes and must survive a closed tab or a restart.',
+        benefit: 'Runs are cancellable, retryable and fully logged, with no extra queue infrastructure.',
+        tradeoff: 'The worker must run continuously, which rules out sleeping free-tier hosts.' },
+      { title: 'Mock provider as the default', detail: 'A deterministic model adapter behind the same interface as Claude.',
+        why: 'Tests and a live competition demo cannot depend on network, keys or model variance.',
+        benefit: 'The whole pipeline is tested end to end offline, and the demo is repeatable.',
+        tradeoff: 'Real prompt and Arabic quality must still be verified with a real key.' }
+    ],
+    impact: [
+      { value: '10 / 9', label: 'companies researched / qualified in the demo run', source: 'README — synthetic demo' },
+      { value: '97%', label: 'need signals with a source (35 / 36)', source: 'README — synthetic demo' },
+      { value: '100%', label: 'draft claim sentences cited (15 / 15)', source: 'README — synthetic demo' },
+      { value: '0', label: 'messages sent — by design', source: 'README' }
+    ],
+    impactNote: 'From synthetic data: these prove the pipeline is wired correctly, not its accuracy on real websites.',
+    notes: [
+      'In development. The live pipeline has been run on real domains via a domain list; the Google Places and Brave adapters and a full Claude run with a real key are not yet verified.',
+      'Arabic drafts have not yet had a native Gulf-Arabic review.',
+      '“ProspectPilot” is a working product name. Source is private while the competition is running.'
+    ],
+    related: ['ai-job-agent', 'rental-mcp', 'local-agent-lab']
+  },
+
+  {
     id: 'rental-mcp',
     title: 'Rental SaaS MCP Server',
     tagline: 'Lets an authorised AI client ask a landlord’s own rental data questions — read-only.',
@@ -544,6 +642,91 @@ export const PROJECTS = [
   },
 
   /* ======================================================================== AI */
+  {
+    id: 'boring-doc',
+    title: 'Boring Doc',
+    tagline: 'We read the boring docs so you don’t have to — Flutter docs turned into short, evidence-backed explanations.',
+    categories: ['ai', 'web', 'backend'],
+    status: 'live',
+    visibility: 'private',
+    accent: '#6d5cff',
+    period: 'Oct 2026 —',
+    context: 'Personal product',
+    platforms: ['Web', 'Mobile web'],
+    technologies: ['TypeScript', 'Next.js', 'React', 'PostgreSQL', 'PGlite', 'Drizzle ORM', 'Tailwind CSS', 'Anthropic API', 'Vercel'],
+    summary: 'Official docs are the source of truth but slow to use. Boring Doc keeps a synced index of the Flutter docs, release notes and API, and turns it into 30-second explanations, real version-to-version comparisons and a cited “what changed”.',
+    description:
+      'An interactive documentation platform that sits on top of the official Flutter documentation instead of copying it. Every topic opens with a one-sentence answer, then key points, an interactive visual, an analogy (with where it breaks), working code, common mistakes and the exact official sources it was checked against.\n\n' +
+      'An idempotent ingestion pipeline watches the official repositories and feeds, so you can compare any two real stable releases and see every indexed change — categorised, sorted by impact, with migration guides and evidence. AI explanations are optional, provider-independent and grounded in retrieved sources; everything works with AI switched off.',
+    thumbnail: { src: 'img/projects/boring-doc/home.webp', w: 1280, h: 800, frame: 'web', alt: 'Boring Doc home page: “Understand faster. Compare anything. See what’s changed.” with a search box, suggested questions, a live preview of an interactive widget tree, and counters for stable releases, indexed changes, migration guides, API symbols and tracked doc pages', caption: 'Home — live site, 22 Oct 2026' },
+    screenshots: [
+      { src: 'img/projects/boring-doc/home.webp', w: 1280, h: 800, frame: 'web', alt: 'Boring Doc home page with search, suggested questions, a rotating preview and indexed-content counters', caption: 'Home — every number comes from the index' },
+      { src: 'img/projects/boring-doc/compare.webp', w: 1280, h: 800, frame: 'web', alt: 'Version Comparison Studio comparing Flutter 3.41.0 to 3.47.7: 1,629 changes in range, 10 breaking or removed, 10 deprecations, all with official evidence, and a category distribution bar', caption: 'Compare two real versions — 3.41.0 → 3.47.7' },
+      { src: 'img/projects/boring-doc/topic.webp', w: 1280, h: 800, frame: 'web', alt: 'Topic page section “Understand visually” with an expandable widget tree, followed by a real-world analogy and a box explaining where the analogy breaks', caption: 'Topic page — interactive widget tree and an honest analogy' },
+      { src: 'img/projects/boring-doc/whats-new.webp', w: 1280, h: 800, frame: 'web', alt: 'What’s new in Flutter 3.47: release timeline, at-a-glance category bar and breaking-change cards with impact, version and migration-guide badges', caption: 'What’s new — grouped, with evidence on every card' }
+    ],
+    screenshotsNote: 'Captured from the live site on 22 Oct 2026.',
+    problem: 'Official docs are long and change every few weeks. Finding one answer means scrolling a 5,000-word page; “what changed between my version and the latest?” means reading dozens of release notes by hand; and chatbots answer with confident, made-up APIs.',
+    solution: 'An intelligent layer over the docs: authored explanations verified against a specific version, a change index built automatically from the official sources, and AI that cites those sources or says “insufficient evidence”.',
+    features: [
+      { title: 'Learn in 30 seconds', detail: 'Thirteen Flutter topics with the same nine sections: quick answer, key points, visual, analogy, code, when to use, mistakes, related, sources.' },
+      { title: 'Version Comparison Studio', detail: 'Any two real stable releases; changes by category and impact, migration guides, before/after diffs and an optional verified GitHub source diff.' },
+      { title: 'What’s new & Explore changes', detail: 'The latest stable series grouped by category; URL-driven filters by impact, evidence, platform and release.' },
+      { title: 'Search and command palette', detail: 'Concepts, guides, API symbols and changes in one search (Ctrl/Cmd+K), with typo tolerance.' },
+      { title: 'Automatic sync with provenance', detail: 'Webhook + daily cron ingestion; every record keeps its source commit and “last synchronized” time.' },
+      { title: 'Grounded AI (optional)', detail: 'Explain, generate an example, migration assistant — cites sources inline; works with local or hosted models.' },
+      { title: 'Review queue', detail: 'Low-confidence, high-impact items wait for a human before publishing.' },
+      { title: 'More ecosystems', detail: 'React Native, Android, Jetpack Compose, Swift, React and Next.js via adapters.', planned: true }
+    ],
+    role: ['Sole developer: product, ingestion pipeline, data model, UI and visual design, tests and deployment.'],
+    architecture: {
+      flow: [
+        { title: 'Source adapters', detail: 'GitHub, release feeds, API index' },
+        { title: 'Ingestion pipeline', detail: 'Idempotent, incremental, validated', hot: true },
+        { title: 'PostgreSQL', detail: 'PGlite or managed; search index' },
+        { title: 'Read models', detail: 'Comparison engine, queries' },
+        { title: 'Next.js UI + grounded AI', detail: 'Topics, compare, what’s new' }
+      ],
+      guards: ['HTTPS host allowlist for outbound requests', 'HMAC-verified webhooks', 'Sanitised Markdown', 'Conservative publishing policy'],
+      caption: 'Simplified. Jobs are keyed by source + revision, so overlapping triggers never duplicate records.'
+    },
+    stack: {
+      'Frontend': ['Next.js 16 (App Router)', 'React 19', 'Tailwind CSS 4', 'Radix UI', 'shiki', 'Mermaid', 'cmdk'],
+      'Backend & data': ['Route handlers', 'Drizzle ORM', 'PostgreSQL / PGlite', 'tsvector + pg_trgm search', 'zod', 'pino'],
+      'AI': ['Provider-agnostic service', 'Anthropic', 'OpenAI-compatible (Ollama, LM Studio)'],
+      'Ops & quality': ['Vercel + Cron', 'Docker', 'Vitest', 'Playwright']
+    },
+    challenges: [
+      { title: 'Re-syncing large docs without re-downloading them', detail: 'The Flutter website repo has hundreds of pages and changes daily.', resolution: 'Change detection by HEAD commit and per-file git blob SHA, so only changed files are fetched; feeds are compared by SHA-256.' },
+      { title: 'Not overstating what changed', detail: 'Calling something “breaking” wrongly is worse than not saying it.', resolution: 'Breaking, deprecated and removed are asserted only from the official breaking-change index or explicit statements; heuristic classifications show their confidence and low-confidence high-impact items go to review.' }
+    ],
+    decisions: [
+      { title: 'PGlite until DATABASE_URL is set', detail: 'PostgreSQL compiled to WASM runs embedded; the same schema works on managed Postgres.',
+        why: 'Anyone should be able to clone, seed and run it in seconds without a database server.',
+        benefit: 'Zero-setup development and tests against real Postgres features (tsvector, GIN, pg_trgm).',
+        tradeoff: 'On Vercel without DATABASE_URL the database is ephemeral and re-seeded.' },
+      { title: 'Ecosystem as a key, not a fork', detail: 'Every row carries an ecosystem; adapters and typed content add new ones.',
+        why: 'Flutter is the first of many ecosystems; rewriting the core for each would not scale.',
+        benefit: 'A scaffold command plus two generic adapters (Markdown docs repo, GitHub Releases) cover most new ecosystems.' },
+      { title: 'AI is optional', detail: 'Everything works with AI off; when on, answers are retrieved, cited and labelled.',
+        why: 'Hallucinated APIs are exactly the problem the product exists to fix.',
+        benefit: 'No hard dependency on a paid model, and no uncited answers.',
+        tradeoff: 'The best explanations are authored, which takes time per topic.' }
+    ],
+    impact: [
+      { value: '3,679', label: 'indexed Flutter changes', source: 'Live site, 22 Oct 2026' },
+      { value: '180', label: 'stable releases tracked', source: 'Live site, 22 Oct 2026' },
+      { value: '4,624', label: 'API symbols searchable', source: 'Live site, 22 Oct 2026' },
+      { value: '67', label: 'unit tests, plus Playwright journeys', source: 'README' }
+    ],
+    links: [{ type: 'live', url: 'https://fresh-doc-1qhf.vercel.app/', label: 'Open Boring Doc' }],
+    notes: [
+      'Flutter is the only ecosystem built so far; the others are listed as planned.',
+      'Boring Doc is independent and not affiliated with Google. Upstream docs stay under their own licences (flutter/website text CC BY 3.0).'
+    ],
+    related: ['portfolio-guide', 'ai-job-agent', 'expense-tracker']
+  },
+
   {
     id: 'glowfit-ai',
     title: 'GlowFit AI',

@@ -8,10 +8,10 @@
  * The learning list mirrors the projects marked `status: 'learning'` in
  * projects/js/projects-data.js — keep the two in step.
  *
- * Checked 21 Oct 2026 against each project's latest commit and README.
+ * Checked 22 Oct 2026 against each project's latest commit and README.
  */
 window.NOW = {
-  updated: '21 Oct 2026',
+  updated: '22 Oct 2026',
 
   /* A. In progress this month */
   building: [
@@ -26,6 +26,27 @@ window.NOW = {
         { label: 'Source on GitHub', url: 'https://github.com/Afaquejaya/ai-job-agent', external: true },
         { label: 'Case study', url: 'projects/project.html?id=ai-job-agent' }
       ]
+    },
+    {
+      name: 'Boring Doc',
+      status: 'Live · private source',
+      what: 'We read the boring docs so you don’t have to: the official Flutter docs, release notes and API turned into 30-second explanations, real version-to-version comparisons and a cited “what changed”.',
+      progress: 'Live on Vercel (22 Oct 2026) with 13 Flutter topics, 180 stable releases and 3,679 indexed changes, synced daily from the official sources.',
+      next: 'A second ecosystem through the generic adapters — React Native, Android or Jetpack Compose.',
+      tags: ['TypeScript', 'Next.js', 'PostgreSQL', 'PGlite', 'Anthropic API'],
+      links: [
+        { label: 'Live site', url: 'https://fresh-doc-1qhf.vercel.app/', external: true },
+        { label: 'Case study', url: 'projects/project.html?id=boring-doc' }
+      ]
+    },
+    {
+      name: 'ProspectPilot AI',
+      status: 'In development',
+      what: 'An evidence-first sales agent that finds UAE/GCC companies who need what you sell, proves it from their public websites, and drafts cited outreach in English and Arabic. A human approves everything; nothing is sent.',
+      progress: 'The full pipeline — ICP, discovery, research, scoring, EN/AR drafts, approvals — runs end to end on demo data and on real domains (21 Oct 2026).',
+      next: 'Verify the Google Places and Brave adapters and a full Claude run with real keys, then a native Arabic review of the drafts.',
+      tags: ['TypeScript', 'Next.js', 'PostgreSQL', 'Anthropic API'],
+      links: [{ label: 'Case study', url: 'projects/project.html?id=prospectpilot' }]
     },
     {
       name: 'Rental Property Management SaaS + MCP',
