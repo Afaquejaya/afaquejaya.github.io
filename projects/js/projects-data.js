@@ -212,7 +212,7 @@ export const PROJECTS = [
         tradeoff: 'Ships disabled (NOT_CONFIGURED) until a provider account is connected and tested end to end.' }
     ],
     links: [
-      { type: 'live', url: 'https://rental-property.hatchable.site/', label: 'Open the live app', note: 'sign-in required' }
+      // { type: 'live', url: 'https://rental-property.hatchable.site/', label: 'Open the live app', note: 'sign-in required' }
     ],
     notes: [
       'Most of the code was generated through Hatchable’s AI builder from my step-by-step specifications, then reviewed and corrected.',
@@ -785,9 +785,9 @@ export const PROJECTS = [
         benefit: 'A live demo from day one; the same code runs locally and in production.' }
     ],
     links: [
-      { type: 'live', url: 'https://glowfit-ai.vercel.app', label: 'Live demo' },
+      // { type: 'live', url: 'https://glowfit-ai.vercel.app', label: 'Live demo' },
       { type: 'video', url: 'https://www.youtube.com/watch?v=EdBg7vJooeQ', label: 'Demo video' },
-      { type: 'github', url: 'https://github.com/Afaquejaya/glowfit-ai', label: 'Source on GitHub' }
+      // { type: 'github', url: 'https://github.com/Afaquejaya/glowfit-ai', label: 'Source on GitHub' }
     ],
     related: ['expense-tracker', 'face-detection', 'portfolio-guide']
   },
