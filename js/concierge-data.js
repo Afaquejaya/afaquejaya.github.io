@@ -85,7 +85,7 @@ window.CONCIERGE_DATA = {
     whatsapp:   { label: 'Chat on WhatsApp',  href: 'https://wa.me/918797801820?text=Hi%20Afaque%2C%20I%20found%20your%20portfolio%20and%20I%E2%80%99d%20like%20to%20discuss%20a%20project.', newTab: true },
     linkedin:   { label: 'LinkedIn',          href: 'https://www.linkedin.com/in/afaque-jaya', newTab: true },
     github:     { label: 'GitHub',            href: 'https://github.com/Afaquejaya', newTab: true },
-    rentalLive: { label: 'Open live SaaS',    href: 'https://rental-property.hatchable.site/', newTab: true },
+    // rentalLive: { label: 'Open live SaaS',    href: 'https://rental-property.hatchable.site/', newTab: true },
     glowfitLive:{ label: 'GlowFit live demo', href: 'https://glowfit-ai.vercel.app', newTab: true },
     glowfitVideo:{ label: 'Watch GlowFit video', href: 'https://www.youtube.com/watch?v=EdBg7vJooeQ', newTab: true },
     glowfitGit: { label: 'GlowFit on GitHub', href: 'https://github.com/Afaquejaya/glowfit-ai', newTab: true },

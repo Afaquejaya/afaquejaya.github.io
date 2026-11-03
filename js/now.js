@@ -99,7 +99,7 @@ window.NOW = {
         { src: 'img/projects/rental/property-ai.webp', w: 398, h: 462, caption: 'Property AI — read-only, cites its source', alt: 'Property AI panel answering which tenants have overdue rent, with amounts, days overdue and a source line' }
       ],
       links: [
-        { label: 'Live app (sign-in required)', url: 'https://rental-property.hatchable.site/', external: true },
+        // { label: 'Live app (sign-in required)', url: 'https://rental-property.hatchable.site/', external: true },
         { label: 'Case study', url: 'projects/project.html?id=rental-saas' }
       ]
     },
