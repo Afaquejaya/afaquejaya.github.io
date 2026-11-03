@@ -41,7 +41,7 @@ window.NOW = {
         { src: 'img/projects/boring-doc/whats-new.webp', w: 1280, h: 800, caption: 'What’s new — grouped by impact, evidence on every card', alt: 'What’s new in Flutter 3.47: release timeline, category bar and breaking-change cards with migration-guide badges' }
       ],
       links: [
-        { label: 'Open the live site', url: 'https://fresh-doc-1qhf.vercel.app/', external: true },
+        { label: 'Open the live site', url: 'https://fresh-doc.vercel.app/', external: true },
         { label: 'Case study', url: 'projects/project.html?id=boring-doc' }
       ]
     },

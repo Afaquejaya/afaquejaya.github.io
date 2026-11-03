@@ -719,7 +719,7 @@ export const PROJECTS = [
       { value: '4,624', label: 'API symbols searchable', source: 'Live site, 22 Oct 2026' },
       { value: '67', label: 'unit tests, plus Playwright journeys', source: 'README' }
     ],
-    links: [{ type: 'live', url: 'https://fresh-doc-1qhf.vercel.app/', label: 'Open Boring Doc' }],
+    links: [{ type: 'live', url: 'https://fresh-doc.vercel.app/', label: 'Open Boring Doc' }],
     notes: [
       'Flutter is the only ecosystem built so far; the others are listed as planned.',
       'Boring Doc is independent and not affiliated with Google. Upstream docs stay under their own licences (flutter/website text CC BY 3.0).'
